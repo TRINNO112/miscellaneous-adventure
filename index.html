@@ -4368,13 +4368,11 @@
           utils.showToast('This chapter is locked. Complete previous chapters first!', 'warning');
           return;
         }
-
-        utils.showToast(`Starting ${chapter.title}...`, 'info');
         
-        // Simulate chapter completion
-        setTimeout(() => {
-          this.completeChapter(chapterId);
-        }, 2000);
+        // Construct the chapter URL based on the chapter ID
+        const chapterUrl = `chapter-${chapter.number}.html`;
+        utils.showToast(`Loading ${chapter.title}...`, 'info');
+        window.location.href = chapterUrl;
       },
 
       async completeChapter(chapterId) {
@@ -4630,6 +4628,13 @@
     };
 
     // ==========================================
+    // EXPOSE FUNCTIONS TO GLOBAL SCOPE
+    // ==========================================
+    window.chapterSystem = chapterSystem;
+    window.authSystem = authSystem;
+    window.modalSystem = modalSystem;
+
+    // ==========================================
     // INITIALIZATION
     // ==========================================
     document.addEventListener('DOMContentLoaded', () => {
@@ -4644,7 +4649,7 @@
       
       console.log('✅ Application ready!');
     });
-
+    
     // ==========================================
     // GLOBAL ERROR HANDLER
     // ==========================================

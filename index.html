@@ -17,7 +17,11 @@
   <meta property="og:type" content="website" />
   
   <!-- Favicon placeholder -->
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='90'>📊</text></svg>">
+  <link rel="icon" type="image/png" href="favicon/favicon-96x96.png" sizes="96x96" />
+  <link rel="icon" type="image/svg+xml" href="favicon/favicon.svg" />
+  <link rel="shortcut icon" href="favicon/favicon.ico" />
+  <link rel="apple-touch-icon" sizes="180x180" href="favicon/apple-touch-icon.png" />
+  <link rel="manifest" href="favicon/site.webmanifest" />
 
   <style>
   /* ==========================================
@@ -294,7 +298,10 @@
     gap: var(--space-6);
   }
   
-  /* Logo Design */
+  /* ==========================================
+   LOGO DESIGN - Optimized for Image
+   ========================================== */
+
   .logo {
     display: flex;
     align-items: center;
@@ -302,27 +309,48 @@
     cursor: pointer;
     transition: transform var(--transition-base);
   }
-  
+
   .logo:hover {
     transform: translateY(-2px);
   }
-  
-  .logo-mark {
-    width: 48px;
+
+  /* Logo Image Styles */
+  .logo-image {
     height: 48px;
+    width: auto;
+    max-width: 200px; /* Prevents logo from being too wide */
+    object-fit: contain;
+    display: block;
+    transition: all var(--transition-base);
+    filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.1));
+  }
+
+  .logo:hover .logo-image {
+    filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.15));
+  }
+
+  /* Optional: If you want a container for the image with background */
+  .logo-mark-image {
+    height: 48px;
+    width: 48px;
     border-radius: var(--radius-md);
-    background: var(--gradient-primary);
     display: grid;
     place-items: center;
-    font-weight: 800;
-    font-size: 1.25rem;
-    color: white;
+    background: white; /* or transparent */
+    padding: var(--space-1);
     box-shadow: var(--shadow-md);
     position: relative;
     overflow: hidden;
+    transition: all var(--transition-base);
   }
-  
-  .logo-mark::before {
+
+  .logo-mark-image img {
+    height: 100%;
+    width: 100%;
+    object-fit: contain;
+  }
+
+  .logo-mark-image::before {
     content: '';
     position: absolute;
     inset: 0;
@@ -330,17 +358,23 @@
     opacity: 0;
     transition: opacity var(--transition-base);
   }
-  
-  .logo:hover .logo-mark::before {
+
+  .logo:hover .logo-mark-image::before {
     opacity: 1;
   }
-  
+
+  .logo:hover .logo-mark-image {
+    transform: scale(1.05);
+    box-shadow: var(--shadow-lg);
+  }
+
+  /* Logo Text Styles (if keeping text alongside image) */
   .logo-text {
     display: flex;
     flex-direction: column;
     gap: 2px;
   }
-  
+
   .logo-title {
     font-family: var(--font-display);
     font-size: 1.125rem;
@@ -348,7 +382,7 @@
     color: var(--text-primary);
     letter-spacing: -0.02em;
   }
-  
+
   .logo-subtitle {
     font-size: 0.75rem;
     color: var(--text-tertiary);
@@ -356,7 +390,236 @@
     letter-spacing: 0.05em;
     text-transform: uppercase;
   }
-  
+
+  /* Responsive Logo Adjustments */
+  @media (max-width: 768px) {
+    .logo-image {
+      height: 40px;
+      max-width: 150px;
+    }
+    
+    .logo-mark-image {
+      height: 40px;
+      width: 40px;
+    }
+    
+    .logo-subtitle {
+      display: none; /* Hide subtitle on mobile to save space */
+    }
+    
+    .logo-title {
+      font-size: 1rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .logo-image {
+      height: 36px;
+      max-width: 120px;
+    }
+    
+    .logo-mark-image {
+      height: 36px;
+      width: 36px;
+    }
+    
+    .logo-text {
+      display: none; /* Hide all text on very small screens, show only logo */
+    }
+  }
+
+  /* ==========================================
+   LOGO DESIGN - Optimized for Image
+   ========================================== */
+
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    cursor: pointer;
+    transition: transform var(--transition-base);
+  }
+
+  .logo:hover {
+    transform: translateY(-2px);
+  }
+
+  /* Logo Image - Primary Style */
+  .logo-image {
+    height: 48px;
+    width: auto;
+    max-width: 200px;
+    object-fit: contain;
+    display: block;
+    transition: all var(--transition-base);
+    border-radius: 10px;
+    filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.1));
+    
+    /* High-quality rendering optimization */
+    image-rendering: auto;
+    -ms-interpolation-mode: bicubic;
+    backface-visibility: hidden;
+    transform: translateZ(0);
+    will-change: transform;
+  }
+
+  .logo:hover .logo-image {
+    filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.15));
+    transform: translateZ(0) scale(1.02);
+  }
+
+  /* Logo with Container Background (Alternative Style) */
+  .logo-mark-image {
+    height: 48px;
+    width: 48px;
+    border-radius: var(--radius-md);
+    display: grid;
+    place-items: center;
+    background: white;
+    padding: var(--space-1);
+    box-shadow: var(--shadow-md);
+    position: relative;
+    overflow: hidden;
+    transition: all var(--transition-base);
+  }
+
+  .logo-mark-image img {
+    height: 100%;
+    width: 100%;
+    object-fit: contain;
+    image-rendering: auto;
+    backface-visibility: hidden;
+  }
+
+  .logo-mark-image::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, transparent, rgba(255,255,255,0.2));
+    opacity: 0;
+    transition: opacity var(--transition-base);
+  }
+
+  .logo:hover .logo-mark-image::before {
+    opacity: 1;
+  }
+
+  .logo:hover .logo-mark-image {
+    transform: scale(1.05);
+    box-shadow: var(--shadow-lg);
+  }
+
+  /* Logo Text Styles */
+  .logo-text {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .logo-title {
+    font-family: var(--font-display);
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+  }
+
+  .logo-subtitle {
+    font-size: 0.75rem;
+    color: var(--text-tertiary);
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    line-height: 1;
+  }
+
+  /* Responsive Logo */
+  @media (max-width: 768px) {
+    .logo-image {
+      height: 40px;
+      max-width: 150px;
+    }
+    
+    .logo-mark-image {
+      height: 40px;
+      width: 40px;
+    }
+    
+    .logo-subtitle {
+      display: none;
+    }
+    
+    .logo-title {
+      font-size: 1rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .logo-image {
+      height: 36px;
+      max-width: 120px;
+    }
+    
+    .logo-mark-image {
+      height: 36px;
+      width: 36px;
+    }
+    
+    .logo-text {
+      display: none;
+    }
+  }
+
+  /* ==========================================
+    FOOTER LOGO
+    ========================================== */
+
+  .footer-logo {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+  }
+
+  .footer-logo-image {
+    height: 48px;
+    width: auto;
+    max-width: 200px;
+    object-fit: contain;
+    border-radius: 10px;
+    
+    /* Optimization */
+    image-rendering: auto;
+    -ms-interpolation-mode: bicubic;
+    backface-visibility: hidden;
+    transform: translateZ(0);
+  }
+
+  .footer-logo-mark-image {
+    height: 48px;
+    width: 48px;
+    border-radius: var(--radius-md);
+    display: grid;
+    place-items: center;
+    background: var(--gradient-primary);
+    padding: var(--space-1);
+  }
+
+  .footer-logo-mark-image img {
+    height: 100%;
+    width: 100%;
+    object-fit: contain;
+    image-rendering: auto;
+    backface-visibility: hidden;
+  }
+
+  .footer-logo-text {
+    font-family: var(--font-display);
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: white;
+  }
+
   /* Navigation Links */
   .nav-links {
     display: flex;
@@ -518,6 +781,12 @@
     padding: var(--space-3);
     aspect-ratio: 1;
   }
+
+  #heroWatchBtn svg {
+    width: 26px;
+    height: 26px;
+  }
+
 
   /* ==========================================
      HERO SECTION - Stunning First Impression
@@ -1608,31 +1877,6 @@
     display: flex;
     flex-direction: column;
     gap: var(--space-4);
-  }
-  
-  .footer-logo {
-    display: flex;
-    align-items: center;
-    gap: var(--space-3);
-  }
-  
-  .footer-logo-mark {
-    width: 48px;
-    height: 48px;
-    border-radius: var(--radius-md);
-    background: var(--gradient-primary);
-    display: grid;
-    place-items: center;
-    font-weight: 800;
-    font-size: 1.25rem;
-    color: white;
-  }
-  
-  .footer-logo-text {
-    font-family: var(--font-display);
-    font-size: 1.125rem;
-    font-weight: 700;
-    color: white;
   }
   
   .footer-description {
@@ -2915,9 +3159,9 @@
   <nav class="navbar" id="navbar">
     <div class="container">
       <div class="navbar-content">
-        <!-- Logo -->
+        <!-- In Navbar -->
         <div class="logo">
-          <div class="logo-mark">MA</div>
+          <img src="image/logo.png" alt="Miscellaneous Adventure" class="logo-image">
           <div class="logo-text">
             <div class="logo-title">Miscellaneous Adventure</div>
             <div class="logo-subtitle">Tax Officer Chronicles</div>
@@ -3354,7 +3598,7 @@
       <div class="footer-content">
         <div class="footer-brand">
           <div class="footer-logo">
-            <div class="footer-logo-mark">MA</div>
+            <img src="image/logo.png" alt="Miscellaneous Adventure" class="footer-logo-image">
             <div class="footer-logo-text">Miscellaneous Adventure</div>
           </div>
           <p class="footer-description">
@@ -3626,408 +3870,421 @@
     </div>
   </div>
 
-  <!-- Firebase SDK -->
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+  <script type="module">
+    // Import centralized services
+    import { authService } from './Firebase/auth-service.js';
+    import { userService } from './Firebase/user-service.js';
 
-  <script>
-  /* ==========================================
-  JAVASCRIPT - Complete Application Logic
-  ========================================== */
+    /* ==========================================
+    JAVASCRIPT - Complete Application Logic (Updated for Centralized Services)
+    ========================================== */
 
-  // Your web app's Firebase configuration
-  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-  const firebaseConfig = {
-    apiKey: "AIzaSyAOHaoLEZjT8V5rkuDrOsdny1s09OKMelc",
-    authDomain: "miscellaneous-adventure.firebaseapp.com",
-    projectId: "miscellaneous-adventure",
-    storageBucket: "miscellaneous-adventure.firebasestorage.app",
-    messagingSenderId: "974562975403",
-    appId: "1:974562975403:web:8dc24c1b865680cd4e61ee",
-    measurementId: "G-08GC6BKWLJ"
-  };
-
-  // Initialize Firebase
-  if (firebaseConfig.apiKey !== "YOUR_API_KEY") {
-    firebase.initializeApp(firebaseConfig);
-  } else {
-    console.warn("⚠️ Firebase not configured. Replace firebaseConfig with your actual config.");
-  }
-
-  const auth = firebase.auth?.() || null;
-  const db = firebase.firestore?.() || null;
-
-  // ==========================================
-  // STATE MANAGEMENT
-  // ==========================================
-  const appState = {
-    currentUser: null,
-    userProgress: {
-      completed: [],
-      current: null,
-      achievements: []
-    },
-    chapters: [
-      {
-        id: 'ch-1',
-        number: 1,
-        title: 'Audit Basics',
-        description: 'Learn the fundamentals of tax auditing with your first quirky case.',
-        icon: '📋',
-        difficulty: 1,
-        duration: '30 min',
-        status: 'unlocked'
+    // ==========================================
+    // STATE MANAGEMENT
+    // ==========================================
+    const appState = {
+      currentUser: null,
+      userProgress: {
+        completed: [],
+        current: null,
+        achievements: []
       },
-      {
-        id: 'ch-2',
-        number: 2,
-        title: 'Market Mayhem',
-        description: 'Investigate suspicious samosa vendor receipts in the bustling marketplace.',
-        icon: '🛒',
-        difficulty: 2,
-        duration: '45 min',
-        status: 'locked'
-      },
-      {
-        id: 'ch-3',
-        number: 3,
-        title: 'Offshore Oddities',
-        description: 'Uncover a complex web of offshore accounts and creative accounting.',
-        icon: '🌊',
-        difficulty: 3,
-        duration: '60 min',
-        status: 'locked'
-      },
-      {
-        id: 'ch-4',
-        number: 4,
-        title: 'Courtroom Comedy',
-        description: 'Face the ultimate challenge in a high-stakes courtroom showdown.',
-        icon: '⚖️',
-        difficulty: 3,
-        duration: '75 min',
-        status: 'locked'
-      }
-    ]
-  };
-
-  // ==========================================
-  // UTILITY FUNCTIONS
-  // ==========================================
-  const utils = {
-    // DOM selectors
-    $(selector, parent = document) {
-      return parent.querySelector(selector);
-    },
-    
-    $$(selector, parent = document) {
-      return Array.from(parent.querySelectorAll(selector));
-    },
-
-    // Show toast notification
-    showToast(message, type = 'info', duration = 3000) {
-      const container = this.$('#toastContainer');
-      const toast = document.createElement('div');
-      toast.className = `toast ${type}`;
-      
-      const icons = {
-        success: '✓',
-        error: '✕',
-        warning: '⚠',
-        info: 'ℹ'
-      };
-
-      toast.innerHTML = `
-        <div class="toast-icon">${icons[type] || icons.info}</div>
-        <div class="toast-content">
-          <div class="toast-message">${message}</div>
-        </div>
-        <button class="toast-close" onclick="this.parentElement.remove()">
-          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M12 4L4 12M4 4l8 8"/>
-          </svg>
-        </button>
-        <div class="toast-progress"></div>
-      `;
-
-      container.appendChild(toast);
-
-      setTimeout(() => {
-        toast.classList.add('removing');
-        setTimeout(() => toast.remove(), 300);
-      }, duration);
-    },
-
-    // Show loading overlay
-    showLoading(text = 'Loading...') {
-      const overlay = this.$('#loadingOverlay');
-      if (overlay) {
-        this.$('.loading-text', overlay).textContent = text;
-        overlay.style.display = 'flex';
-      }
-    },
-
-    hideLoading() {
-      const overlay = this.$('#loadingOverlay');
-      if (overlay) overlay.style.display = 'none';
-    },
-
-    // Animate counter
-    animateCounter(element, target, duration = 2000) {
-      const start = 0;
-      const increment = target / (duration / 16);
-      let current = start;
-
-      const timer = setInterval(() => {
-        current += increment;
-        if (current >= target) {
-          element.textContent = target.toLocaleString();
-          clearInterval(timer);
-        } else {
-          element.textContent = Math.floor(current).toLocaleString();
+      chapters: [
+        {
+          id: 'ch-1',
+          number: 1,
+          title: 'Office Chaos',
+          description: 'Your first day on the job — and the entire tax office is already in chaos. Time to fix the mess before your boss finds out.',
+          icon: '🏢',
+          difficulty: 1,
+          duration: '30 min',
+          status: 'unlocked'
+        },
+        {
+          id: 'ch-2',
+          number: 2,
+          title: 'The Bribe Chase',
+          description: 'A mysterious envelope, a nervous businessman, and a ticking deadline. Can you trace the bribe before the media does?',
+          icon: '💼',
+          difficulty: 2,
+          duration: '45 min',
+          status: 'locked'
+        },
+        {
+          id: 'ch-3',
+          number: 3,
+          title: 'Midnight Raid',
+          description: 'When the city sleeps, you raid the biggest accounting firm in town. Nothing about this night will go as planned.',
+          icon: '🌙',
+          difficulty: 3,
+          duration: '60 min',
+          status: 'locked'
         }
-      }, 16);
-    },
+      ]
+    };
 
-    // Validate email
-    isValidEmail(email) {
-      return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-    },
-
-    // Check password strength
-    getPasswordStrength(password) {
-      let strength = 0;
-      if (password.length >= 8) strength++;
-      if (password.length >= 12) strength++;
-      if (/[a-z]/.test(password) && /[A-Z]/.test(password)) strength++;
-      if (/\d/.test(password)) strength++;
-      if (/[^a-zA-Z0-9]/.test(password)) strength++;
-
-      if (strength <= 2) return { level: 'weak', label: 'Weak Password' };
-      if (strength <= 3) return { level: 'medium', label: 'Medium Password' };
-      return { level: 'strong', label: 'Strong Password' };
-    }
-  };
-
-  // ==========================================
-  // MODAL SYSTEM
-  // ==========================================
-  const modalSystem = {
-    open(modalId) {
-      const modal = utils.$(`#${modalId}`);
-      if (!modal) return;
+    // ==========================================
+    // UTILITY FUNCTIONS
+    // ==========================================
+    const utils = {
+      // DOM selectors
+      $(selector, parent = document) {
+        return parent.querySelector(selector);
+      },
       
-      modal.classList.add('active');
-      document.body.style.overflow = 'hidden';
-      
-      // Focus first input
-      const firstInput = utils.$('input', modal);
-      if (firstInput) setTimeout(() => firstInput.focus(), 100);
-    },
+      $$(selector, parent = document) {
+        return Array.from(parent.querySelectorAll(selector));
+      },
 
-    close(modalId) {
-      const modal = utils.$(`#${modalId}`);
-      if (!modal) return;
-      
-      modal.classList.remove('active');
-      document.body.style.overflow = '';
-      
-      // Clear forms
-      const form = utils.$('form', modal);
-      if (form) form.reset();
-    },
+      // Show toast notification
+      showToast(message, type = 'info', duration = 3000) {
+        const container = this.$('#toastContainer');
+        const toast = document.createElement('div');
+        toast.className = `toast ${type}`;
+        
+        const icons = {
+          success: '✓',
+          error: '✕',
+          warning: '⚠',
+          info: 'ℹ'
+        };
 
-    init() {
-      // Close buttons
-      utils.$$('[data-modal-close]').forEach(btn => {
-        btn.addEventListener('click', () => {
-          this.close(btn.dataset.modalClose);
-        });
-      });
+        toast.innerHTML = `
+          <div class="toast-icon">${icons[type] || icons.info}</div>
+          <div class="toast-content">
+            <div class="toast-message">${message}</div>
+          </div>
+          <button class="toast-close" onclick="this.parentElement.remove()">
+            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 4L4 12M4 4l8 8"/>
+            </svg>
+          </button>
+          <div class="toast-progress"></div>
+        `;
 
-      // Click outside to close
-      utils.$$('.modal-overlay').forEach(overlay => {
-        overlay.addEventListener('click', (e) => {
-          if (e.target === overlay) {
-            this.close(overlay.id);
+        container.appendChild(toast);
+
+        setTimeout(() => {
+          toast.classList.add('removing');
+          setTimeout(() => toast.remove(), 300);
+        }, duration);
+      },
+
+      // Show loading overlay
+      showLoading(text = 'Loading...') {
+        const overlay = this.$('#loadingOverlay');
+        if (overlay) {
+          this.$('.loading-text', overlay).textContent = text;
+          overlay.style.display = 'flex';
+        }
+      },
+
+      hideLoading() {
+        const overlay = this.$('#loadingOverlay');
+        if (overlay) overlay.style.display = 'none';
+      },
+
+      // Animate counter
+      animateCounter(element, target, duration = 2000) {
+        const start = 0;
+        const increment = target / (duration / 16);
+        let current = start;
+
+        const timer = setInterval(() => {
+          current += increment;
+          if (current >= target) {
+            element.textContent = target.toLocaleString();
+            clearInterval(timer);
+          } else {
+            element.textContent = Math.floor(current).toLocaleString();
           }
-        });
-      });
+        }, 16);
+      },
 
-      // ESC key to close
-      document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape') {
-          utils.$$('.modal-overlay.active').forEach(modal => {
-            this.close(modal.id);
+      // Validate email
+      isValidEmail(email) {
+        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+      },
+
+      // Check password strength
+      getPasswordStrength(password) {
+        let strength = 0;
+        if (password.length >= 8) strength++;
+        if (password.length >= 12) strength++;
+        if (/[a-z]/.test(password) && /[A-Z]/.test(password)) strength++;
+        if (/\d/.test(password)) strength++;
+        if (/[^a-zA-Z0-9]/.test(password)) strength++;
+
+        if (strength <= 2) return { level: 'weak', label: 'Weak Password' };
+        if (strength <= 3) return { level: 'medium', label: 'Medium Password' };
+        return { level: 'strong', label: 'Strong Password' };
+      }
+    };
+
+    // ==========================================
+    // MODAL SYSTEM
+    // ==========================================
+    const modalSystem = {
+      open(modalId) {
+        const modal = utils.$(`#${modalId}`);
+        if (!modal) return;
+        
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+        
+        // Focus first input
+        const firstInput = utils.$('input', modal);
+        if (firstInput) setTimeout(() => firstInput.focus(), 100);
+      },
+
+      close(modalId) {
+        const modal = utils.$(`#${modalId}`);
+        if (!modal) return;
+        
+        modal.classList.remove('active');
+        document.body.style.overflow = '';
+        
+        // Clear forms
+        const form = utils.$('form', modal);
+        if (form) form.reset();
+      },
+
+      init() {
+        // Close buttons
+        utils.$$('[data-modal-close]').forEach(btn => {
+          btn.addEventListener('click', () => {
+            this.close(btn.dataset.modalClose);
           });
-        }
-      });
-    }
-  };
+        });
 
-  // ==========================================
-  // AUTHENTICATION
-  // ==========================================
-  const authSystem = {
-    async signUpWithEmail(name, email, password) {
-      try {
-        utils.showLoading('Creating your account...');
-        
-        if (!auth) throw new Error('Firebase not configured');
-        
-        const userCredential = await auth.createUserWithEmailAndPassword(email, password);
-        await userCredential.user.updateProfile({ displayName: name });
-        
-        // Create user document
-        if (db) {
-          await db.collection('users').doc(userCredential.user.uid).set({
-            displayName: name,
-            email: email,
-            createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-            progress: {
-              completed: [],
-              current: 'ch-1',
-              achievements: []
-            },
-            stats: {
-              totalPlayTime: 0,
-              chaptersCompleted: 0,
-              choicesMade: 0
+        // Click outside to close
+        utils.$$('.modal-overlay').forEach(overlay => {
+          overlay.addEventListener('click', (e) => {
+            if (e.target === overlay) {
+              this.close(overlay.id);
             }
           });
-        }
+        });
 
-        utils.hideLoading();
-        modalSystem.close('signupModal');
-        utils.showToast(`Welcome, ${name}! Your adventure begins now.`, 'success');
-        
-        return userCredential.user;
-      } catch (error) {
-        utils.hideLoading();
-        this.handleAuthError(error);
-        throw error;
-      }
-    },
-
-    async signInWithEmail(email, password) {
-      try {
-        utils.showLoading('Signing you in...');
-        
-        if (!auth) throw new Error('Firebase not configured');
-        
-        const userCredential = await auth.signInWithEmailAndPassword(email, password);
-        
-        utils.hideLoading();
-        modalSystem.close('loginModal');
-        utils.showToast(`Welcome back, ${userCredential.user.displayName || 'Adventurer'}!`, 'success');
-        
-        return userCredential.user;
-      } catch (error) {
-        utils.hideLoading();
-        this.handleAuthError(error);
-        throw error;
-      }
-    },
-
-    async signInWithGoogle() {
-      try {
-        utils.showLoading('Opening Google Sign-In...');
-        
-        if (!auth) throw new Error('Firebase not configured');
-        
-        const provider = new firebase.auth.GoogleAuthProvider();
-        const userCredential = await auth.signInWithPopup(provider);
-        
-        // Create user document if new user
-        if (db) {
-          const userDoc = await db.collection('users').doc(userCredential.user.uid).get();
-          if (!userDoc.exists) {
-            await db.collection('users').doc(userCredential.user.uid).set({
-              displayName: userCredential.user.displayName,
-              email: userCredential.user.email,
-              photoURL: userCredential.user.photoURL,
-              createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-              progress: {
-                completed: [],
-                current: 'ch-1',
-                achievements: []
-              },
-              stats: {
-                totalPlayTime: 0,
-                chaptersCompleted: 0,
-                choicesMade: 0
-              }
+        // ESC key to close
+        document.addEventListener('keydown', (e) => {
+          if (e.key === 'Escape') {
+            utils.$$('.modal-overlay.active').forEach(modal => {
+              this.close(modal.id);
             });
           }
-        }
+        });
+      }
+    };
 
-        utils.hideLoading();
-        modalSystem.close('loginModal');
-        modalSystem.close('signupModal');
-        utils.showToast(`Welcome, ${userCredential.user.displayName}!`, 'success');
-        
-        return userCredential.user;
-      } catch (error) {
-        utils.hideLoading();
-        if (error.code !== 'auth/popup-closed-by-user') {
+    // ==========================================
+    // AUTHENTICATION (Updated for Centralized Services)
+    // ==========================================
+    const authSystem = {
+      async signUpWithEmail(name, email, password) {
+        try {
+          utils.showLoading('Creating your account...');
+          
+          const user = await authService.signUpWithEmail(name, email, password);
+          
+          utils.hideLoading();
+          modalSystem.close('signupModal');
+          utils.showToast(`Welcome, ${name}! Your adventure begins now.`, 'success');
+          
+          return user;
+        } catch (error) {
+          utils.hideLoading();
+          this.handleAuthError(error);
+          throw error;
+        }
+      },
+
+      async signInWithEmail(email, password) {
+        try {
+          utils.showLoading('Signing you in...');
+          
+          const user = await authService.signInWithEmail(email, password);
+          
+          utils.hideLoading();
+          modalSystem.close('loginModal');
+          utils.showToast(`Welcome back, ${user.displayName || 'Adventurer'}!`, 'success');
+          
+          return user;
+        } catch (error) {
+          utils.hideLoading();
+          this.handleAuthError(error);
+          throw error;
+        }
+      },
+
+      async signInWithGoogle() {
+        try {
+          utils.showLoading('Opening Google Sign-In...');
+          
+          const user = await authService.signInWithGoogle();
+          
+          utils.hideLoading();
+          modalSystem.close('loginModal');
+          modalSystem.close('signupModal');
+          utils.showToast(`Welcome, ${user.displayName}!`, 'success');
+          
+          return user;
+        } catch (error) {
+          utils.hideLoading();
+          if (error.code !== 'auth/popup-closed-by-user') {
+            this.handleAuthError(error);
+          }
+          throw error;
+        }
+      },
+
+      async resetPassword(email) {
+        try {
+          utils.showLoading('Sending reset link...');
+          
+          await authService.resetPassword(email);
+          
+          utils.hideLoading();
+          modalSystem.close('resetPasswordModal');
+          utils.showToast('Password reset link sent! Check your email.', 'success');
+        } catch (error) {
+          utils.hideLoading();
+          this.handleAuthError(error);
+          throw error;
+        }
+      },
+
+      async signOut() {
+        try {
+          await authService.signOutUser();
+          utils.showToast('Signed out successfully', 'success');
+          window.location.reload();
+        } catch (error) {
           this.handleAuthError(error);
         }
-        throw error;
-      }
-    },
+      },
 
-    async resetPassword(email) {
-      try {
-        utils.showLoading('Sending reset link...');
+      handleAuthError(error) {
+        const errorMessages = {
+          'auth/email-already-in-use': 'This email is already registered. Try signing in instead.',
+          'auth/invalid-email': 'Please enter a valid email address.',
+          'auth/operation-not-allowed': 'This sign-in method is not enabled.',
+          'auth/weak-password': 'Password should be at least 6 characters long.',
+          'auth/user-disabled': 'This account has been disabled.',
+          'auth/user-not-found': 'No account found with this email.',
+          'auth/wrong-password': 'Incorrect password. Please try again.',
+          'auth/too-many-requests': 'Too many failed attempts. Please try again later.',
+          'auth/network-request-failed': 'Network error. Please check your connection.'
+        };
+
+        const message = errorMessages[error.code] || error.message || 'An error occurred';
+        utils.showToast(message, 'error');
+      },
+
+      async loadUserProgress(uid) {
+        try {
+          const progress = await userService.getUserProgress(uid);
+          if (progress) {
+            appState.userProgress = progress;
+            
+            // Update chapter statuses
+            appState.chapters.forEach((chapter, index) => {
+              if (appState.userProgress.completed.includes(chapter.id)) {
+                chapter.status = 'completed';
+              } else if (index === 0 || appState.userProgress.completed.includes(appState.chapters[index - 1].id)) {
+                chapter.status = 'unlocked';
+              } else {
+                chapter.status = 'locked';
+              }
+            });
+            
+            chapterSystem.render();
+            this.updateProgressBar();
+          }
+        } catch (error) {
+          console.error('Error loading user progress:', error);
+        }
+      },
+
+      updateProgressBar() {
+        const completed = appState.userProgress.completed.length;
+        const total = appState.chapters.length;
+        const percentage = (completed / total) * 100;
         
-        if (!auth) throw new Error('Firebase not configured');
+        const progressBar = utils.$('#progressBar');
+        const progressText = utils.$('#overallProgress');
         
-        await auth.sendPasswordResetEmail(email);
-        
-        utils.hideLoading();
-        modalSystem.close('resetPasswordModal');
-        utils.showToast('Password reset link sent! Check your email.', 'success');
-      } catch (error) {
-        utils.hideLoading();
-        this.handleAuthError(error);
-        throw error;
-      }
-    },
+        if (progressBar) progressBar.style.width = `${percentage}%`;
+        if (progressText) progressText.textContent = `${Math.round(percentage)}%`;
+      },
 
-    async signOut() {
-      try {
-        if (!auth) throw new Error('Firebase not configured');
-        
-        await auth.signOut();
-        utils.showToast('Signed out successfully', 'success');
-        window.location.reload();
-      } catch (error) {
-        this.handleAuthError(error);
-      }
-    },
+      updateUIForAuthenticatedUser(user) {
+        const navActions = utils.$('#navActions');
+        if (navActions) {
+          navActions.innerHTML = `
+            <div class="dropdown">
+              <button class="btn btn-ghost" onclick="document.querySelector('.dropdown').classList.toggle('active')">
+                <div class="avatar avatar-sm">
+                  ${user.photoURL ? `<img src="${user.photoURL}" alt="${user.displayName}">` : user.displayName?.charAt(0) || 'U'}
+                </div>
+                <span>${user.displayName || 'Account'}</span>
+              </button>
+              <div class="dropdown-menu">
+                <a href="#dashboard" class="dropdown-item">
+                  <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="3" y="3" width="7" height="7"/>
+                    <rect x="14" y="3" width="7" height="7"/>
+                    <rect x="14" y="14" width="7" height="7"/>
+                    <rect x="3" y="14" width="7" height="7"/>
+                  </svg>
+                  Dashboard
+                </a>
+                <a href="#profile" class="dropdown-item">
+                  <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                    <circle cx="12" cy="7" r="4"/>
+                  </svg>
+                  Profile
+                </a>
+                <a href="#settings" class="dropdown-item">
+                  <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="3"/>
+                    <path d="M12 1v6m0 6v6M5.2 5.2l4.2 4.2m5.2 5.2l4.2 4.2M1 12h6m6 0h6M5.2 18.8l4.2-4.2m5.2-5.2l4.2-4.2"/>
+                  </svg>
+                  Settings
+                </a>
+                <div class="dropdown-divider"></div>
+                <a href="#" class="dropdown-item danger" onclick="authSystem.signOut()">
+                  <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+                    <polyline points="16 17 21 12 16 7"/>
+                    <line x1="21" y1="12" x2="9" y2="12"/>
+                  </svg>
+                  Sign Out
+                </a>
+              </div>
+            </div>
+          `;
+        }
+      },
 
-    handleAuthError(error) {
-      const errorMessages = {
-        'auth/email-already-in-use': 'This email is already registered. Try signing in instead.',
-        'auth/invalid-email': 'Please enter a valid email address.',
-        'auth/operation-not-allowed': 'This sign-in method is not enabled.',
-        'auth/weak-password': 'Password should be at least 6 characters long.',
-        'auth/user-disabled': 'This account has been disabled.',
-        'auth/user-not-found': 'No account found with this email.',
-        'auth/wrong-password': 'Incorrect password. Please try again.',
-        'auth/too-many-requests': 'Too many failed attempts. Please try again later.',
-        'auth/network-request-failed': 'Network error. Please check your connection.'
-      };
+      updateUIForUnauthenticatedUser() {
+        const navActions = utils.$('#navActions');
+        if (navActions) {
+          navActions.innerHTML = `
+            <button class="btn btn-ghost" id="navLoginBtn">Login</button>
+            <button class="btn btn-primary" id="navSignupBtn">Get Started</button>
+          `;
+          
+          // Re-attach event listeners
+          utils.$('#navLoginBtn')?.addEventListener('click', () => modalSystem.open('loginModal'));
+          utils.$('#navSignupBtn')?.addEventListener('click', () => modalSystem.open('signupModal'));
+        }
+      },
 
-      const message = errorMessages[error.code] || error.message || 'An error occurred';
-      utils.showToast(message, 'error');
-    },
-
-    init() {
-      // Auth state observer
-      if (auth) {
-        auth.onAuthStateChanged(async (user) => {
+      init() {
+        // Auth state observer using centralized service
+        authService.onAuthStateChange(async (user) => {
           appState.currentUser = user;
           
           if (user) {
@@ -4038,477 +4295,367 @@
           }
         });
       }
-    },
+    };
 
-    async loadUserProgress(uid) {
-      if (!db) return;
-      
-      try {
-        const userDoc = await db.collection('users').doc(uid).get();
-        if (userDoc.exists) {
-          const data = userDoc.data();
-          appState.userProgress = data.progress || { completed: [], current: 'ch-1', achievements: [] };
-          
-          // Update chapter statuses
-          appState.chapters.forEach((chapter, index) => {
-            if (appState.userProgress.completed.includes(chapter.id)) {
-              chapter.status = 'completed';
-            } else if (index === 0 || appState.userProgress.completed.includes(appState.chapters[index - 1].id)) {
-              chapter.status = 'unlocked';
-            } else {
-              chapter.status = 'locked';
-            }
-          });
-          
-          chapterSystem.render();
-          this.updateProgressBar();
-        }
-      } catch (error) {
-        console.error('Error loading user progress:', error);
-      }
-    },
+    // ==========================================
+    // CHAPTER SYSTEM (Updated for Centralized Services)
+    // ==========================================
+    const chapterSystem = {
+      render() {
+        const container = utils.$('#chaptersGrid');
+        if (!container) return;
 
-    updateProgressBar() {
-      const completed = appState.userProgress.completed.length;
-      const total = appState.chapters.length;
-      const percentage = (completed / total) * 100;
-      
-      const progressBar = utils.$('#progressBar');
-      const progressText = utils.$('#overallProgress');
-      
-      if (progressBar) progressBar.style.width = `${percentage}%`;
-      if (progressText) progressText.textContent = `${Math.round(percentage)}%`;
-    },
-
-    updateUIForAuthenticatedUser(user) {
-      const navActions = utils.$('#navActions');
-      if (navActions) {
-        navActions.innerHTML = `
-          <div class="dropdown">
-            <button class="btn btn-ghost" onclick="document.querySelector('.dropdown').classList.toggle('active')">
-              <div class="avatar avatar-sm">
-                ${user.photoURL ? `<img src="${user.photoURL}" alt="${user.displayName}">` : user.displayName?.charAt(0) || 'U'}
+        container.innerHTML = appState.chapters.map(chapter => `
+          <div class="chapter-card ${chapter.status}" data-chapter-id="${chapter.id}">
+            <div class="chapter-header">
+              <div class="chapter-number">CH ${chapter.number}</div>
+              <div class="chapter-status ${chapter.status}">
+                ${chapter.status === 'completed' ? 'Completed' : chapter.status === 'locked' ? 'Locked' : 'Available'}
               </div>
-              <span>${user.displayName || 'Account'}</span>
-            </button>
-            <div class="dropdown-menu">
-              <a href="#dashboard" class="dropdown-item">
-                <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
-                  <rect x="3" y="3" width="7" height="7"/>
-                  <rect x="14" y="3" width="7" height="7"/>
-                  <rect x="14" y="14" width="7" height="7"/>
-                  <rect x="3" y="14" width="7" height="7"/>
-                </svg>
-                Dashboard
-              </a>
-              <a href="#profile" class="dropdown-item">
-                <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
-                  <circle cx="12" cy="7" r="4"/>
-                </svg>
-                Profile
-              </a>
-              <a href="#settings" class="dropdown-item">
-                <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
-                  <circle cx="12" cy="12" r="3"/>
-                  <path d="M12 1v6m0 6v6M5.2 5.2l4.2 4.2m5.2 5.2l4.2 4.2M1 12h6m6 0h6M5.2 18.8l4.2-4.2m5.2-5.2l4.2-4.2"/>
-                </svg>
-                Settings
-              </a>
-              <div class="dropdown-divider"></div>
-              <a href="#" class="dropdown-item danger" onclick="authSystem.signOut()">
-                <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
-                  <polyline points="16 17 21 12 16 7"/>
-                  <line x1="21" y1="12" x2="9" y2="12"/>
-                </svg>
-                Sign Out
-              </a>
+              <div class="chapter-icon">${chapter.icon}</div>
             </div>
-          </div>
-        `;
-      }
-    },
-
-    updateUIForUnauthenticatedUser() {
-      const navActions = utils.$('#navActions');
-      if (navActions) {
-        navActions.innerHTML = `
-          <button class="btn btn-ghost" id="navLoginBtn">Login</button>
-          <button class="btn btn-primary" id="navSignupBtn">Get Started</button>
-        `;
-        
-        // Re-attach event listeners
-        utils.$('#navLoginBtn')?.addEventListener('click', () => modalSystem.open('loginModal'));
-        utils.$('#navSignupBtn')?.addEventListener('click', () => modalSystem.open('signupModal'));
-      }
-    }
-  };
-
-  // ==========================================
-  // CHAPTER SYSTEM
-  // ==========================================
-  const chapterSystem = {
-    render() {
-      const container = utils.$('#chaptersGrid');
-      if (!container) return;
-
-      container.innerHTML = appState.chapters.map(chapter => `
-        <div class="chapter-card ${chapter.status}" data-chapter-id="${chapter.id}">
-          <div class="chapter-header">
-            <div class="chapter-number">CH ${chapter.number}</div>
-            <div class="chapter-status ${chapter.status}">
-              ${chapter.status === 'completed' ? 'Completed' : chapter.status === 'locked' ? 'Locked' : 'Available'}
-            </div>
-            <div class="chapter-icon">${chapter.icon}</div>
-          </div>
-          
-          <div class="chapter-body">
-            <h3 class="chapter-title">${chapter.title}</h3>
-            <p class="chapter-description">${chapter.description}</p>
             
-            <div class="chapter-meta">
-              <div class="chapter-meta-item">
-                <div class="chapter-meta-label">Difficulty</div>
-                <div class="chapter-meta-value">
-                  <div class="difficulty">
-                    ${[1,2,3].map(i => `<div class="difficulty-dot ${i <= chapter.difficulty ? 'active' : ''}"></div>`).join('')}
+            <div class="chapter-body">
+              <h3 class="chapter-title">${chapter.title}</h3>
+              <p class="chapter-description">${chapter.description}</p>
+              
+              <div class="chapter-meta">
+                <div class="chapter-meta-item">
+                  <div class="chapter-meta-label">Difficulty</div>
+                  <div class="chapter-meta-value">
+                    <div class="difficulty">
+                      ${[1,2,3].map(i => `<div class="difficulty-dot ${i <= chapter.difficulty ? 'active' : ''}"></div>`).join('')}
+                    </div>
+                  </div>
+                </div>
+                <div class="chapter-meta-item">
+                  <div class="chapter-meta-label">Duration</div>
+                  <div class="chapter-meta-value">
+                    <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2">
+                      <circle cx="7" cy="7" r="6"/>
+                      <polyline points="7 3 7 7 10 10"/>
+                    </svg>
+                    ${chapter.duration}
                   </div>
                 </div>
               </div>
-              <div class="chapter-meta-item">
-                <div class="chapter-meta-label">Duration</div>
-                <div class="chapter-meta-value">
-                  <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2">
-                    <circle cx="7" cy="7" r="6"/>
-                    <polyline points="7 3 7 7 10 10"/>
-                  </svg>
-                  ${chapter.duration}
-                </div>
+              
+              <div class="chapter-footer">
+                ${chapter.status === 'locked' 
+                  ? '<button class="btn btn-secondary" disabled>🔒 Locked</button>'
+                  : chapter.status === 'completed'
+                    ? `<button class="btn btn-outline" onclick="chapterSystem.play('${chapter.id}')">Replay</button>
+                      <button class="btn btn-primary" onclick="chapterSystem.play('${chapter.id}')">Continue</button>`
+                    : `<button class="btn btn-primary w-full" onclick="chapterSystem.play('${chapter.id}')">
+                        ${chapter.id === appState.userProgress.current ? 'Continue' : 'Start Chapter'}
+                      </button>`
+                }
               </div>
             </div>
-            
-            <div class="chapter-footer">
-              ${chapter.status === 'locked' 
-                ? '<button class="btn btn-secondary" disabled>🔒 Locked</button>'
-                : chapter.status === 'completed'
-                  ? `<button class="btn btn-outline" onclick="chapterSystem.play('${chapter.id}')">Replay</button>
-                     <button class="btn btn-primary" onclick="chapterSystem.play('${chapter.id}')">Continue</button>`
-                  : `<button class="btn btn-primary w-full" onclick="chapterSystem.play('${chapter.id}')">
-                      ${chapter.id === appState.userProgress.current ? 'Continue' : 'Start Chapter'}
-                    </button>`
-              }
-            </div>
           </div>
-        </div>
-      `).join('');
-    },
+        `).join('');
+      },
 
-    play(chapterId) {
-      if (!appState.currentUser) {
-        utils.showToast('Please sign in to play chapters', 'warning');
-        modalSystem.open('loginModal');
-        return;
-      }
+      play(chapterId) {
+        if (!appState.currentUser) {
+          utils.showToast('Please sign in to play chapters', 'warning');
+          modalSystem.open('loginModal');
+          return;
+        }
 
-      const chapter = appState.chapters.find(ch => ch.id === chapterId);
-      if (!chapter || chapter.status === 'locked') {
-        utils.showToast('This chapter is locked. Complete previous chapters first!', 'warning');
-        return;
-      }
+        const chapter = appState.chapters.find(ch => ch.id === chapterId);
+        if (!chapter || chapter.status === 'locked') {
+          utils.showToast('This chapter is locked. Complete previous chapters first!', 'warning');
+          return;
+        }
 
-      utils.showToast(`Starting ${chapter.title}...`, 'info');
-      
-      // Simulate chapter completion after 2 seconds (for demo)
-      setTimeout(() => {
-        this.completeChapter(chapterId);
-      }, 2000);
-    },
-
-    async completeChapter(chapterId) {
-      if (!appState.currentUser || !db) return;
-
-      try {
-        const userRef = db.collection('users').doc(appState.currentUser.uid);
+        utils.showToast(`Starting ${chapter.title}...`, 'info');
         
-        await userRef.update({
-          'progress.completed': firebase.firestore.FieldValue.arrayUnion(chapterId),
-          'stats.chaptersCompleted': firebase.firestore.FieldValue.increment(1)
+        // Simulate chapter completion
+        setTimeout(() => {
+          this.completeChapter(chapterId);
+        }, 2000);
+      },
+
+      async completeChapter(chapterId) {
+        if (!appState.currentUser) return;
+
+        try {
+          // Use centralized service to save progress
+          await userService.completeChapter(appState.currentUser.uid, chapterId);
+
+          utils.showToast('Chapter completed! 🎉', 'success');
+          
+          // Reload progress from centralized service
+          await authSystem.loadUserProgress(appState.currentUser.uid);
+        } catch (error) {
+          console.error('Error completing chapter:', error);
+          utils.showToast('Error saving progress', 'error');
+        }
+      },
+
+      init() {
+        this.render();
+
+        // Filter buttons
+        utils.$$('.filter-btn').forEach(btn => {
+          btn.addEventListener('click', () => {
+            utils.$$('.filter-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            
+            const filter = btn.dataset.filter;
+            utils.$$('.chapter-card').forEach(card => {
+              if (filter === 'all') {
+                card.style.display = '';
+              } else {
+                const status = card.classList.contains(filter) ? '' : 'none';
+                card.style.display = status;
+              }
+            });
+          });
+        });
+      }
+    };
+
+    // ==========================================
+    // FORM HANDLERS
+    // ==========================================
+    const formHandlers = {
+      init() {
+        // Login form
+        utils.$('#loginForm')?.addEventListener('submit', async (e) => {
+          e.preventDefault();
+          const email = utils.$('#loginEmail').value;
+          const password = utils.$('#loginPassword').value;
+          
+          if (!utils.isValidEmail(email)) {
+            utils.showToast('Please enter a valid email', 'error');
+            return;
+          }
+          
+          await authSystem.signInWithEmail(email, password);
         });
 
-        utils.showToast('Chapter completed! 🎉', 'success');
-        
-        // Reload progress
-        await authSystem.loadUserProgress(appState.currentUser.uid);
-      } catch (error) {
-        console.error('Error completing chapter:', error);
-        utils.showToast('Error saving progress', 'error');
-      }
-    },
-
-    init() {
-      this.render();
-
-      // Filter buttons
-      utils.$$('.filter-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-          utils.$$('.filter-btn').forEach(b => b.classList.remove('active'));
-          btn.classList.add('active');
+        // Signup form
+        utils.$('#signupForm')?.addEventListener('submit', async (e) => {
+          e.preventDefault();
+          const name = utils.$('#signupName').value.trim();
+          const email = utils.$('#signupEmail').value.trim();
+          const password = utils.$('#signupPassword').value;
+          const agreeTerms = utils.$('#agreeTerms').checked;
           
-          const filter = btn.dataset.filter;
-          utils.$$('.chapter-card').forEach(card => {
-            if (filter === 'all') {
-              card.style.display = '';
-            } else {
-              const status = card.classList.contains(filter) ? '' : 'none';
-              card.style.display = status;
+          if (!name) {
+            utils.showToast('Please enter your name', 'error');
+            return;
+          }
+          
+          if (!utils.isValidEmail(email)) {
+            utils.showToast('Please enter a valid email', 'error');
+            return;
+          }
+          
+          if (password.length < 6) {
+            utils.showToast('Password must be at least 6 characters', 'error');
+            return;
+          }
+          
+          if (!agreeTerms) {
+            utils.showToast('Please agree to the terms of service', 'error');
+            return;
+          }
+          
+          await authSystem.signUpWithEmail(name, email, password);
+        });
+
+        // Reset password form
+        utils.$('#resetPasswordForm')?.addEventListener('submit', async (e) => {
+          e.preventDefault();
+          const email = utils.$('#resetEmail').value.trim();
+          
+          if (!utils.isValidEmail(email)) {
+            utils.showToast('Please enter a valid email', 'error');
+            return;
+          }
+          
+          await authSystem.resetPassword(email);
+        });
+
+        // Password strength indicator
+        utils.$('#signupPassword')?.addEventListener('input', (e) => {
+          const password = e.target.value;
+          const strengthContainer = utils.$('#passwordStrength');
+          const strengthFill = utils.$('#passwordStrengthFill');
+          const strengthLabel = utils.$('#passwordStrengthLabel');
+          
+          if (password.length === 0) {
+            strengthContainer.style.display = 'none';
+            return;
+          }
+          
+          strengthContainer.style.display = 'block';
+          const { level, label } = utils.getPasswordStrength(password);
+          
+          strengthFill.className = `password-strength-fill ${level}`;
+          strengthLabel.className = `password-strength-label ${level}`;
+          strengthLabel.textContent = label;
+        });
+
+        // Toggle password visibility
+        utils.$('#toggleLoginPassword')?.addEventListener('click', () => {
+          const input = utils.$('#loginPassword');
+          input.type = input.type === 'password' ? 'text' : 'password';
+        });
+
+        // Google sign-in buttons
+        utils.$('#loginGoogleBtn')?.addEventListener('click', () => authSystem.signInWithGoogle());
+        utils.$('#signupGoogleBtn')?.addEventListener('click', () => authSystem.signInWithGoogle());
+      }
+    };
+
+    // ==========================================
+    // NAVIGATION HANDLERS
+    // ==========================================
+    const navigationHandlers = {
+      init() {
+        // Smooth scroll for anchor links
+        utils.$$('a[href^="#"]').forEach(anchor => {
+          anchor.addEventListener('click', function(e) {
+            const href = this.getAttribute('href');
+            if (href === '#') return;
+            
+            e.preventDefault();
+            const target = utils.$(href);
+            if (target) {
+              target.scrollIntoView({ behavior: 'smooth', block: 'start' });
             }
           });
         });
-      });
-    }
-  };
 
-  // ==========================================
-  // FORM HANDLERS
-  // ==========================================
-  const formHandlers = {
-    init() {
-      // Login form
-      utils.$('#loginForm')?.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        const email = utils.$('#loginEmail').value;
-        const password = utils.$('#loginPassword').value;
-        
-        if (!utils.isValidEmail(email)) {
-          utils.showToast('Please enter a valid email', 'error');
-          return;
-        }
-        
-        await authSystem.signInWithEmail(email, password);
-      });
-
-      // Signup form
-      utils.$('#signupForm')?.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        const name = utils.$('#signupName').value.trim();
-        const email = utils.$('#signupEmail').value.trim();
-        const password = utils.$('#signupPassword').value;
-        const agreeTerms = utils.$('#agreeTerms').checked;
-        
-        if (!name) {
-          utils.showToast('Please enter your name', 'error');
-          return;
-        }
-        
-        if (!utils.isValidEmail(email)) {
-          utils.showToast('Please enter a valid email', 'error');
-          return;
-        }
-        
-        if (password.length < 6) {
-          utils.showToast('Password must be at least 6 characters', 'error');
-          return;
-        }
-        
-        if (!agreeTerms) {
-          utils.showToast('Please agree to the terms of service', 'error');
-          return;
-        }
-        
-        await authSystem.signUpWithEmail(name, email, password);
-      });
-
-      // Reset password form
-      utils.$('#resetPasswordForm')?.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        const email = utils.$('#resetEmail').value.trim();
-        
-        if (!utils.isValidEmail(email)) {
-          utils.showToast('Please enter a valid email', 'error');
-          return;
-        }
-        
-        await authSystem.resetPassword(email);
-      });
-
-      // Password strength indicator
-      utils.$('#signupPassword')?.addEventListener('input', (e) => {
-        const password = e.target.value;
-        const strengthContainer = utils.$('#passwordStrength');
-        const strengthFill = utils.$('#passwordStrengthFill');
-        const strengthLabel = utils.$('#passwordStrengthLabel');
-        
-        if (password.length === 0) {
-          strengthContainer.style.display = 'none';
-          return;
-        }
-        
-        strengthContainer.style.display = 'block';
-        const { level, label } = utils.getPasswordStrength(password);
-        
-        strengthFill.className = `password-strength-fill ${level}`;
-        strengthLabel.className = `password-strength-label ${level}`;
-        strengthLabel.textContent = label;
-      });
-
-      // Toggle password visibility
-      utils.$('#toggleLoginPassword')?.addEventListener('click', () => {
-        const input = utils.$('#loginPassword');
-        input.type = input.type === 'password' ? 'text' : 'password';
-      });
-
-      // Google sign-in buttons
-      utils.$('#loginGoogleBtn')?.addEventListener('click', () => authSystem.signInWithGoogle());
-      utils.$('#signupGoogleBtn')?.addEventListener('click', () => authSystem.signInWithGoogle());
-    }
-  };
-
-  // ==========================================
-  // NAVIGATION HANDLERS
-  // ==========================================
-  const navigationHandlers = {
-    init() {
-      // Smooth scroll for anchor links
-      utils.$$('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function(e) {
-          const href = this.getAttribute('href');
-          if (href === '#') return;
+        // Navbar scroll effect
+        let lastScroll = 0;
+        window.addEventListener('scroll', () => {
+          const navbar = utils.$('#navbar');
+          const currentScroll = window.pageYOffset;
           
-          e.preventDefault();
-          const target = utils.$(href);
-          if (target) {
-            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          if (currentScroll > 100) {
+            navbar?.classList.add('scrolled');
+          } else {
+            navbar?.classList.remove('scrolled');
           }
+          
+          lastScroll = currentScroll;
         });
-      });
 
-      // Navbar scroll effect
-      let lastScroll = 0;
-      window.addEventListener('scroll', () => {
-        const navbar = utils.$('#navbar');
-        const currentScroll = window.pageYOffset;
-        
-        if (currentScroll > 100) {
-          navbar?.classList.add('scrolled');
-        } else {
-          navbar?.classList.remove('scrolled');
+        // Modal switching
+        utils.$('#switchToSignup')?.addEventListener('click', (e) => {
+          e.preventDefault();
+          modalSystem.close('loginModal');
+          modalSystem.open('signupModal');
+        });
+
+        utils.$('#switchToLogin')?.addEventListener('click', (e) => {
+          e.preventDefault();
+          modalSystem.close('signupModal');
+          modalSystem.open('loginModal');
+        });
+
+        utils.$('#forgotPasswordLink')?.addEventListener('click', (e) => {
+          e.preventDefault();
+          modalSystem.close('loginModal');
+          modalSystem.open('resetPasswordModal');
+        });
+
+        utils.$('#backToLogin')?.addEventListener('click', (e) => {
+          e.preventDefault();
+          modalSystem.close('resetPasswordModal');
+          modalSystem.open('loginModal');
+        });
+
+        // CTA buttons
+        utils.$('#heroStartBtn')?.addEventListener('click', () => modalSystem.open('signupModal'));
+        utils.$('#ctaSignupBtn')?.addEventListener('click', () => modalSystem.open('signupModal'));
+        utils.$('#ctaLoginBtn')?.addEventListener('click', () => modalSystem.open('loginModal'));
+        utils.$('#navLoginBtn')?.addEventListener('click', () => modalSystem.open('loginModal'));
+        utils.$('#navSignupBtn')?.addEventListener('click', () => modalSystem.open('signupModal'));
+      }
+    };
+
+    // ==========================================
+    // ANIMATIONS & EFFECTS
+    // ==========================================
+    const animations = {
+      init() {
+        // Animate stats on scroll
+        const statsSection = utils.$('.stats-section');
+        if (statsSection) {
+          const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+              if (entry.isIntersecting) {
+                utils.$$('.stat-value').forEach(stat => {
+                  const target = parseInt(stat.dataset.count);
+                  if (target) {
+                    utils.animateCounter(stat, target);
+                  }
+                });
+                observer.unobserve(entry.target);
+              }
+            });
+          });
+          
+          observer.observe(statsSection);
         }
-        
-        lastScroll = currentScroll;
-      });
 
-      // Modal switching
-      utils.$('#switchToSignup')?.addEventListener('click', (e) => {
-        e.preventDefault();
-        modalSystem.close('loginModal');
-        modalSystem.open('signupModal');
-      });
+        // Intersection observer for fade-in animations
+        const observerOptions = {
+          threshold: 0.1,
+          rootMargin: '0px 0px -50px 0px'
+        };
 
-      utils.$('#switchToLogin')?.addEventListener('click', (e) => {
-        e.preventDefault();
-        modalSystem.close('signupModal');
-        modalSystem.open('loginModal');
-      });
-
-      utils.$('#forgotPasswordLink')?.addEventListener('click', (e) => {
-        e.preventDefault();
-        modalSystem.close('loginModal');
-        modalSystem.open('resetPasswordModal');
-      });
-
-      utils.$('#backToLogin')?.addEventListener('click', (e) => {
-        e.preventDefault();
-        modalSystem.close('resetPasswordModal');
-        modalSystem.open('loginModal');
-      });
-
-      // CTA buttons
-      utils.$('#heroStartBtn')?.addEventListener('click', () => modalSystem.open('signupModal'));
-      utils.$('#ctaSignupBtn')?.addEventListener('click', () => modalSystem.open('signupModal'));
-      utils.$('#ctaLoginBtn')?.addEventListener('click', () => modalSystem.open('loginModal'));
-      utils.$('#navLoginBtn')?.addEventListener('click', () => modalSystem.open('loginModal'));
-      utils.$('#navSignupBtn')?.addEventListener('click', () => modalSystem.open('signupModal'));
-    }
-  };
-
-  // ==========================================
-  // ANIMATIONS & EFFECTS
-  // ==========================================
-  const animations = {
-    init() {
-      // Animate stats on scroll
-      const statsSection = utils.$('.stats-section');
-      if (statsSection) {
         const observer = new IntersectionObserver((entries) => {
           entries.forEach(entry => {
             if (entry.isIntersecting) {
-              utils.$$('.stat-value').forEach(stat => {
-                const target = parseInt(stat.dataset.count);
-                if (target) {
-                  utils.animateCounter(stat, target);
-                }
-              });
-              observer.unobserve(entry.target);
+              entry.target.style.opacity = '1';
+              entry.target.style.transform = 'translateY(0)';
             }
           });
+        }, observerOptions);
+
+        utils.$$('.feature-card, .chapter-card, .testimonial-card').forEach(el => {
+          el.style.opacity = '0';
+          el.style.transform = 'translateY(20px)';
+          el.style.transition = 'all 0.6s ease';
+          observer.observe(el);
         });
-        
-        observer.observe(statsSection);
       }
+    };
 
-      // Intersection observer for fade-in animations
-      const observerOptions = {
-        threshold: 0.1,
-        rootMargin: '0px 0px -50px 0px'
-      };
+    // ==========================================
+    // INITIALIZATION
+    // ==========================================
+    document.addEventListener('DOMContentLoaded', () => {
+      console.log('🎮 Miscellaneous Adventure - Initializing...');
+      
+      modalSystem.init();
+      authSystem.init();
+      chapterSystem.init();
+      formHandlers.init();
+      navigationHandlers.init();
+      animations.init();
+      
+      console.log('✅ Application ready!');
+    });
 
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.style.opacity = '1';
-            entry.target.style.transform = 'translateY(0)';
-          }
-        });
-      }, observerOptions);
+    // ==========================================
+    // GLOBAL ERROR HANDLER
+    // ==========================================
+    window.addEventListener('error', (e) => {
+      console.error('Global error:', e.error);
+      utils.showToast('An unexpected error occurred', 'error');
+    });
 
-      utils.$$('.feature-card, .chapter-card, .testimonial-card').forEach(el => {
-        el.style.opacity = '0';
-        el.style.transform = 'translateY(20px)';
-        el.style.transition = 'all 0.6s ease';
-        observer.observe(el);
-      });
-    }
-  };
-
-  // ==========================================
-  // INITIALIZATION
-  // ==========================================
-  document.addEventListener('DOMContentLoaded', () => {
-    console.log('🎮 Miscellaneous Adventure - Initializing...');
-    
-    modalSystem.init();
-    authSystem.init();
-    chapterSystem.init();
-    formHandlers.init();
-    navigationHandlers.init();
-    animations.init();
-    
-    console.log('✅ Application ready!');
-  });
-
-  // ==========================================
-  // GLOBAL ERROR HANDLER
-  // ==========================================
-  window.addEventListener('error', (e) => {
-    console.error('Global error:', e.error);
-    utils.showToast('An unexpected error occurred', 'error');
-  });
-
-  window.addEventListener('unhandledrejection', (e) => {
-    console.error('Unhandled promise rejection:', e.reason);
-  });
-
-  </script>
+    window.addEventListener('unhandledrejection', (e) => {
+      console.error('Unhandled promise rejection:', e.reason);
+    });
+</script>
 </body>
 </html>

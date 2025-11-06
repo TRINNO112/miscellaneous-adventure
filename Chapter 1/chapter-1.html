@@ -104,100 +104,83 @@
     </div>
     
     <!-- Navigation Bar -->
-    <nav class="navigation-bar" id="navigationBar">
+    <nav id="mainNav">
         <div class="nav-container">
-            <div class="nav-left">
-                <button class="nav-menu-toggle" id="navMenuToggle" aria-label="Toggle Menu">
-                    <span class="menu-line"></span>
-                    <span class="menu-line"></span>
-                    <span class="menu-line"></span>
-                </button>
-                
-                <a href="../../index.html" class="nav-back-button" aria-label="Back to Main">
-                    <i class="fas fa-arrow-left"></i>
-                    <span>Main Menu</span>
-                </a>
-            </div>
+            <!-- Logo -->
+            <a href="../index.html" class="logo">
+                <i class="fas fa-book-open"></i>
+                Miscellaneous Adventure
+            </a>
             
-            <div class="nav-center">
-                <h2 class="nav-title">Part 1: Office Chaos</h2>
-            </div>
+            <!-- Desktop Navigation Links -->
+            <ul class="nav-links">
+                <li><a href="../index.html" class="nav-link">
+                    <i class="fas fa-home"></i>
+                    Main Menu
+                </a></li>
+                <li><a href="part2/index.html" class="nav-link">
+                    <i class="fas fa-forward"></i>
+                    Part 2
+                </a></li>
+                <li><a href="part3/index.html" class="nav-link">
+                    <i class="fas fa-forward"></i>
+                    Part 3
+                </a></li>
+            </ul>
             
-            <div class="nav-right">
-                <button class="nav-user-menu" id="navUserMenu" aria-label="User Menu">
-                    <i class="fas fa-user-circle"></i>
-                    <span class="user-name" id="userName">Guest</span>
-                </button>
-                
-                <div class="user-dropdown" id="userDropdown">
-                    <div class="dropdown-header">
-                        <div class="user-avatar">
+            <!-- User Actions -->
+            <div class="nav-actions">
+                <!-- User Menu Dropdown -->
+                <div class="nav-user-menu" id="navUserMenu">
+                    <button class="user-menu-trigger">
+                        <img src="../assets/default-avatar.png" alt="User" class="user-avatar" id="userAvatar">
+                        <span class="user-name" id="userName">Loading...</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    
+                    <!-- Dropdown Menu -->
+                    <div class="user-dropdown" id="userDropdown">
+                        <div class="dropdown-header">
+                            <img src="../assets/default-avatar.png" alt="User" class="dropdown-avatar" id="dropdownAvatar">
+                            <div class="dropdown-user-info">
+                                <div class="dropdown-name" id="userDisplayName">Player</div>
+                                <div class="dropdown-email" id="userEmail">guest@example.com</div>
+                            </div>
+                        </div>
+                        
+                        <div class="dropdown-divider"></div>
+                        
+                        <a href="../profile.html" class="dropdown-item">
                             <i class="fas fa-user"></i>
-                        </div>
-                        <div class="user-info">
-                            <span class="user-display-name" id="userDisplayName">Guest Player</span>
-                            <span class="user-email" id="userEmail">Not logged in</span>
-                        </div>
+                            <span>Profile</span>
+                        </a>
+                        
+                        <a href="../progress.html" class="dropdown-item">
+                            <i class="fas fa-chart-line"></i>
+                            <span>Progress</span>
+                        </a>
+                        
+                        <a href="../settings.html" class="dropdown-item">
+                            <i class="fas fa-cog"></i>
+                            <span>Settings</span>
+                        </a>
+                        
+                        <div class="dropdown-divider"></div>
+                        
+                        <a href="#" class="dropdown-item danger" id="signOutLink">
+                            <i class="fas fa-sign-out-alt"></i>
+                            <span>Sign Out</span>
+                        </a>
                     </div>
-                    <div class="dropdown-divider"></div>
-                    <a href="#" class="dropdown-item" id="profileLink">
-                        <i class="fas fa-user-edit"></i>
-                        <span>Profile Settings</span>
-                    </a>
-                    <a href="#" class="dropdown-item" id="progressLink">
-                        <i class="fas fa-chart-line"></i>
-                        <span>View Progress</span>
-                    </a>
-                    <a href="#" class="dropdown-item" id="achievementsLink">
-                        <i class="fas fa-trophy"></i>
-                        <span>Achievements</span>
-                    </a>
-                    <div class="dropdown-divider"></div>
-                    <a href="#" class="dropdown-item" id="signOutLink">
-                        <i class="fas fa-sign-out-alt"></i>
-                        <span>Sign Out</span>
-                    </a>
                 </div>
+                
+                <!-- Mobile Menu Toggle -->
+                <button class="menu-toggle" id="menuToggle">
+                    <i class="fas fa-bars"></i>
+                </button>
             </div>
         </div>
     </nav>
-    
-    <!-- Mobile Navigation Menu -->
-    <div class="mobile-menu" id="mobileMenu">
-        <div class="mobile-menu-header">
-            <h3>Navigation</h3>
-            <button class="mobile-menu-close" id="mobileMenuClose">
-                <i class="fas fa-times"></i>
-            </button>
-        </div>
-        <div class="mobile-menu-content">
-            <a href="../index.html" class="mobile-menu-item">
-                <i class="fas fa-home"></i>
-                <span>Main Menu</span>
-            </a>
-            <a href="../part2/index.html" class="mobile-menu-item">
-                <i class="fas fa-forward"></i>
-                <span>Part 2</span>
-            </a>
-            <a href="../part3/index.html" class="mobile-menu-item">
-                <i class="fas fa-forward"></i>
-                <span>Part 3</span>
-            </a>
-            <div class="mobile-menu-divider"></div>
-            <a href="#" class="mobile-menu-item" id="mobileProfileLink">
-                <i class="fas fa-user"></i>
-                <span>Profile</span>
-            </a>
-            <a href="#" class="mobile-menu-item" id="mobileProgressLink">
-                <i class="fas fa-chart-line"></i>
-                <span>Progress</span>
-            </a>
-            <a href="#" class="mobile-menu-item" id="mobileSignOutLink">
-                <i class="fas fa-sign-out-alt"></i>
-                <span>Sign Out</span>
-            </a>
-        </div>
-    </div>
     
     <!-- Main Container -->
     <div class="main-container" id="mainContainer">
@@ -291,7 +274,7 @@
             </div>
         </section>
 
-                <!-- Scenes Grid Section -->
+        <!-- Scenes Grid Section -->
         <section class="scenes-section">
             <div class="scenes-container">
                 <h2 class="section-title">

@@ -30,12 +30,20 @@ class AuthService {
   async signUpWithEmail(name, email, password) {
     try {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-      await updateProfile(userCredential.user, { displayName: name });
+      
+      // Generate default avatar URL
+      const defaultPhotoURL = `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=8b5cf6&color=fff&size=200`;
+      
+      await updateProfile(userCredential.user, { 
+        displayName: name,
+        photoURL: defaultPhotoURL  // ✅ ADD THIS
+      });
       
       // Create user document in Firestore
       await setDoc(doc(db, 'users', userCredential.user.uid), {
         displayName: name,
         email: email,
+        photoURL: defaultPhotoURL,  // ✅ ADD THIS
         createdAt: serverTimestamp(),
         progress: {
           completed: [],

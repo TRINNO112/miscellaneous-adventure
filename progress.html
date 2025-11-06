@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Progress - Miscellaneous Adventure</title>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Progress Page Styles -->
+    <link rel="stylesheet" href="./css/progress.css">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav id="mainNav">
+        <div class="nav-container">
+            <!-- Logo -->
+            <a href="./index.html" class="logo">
+                <i class="fas fa-book-open"></i>
+                Miscellaneous Adventure
+            </a>
+            
+            <!-- Desktop Navigation Links -->
+            <ul class="nav-links">
+                <li><a href="./index.html" class="nav-link">
+                    <i class="fas fa-home"></i>
+                    Main Menu
+                </a></li>
+                <li><a href="./progress.html" class="nav-link active">
+                    <i class="fas fa-chart-line"></i>
+                    Progress
+                </a></li>
+            </ul>
+            
+            <!-- User Actions -->
+            <div class="nav-actions">
+                <div class="nav-user-menu" id="navUserMenu">
+                    <button class="user-menu-trigger">
+                        <img src="https://ui-avatars.com/api/?name=Player&background=8b5cf6&color=fff&size=128" 
+                             alt="User" 
+                             class="user-avatar" 
+                             id="userAvatar">
+                        <span class="user-name" id="userName">Loading...</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    
+                    <div class="user-dropdown" id="userDropdown">
+                        <div class="dropdown-header">
+                            <img src="https://ui-avatars.com/api/?name=Player&background=8b5cf6&color=fff&size=128" 
+                                 alt="User" 
+                                 class="dropdown-avatar" 
+                                 id="dropdownAvatar">
+                            <div class="dropdown-user-info">
+                                <div class="dropdown-name" id="userDisplayName">Player</div>
+                                <div class="dropdown-email" id="userEmail">guest@example.com</div>
+                            </div>
+                        </div>
+                        
+                        <div class="dropdown-divider"></div>
+                        
+                        <a href="#" class="dropdown-item danger" id="signOutLink">
+                            <i class="fas fa-sign-out-alt"></i>
+                            <span>Sign Out</span>
+                        </a>
+                    </div>
+                </div>
+                
+                <button class="menu-toggle" id="menuToggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Container -->
+    <div class="main-container">
+        <!-- Background Effects -->
+        <div class="background-effects">
+            <div class="bg-gradient-orb bg-orb-1"></div>
+            <div class="bg-gradient-orb bg-orb-2"></div>
+            <div class="bg-gradient-orb bg-orb-3"></div>
+        </div>
+
+        <!-- Page Header -->
+        <header class="page-header">
+            <div class="header-content">
+                <h1 class="page-title">
+                    <i class="fas fa-chart-line"></i>
+                    Your Progress
+                </h1>
+                <p class="page-subtitle">Track your journey through Miscellaneous Adventure</p>
+            </div>
+        </header>
+
+        <!-- Progress Content -->
+        <div class="progress-content">
+            
+            <!-- Overall Stats Card -->
+            <div class="stats-overview">
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="stat-info">
+                        <div class="stat-label">Total Play Time</div>
+                        <div class="stat-value" id="totalPlayTime">0m</div>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-book"></i>
+                    </div>
+                    <div class="stat-info">
+                        <div class="stat-label">Chapters Completed</div>
+                        <div class="stat-value" id="chaptersCompleted">0 / 3</div>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-code-branch"></i>
+                    </div>
+                    <div class="stat-info">
+                        <div class="stat-label">Choices Made</div>
+                        <div class="stat-value" id="totalChoicesMade">0</div>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-trophy"></i>
+                    </div>
+                    <div class="stat-info">
+                        <div class="stat-label">Achievements</div>
+                        <div class="stat-value" id="achievementsCount">0</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Character Stats Section -->
+            <section class="section-card">
+                <div class="section-header">
+                    <h2 class="section-title">
+                        <i class="fas fa-user-circle"></i>
+                        Character Stats
+                    </h2>
+                </div>
+                <div class="character-stats">
+                    <!-- Integrity -->
+                    <div class="stat-bar-container">
+                        <div class="stat-bar-header">
+                            <span class="stat-name">
+                                <i class="fas fa-shield-alt"></i>
+                                Integrity
+                            </span>
+                            <span class="stat-value" id="integrityValue">100%</span>
+                        </div>
+                        <div class="stat-bar-track">
+                            <div class="stat-bar-fill integrity" id="integrityBar" style="width: 100%"></div>
+                        </div>
+                        <div class="stat-description" id="integrityLabel">Unwavering</div>
+                    </div>
+
+                    <!-- Reputation -->
+                    <div class="stat-bar-container">
+                        <div class="stat-bar-header">
+                            <span class="stat-name">
+                                <i class="fas fa-star"></i>
+                                Reputation
+                            </span>
+                            <span class="stat-value" id="reputationValue">50%</span>
+                        </div>
+                        <div class="stat-bar-track">
+                            <div class="stat-bar-fill reputation" id="reputationBar" style="width: 50%"></div>
+                        </div>
+                        <div class="stat-description" id="reputationLabel">Neutral</div>
+                    </div>
+
+                    <!-- Moral Path -->
+                    <div class="stat-bar-container">
+                        <div class="stat-bar-header">
+                            <span class="stat-name">
+                                <i class="fas fa-balance-scale"></i>
+                                Moral Path
+                            </span>
+                            <span class="stat-value" id="moralPathValue">50%</span>
+                        </div>
+                        <div class="stat-bar-track">
+                            <div class="stat-bar-fill moral" id="moralBar" style="width: 50%"></div>
+                        </div>
+                        <div class="stat-description" id="moralPathLabel">Undecided</div>
+                    </div>
+
+                    <!-- Influence -->
+                    <div class="stat-bar-container">
+                        <div class="stat-bar-header">
+                            <span class="stat-name">
+                                <i class="fas fa-users"></i>
+                                Influence
+                            </span>
+                            <span class="stat-value" id="influenceValue">10%</span>
+                        </div>
+                        <div class="stat-bar-track">
+                            <div class="stat-bar-fill influence" id="influenceBar" style="width: 10%"></div>
+                        </div>
+                        <div class="stat-description" id="influenceLabel">Minimal</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Chapter Progress Section -->
+            <section class="section-card">
+                <div class="section-header">
+                    <h2 class="section-title">
+                        <i class="fas fa-book-open"></i>
+                        Chapter Progress
+                    </h2>
+                </div>
+                <div class="chapters-grid">
+                    
+                    <!-- Chapter 1 -->
+                    <div class="chapter-progress-card" data-chapter="1">
+                        <div class="chapter-icon">
+                            <i class="fas fa-building"></i>
+                        </div>
+                        <div class="chapter-info">
+                            <h3 class="chapter-title">Chapter 1: Office Chaos</h3>
+                            <p class="chapter-description">Bureaucratic awakening</p>
+                        </div>
+                        <div class="chapter-stats">
+                            <div class="chapter-progress-bar">
+                                <div class="chapter-progress-fill" id="chapter1Progress" style="width: 0%"></div>
+                            </div>
+                            <div class="chapter-progress-text">
+                                <span id="chapter1Scenes">0 / 8</span> Scenes
+                            </div>
+                        </div>
+                        <div class="chapter-status" id="chapter1Status">
+                            <i class="fas fa-lock"></i>
+                            <span>Not Started</span>
+                        </div>
+                    </div>
+
+                    <!-- Chapter 2 -->
+                    <div class="chapter-progress-card locked" data-chapter="2">
+                        <div class="chapter-icon">
+                            <i class="fas fa-briefcase"></i>
+                        </div>
+                        <div class="chapter-info">
+                            <h3 class="chapter-title">Chapter 2: Field Operations</h3>
+                            <p class="chapter-description">Into the real world</p>
+                        </div>
+                        <div class="chapter-stats">
+                            <div class="chapter-progress-bar">
+                                <div class="chapter-progress-fill" id="chapter2Progress" style="width: 0%"></div>
+                            </div>
+                            <div class="chapter-progress-text">
+                                <span id="chapter2Scenes">0 / 8</span> Scenes
+                            </div>
+                        </div>
+                        <div class="chapter-status" id="chapter2Status">
+                            <i class="fas fa-lock"></i>
+                            <span>Locked</span>
+                        </div>
+                    </div>
+
+                    <!-- Chapter 3 -->
+                    <div class="chapter-progress-card locked" data-chapter="3">
+                        <div class="chapter-icon">
+                            <i class="fas fa-gavel"></i>
+                        </div>
+                        <div class="chapter-info">
+                            <h3 class="chapter-title">Chapter 3: Final Confrontation</h3>
+                            <p class="chapter-description">The ultimate choice</p>
+                        </div>
+                        <div class="chapter-stats">
+                            <div class="chapter-progress-bar">
+                                <div class="chapter-progress-fill" id="chapter3Progress" style="width: 0%"></div>
+                            </div>
+                            <div class="chapter-progress-text">
+                                <span id="chapter3Scenes">0 / 8</span> Scenes
+                            </div>
+                        </div>
+                        <div class="chapter-status" id="chapter3Status">
+                            <i class="fas fa-lock"></i>
+                            <span>Locked</span>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+
+            <!-- Achievements Section -->
+            <section class="section-card">
+                <div class="section-header">
+                    <h2 class="section-title">
+                        <i class="fas fa-trophy"></i>
+                        Achievements
+                    </h2>
+                </div>
+                <div class="achievements-grid" id="achievementsGrid">
+                    <!-- Will be populated by JavaScript -->
+                    <div class="achievement-placeholder">
+                        <i class="fas fa-lock"></i>
+                        <p>Complete chapters to unlock achievements</p>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+    </div>
+
+    <!-- Toast Container -->
+    <div id="toastContainer" class="toast-container"></div>
+
+    <!-- Scripts -->
+    <script type="module" src="./js/progress.js"></script>
+</body>
+</html>

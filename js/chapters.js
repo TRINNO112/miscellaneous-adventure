@@ -5,6 +5,7 @@
 
 import gameState from './game-state.js';
 import { authService } from './firebase/auth-service.js';
+import { userService } from './Firebase/user-service.js';
 
 class ChapterController {
     constructor() {
@@ -323,22 +324,67 @@ class ChapterController {
         }
     }
     
-    updateUserInfo(user) {
+    async updateUserInfo(user) {
         const userName = document.getElementById('userName');
         const userDisplayName = document.getElementById('userDisplayName');
         const userEmail = document.getElementById('userEmail');
+        const userAvatar = document.getElementById('userAvatar');
+        const dropdownAvatar = document.getElementById('dropdownAvatar');
         
         if (user) {
-            const displayName = user.displayName || 'Player';
-            const email = user.email || 'Anonymous';
-            
-            if (userName) userName.textContent = displayName;
-            if (userDisplayName) userDisplayName.textContent = displayName;
-            if (userEmail) userEmail.textContent = email;
+            try {
+                // Try to get user data from Firestore first
+                const userProfile = await userService.getUserProfile(user.uid);
+                
+                let displayName = user.displayName || 'Player';
+                let email = user.email || 'Anonymous';
+                let photoURL = user.photoURL;
+                
+                // If Firestore has data, use it (more up-to-date)
+                if (userProfile) {
+                    displayName = userProfile.displayName || displayName;
+                    email = userProfile.email || email;
+                    photoURL = userProfile.photoURL || photoURL;
+                }
+                
+                // Fallback to generated avatar if no photo
+                if (!photoURL) {
+                    photoURL = `https://ui-avatars.com/api/?name=${encodeURIComponent(displayName)}&background=8b5cf6&color=fff&size=200`;
+                }
+                
+                // Update all UI elements
+                if (userName) userName.textContent = displayName;
+                if (userDisplayName) userDisplayName.textContent = displayName;
+                if (userEmail) userEmail.textContent = email;
+                if (userAvatar) {
+                    userAvatar.src = photoURL;
+                    userAvatar.onerror = () => {
+                        userAvatar.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(displayName)}&background=8b5cf6&color=fff&size=200`;
+                    };
+                }
+                if (dropdownAvatar) {
+                    dropdownAvatar.src = photoURL;
+                    dropdownAvatar.onerror = () => {
+                        dropdownAvatar.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(displayName)}&background=8b5cf6&color=fff&size=200`;
+                    };
+                }
+                
+            } catch (error) {
+                console.error('Error loading user profile:', error);
+                // Fallback to basic user data
+                if (userName) userName.textContent = user.displayName || 'Player';
+                if (userDisplayName) userDisplayName.textContent = user.displayName || 'Player';
+                if (userEmail) userEmail.textContent = user.email || 'Anonymous';
+            }
         } else {
+            // Guest user
+            const guestAvatar = 'https://ui-avatars.com/api/?name=Guest&background=6b7280&color=fff&size=200';
+            
             if (userName) userName.textContent = 'Guest';
             if (userDisplayName) userDisplayName.textContent = 'Guest Player';
             if (userEmail) userEmail.textContent = 'Not logged in';
+            if (userAvatar) userAvatar.src = guestAvatar;
+            if (dropdownAvatar) dropdownAvatar.src = guestAvatar;
         }
     }
     

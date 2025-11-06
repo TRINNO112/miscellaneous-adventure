@@ -13,6 +13,28 @@ class UserService {
     this.db = db;
   }
 
+  // ✅ NEW - Get Full User Profile
+  async getUserProfile(userId) {
+    try {
+      const userDoc = await getDoc(doc(db, 'users', userId));
+      if (userDoc.exists()) {
+        return userDoc.data();
+      }
+      return null;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  // ✅ NEW - Update User Profile
+  async updateUserProfile(userId, profileData) {
+    try {
+      await updateDoc(doc(db, 'users', userId), profileData);
+    } catch (error) {
+      throw error;
+    }
+  }
+
   // Get User Progress
   async getUserProgress(userId) {
     try {

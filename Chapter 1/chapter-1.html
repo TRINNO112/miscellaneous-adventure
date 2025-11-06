@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="description" content="Part 1 - Office Chaos: Eight scenes of bureaucratic awakening in the Central Tax Department">
+    <meta name="keywords" content="interactive story, office drama, corruption, bureaucracy">
+    <meta name="author" content="Miscellaneous Adventure">
+    
+    <title>Part 1 - Office Chaos | Miscellaneous Adventure</title>
+    
+    <!-- Preconnect to external domains -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://www.gstatic.com">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Poppins:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-auth-compat.js"></script>
+    
+    <!-- External CSS -->
+    <link rel="stylesheet" href="../css/global.css">
+    <link rel="stylesheet" href="../css/chapters.css">
+    
+    <!-- Inline Critical CSS for faster initial paint -->
+    <style>
+        :root {
+            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --secondary-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            --success-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            --danger-gradient: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+            --dark-gradient: linear-gradient(135deg, #30cfd0 0%, #330867 100%);
+            
+            --color-primary: #667eea;
+            --color-primary-dark: #764ba2;
+            --color-secondary: #f093fb;
+            --color-success: #4facfe;
+            --color-danger: #fa709a;
+            --color-warning: #fee140;
+            
+            --color-dark: #1a1a2e;
+            --color-dark-secondary: #16213e;
+            --color-gray: #94a3b8;
+            --color-light: #f8fafc;
+            --color-white: #ffffff;
+            
+            --shadow-small: 0 2px 4px rgba(0,0,0,0.06);
+            --shadow-medium: 0 4px 12px rgba(0,0,0,0.08);
+            --shadow-large: 0 8px 24px rgba(0,0,0,0.12);
+            --shadow-xl: 0 12px 48px rgba(0,0,0,0.16);
+            
+            --transition-fast: 0.15s ease;
+            --transition-base: 0.3s ease;
+            --transition-slow: 0.5s ease;
+            
+            --border-radius-sm: 4px;
+            --border-radius-md: 8px;
+            --border-radius-lg: 12px;
+            --border-radius-xl: 16px;
+            --border-radius-2xl: 24px;
+            --border-radius-full: 9999px;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            line-height: 1.6;
+            color: var(--color-dark);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loading-container">
+            <div class="loading-spinner">
+                <div class="spinner-ring"></div>
+                <div class="spinner-ring"></div>
+                <div class="spinner-ring"></div>
+            </div>
+            <h3 class="loading-text">Loading Office Chaos</h3>
+            <p class="loading-subtext">Preparing your bureaucratic nightmare...</p>
+            <div class="loading-progress">
+                <div class="loading-progress-bar" id="loadingProgressBar"></div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Navigation Bar -->
+    <nav class="navigation-bar" id="navigationBar">
+        <div class="nav-container">
+            <div class="nav-left">
+                <button class="nav-menu-toggle" id="navMenuToggle" aria-label="Toggle Menu">
+                    <span class="menu-line"></span>
+                    <span class="menu-line"></span>
+                    <span class="menu-line"></span>
+                </button>
+                
+                <a href="../../index.html" class="nav-back-button" aria-label="Back to Main">
+                    <i class="fas fa-arrow-left"></i>
+                    <span>Main Menu</span>
+                </a>
+            </div>
+            
+            <div class="nav-center">
+                <h2 class="nav-title">Part 1: Office Chaos</h2>
+            </div>
+            
+            <div class="nav-right">
+                <button class="nav-user-menu" id="navUserMenu" aria-label="User Menu">
+                    <i class="fas fa-user-circle"></i>
+                    <span class="user-name" id="userName">Guest</span>
+                </button>
+                
+                <div class="user-dropdown" id="userDropdown">
+                    <div class="dropdown-header">
+                        <div class="user-avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="user-info">
+                            <span class="user-display-name" id="userDisplayName">Guest Player</span>
+                            <span class="user-email" id="userEmail">Not logged in</span>
+                        </div>
+                    </div>
+                    <div class="dropdown-divider"></div>
+                    <a href="#" class="dropdown-item" id="profileLink">
+                        <i class="fas fa-user-edit"></i>
+                        <span>Profile Settings</span>
+                    </a>
+                    <a href="#" class="dropdown-item" id="progressLink">
+                        <i class="fas fa-chart-line"></i>
+                        <span>View Progress</span>
+                    </a>
+                    <a href="#" class="dropdown-item" id="achievementsLink">
+                        <i class="fas fa-trophy"></i>
+                        <span>Achievements</span>
+                    </a>
+                    <div class="dropdown-divider"></div>
+                    <a href="#" class="dropdown-item" id="signOutLink">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span>Sign Out</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Mobile Navigation Menu -->
+    <div class="mobile-menu" id="mobileMenu">
+        <div class="mobile-menu-header">
+            <h3>Navigation</h3>
+            <button class="mobile-menu-close" id="mobileMenuClose">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="mobile-menu-content">
+            <a href="../index.html" class="mobile-menu-item">
+                <i class="fas fa-home"></i>
+                <span>Main Menu</span>
+            </a>
+            <a href="../part2/index.html" class="mobile-menu-item">
+                <i class="fas fa-forward"></i>
+                <span>Part 2</span>
+            </a>
+            <a href="../part3/index.html" class="mobile-menu-item">
+                <i class="fas fa-forward"></i>
+                <span>Part 3</span>
+            </a>
+            <div class="mobile-menu-divider"></div>
+            <a href="#" class="mobile-menu-item" id="mobileProfileLink">
+                <i class="fas fa-user"></i>
+                <span>Profile</span>
+            </a>
+            <a href="#" class="mobile-menu-item" id="mobileProgressLink">
+                <i class="fas fa-chart-line"></i>
+                <span>Progress</span>
+            </a>
+            <a href="#" class="mobile-menu-item" id="mobileSignOutLink">
+                <i class="fas fa-sign-out-alt"></i>
+                <span>Sign Out</span>
+            </a>
+        </div>
+    </div>
+    
+    <!-- Main Container -->
+    <div class="main-container" id="mainContainer">
+        <!-- Background Effects -->
+        <div class="background-effects">
+            <div class="bg-gradient-orb bg-orb-1"></div>
+            <div class="bg-gradient-orb bg-orb-2"></div>
+            <div class="bg-gradient-orb bg-orb-3"></div>
+            <div class="bg-grid-pattern"></div>
+        </div>
+        
+        <!-- Header Section -->
+        <header class="part-header">
+            <div class="header-content">
+                <div class="header-badge">
+                    <span class="badge-text">Chapter 1</span>
+                </div>
+                <h1 class="header-title">
+                    <span class="title-line-1">Office</span>
+                    <span class="title-line-2">Chaos</span>
+                </h1>
+                <p class="header-subtitle">
+                    Eight scenes of bureaucratic awakening where idealism meets harsh reality
+                </p>
+                <div class="header-stats">
+                    <div class="stat-badge">
+                        <i class="fas fa-clock"></i>
+                        <span>Est. 45 mins</span>
+                    </div>
+                    <div class="stat-badge">
+                        <i class="fas fa-list-check"></i>
+                        <span>8 Scenes</span>
+                    </div>
+                    <div class="stat-badge">
+                        <i class="fas fa-code-branch"></i>
+                        <span>16 Choices</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+        
+        <!-- Progress Section -->
+        <section class="progress-section">
+            <div class="progress-container">
+                <div class="progress-header">
+                    <h3 class="progress-title">
+                        <i class="fas fa-chart-line"></i>
+                        Chapter Progress
+                    </h3>
+                    <div class="progress-percentage" id="progressPercentage">0%</div>
+                </div>
+                <div class="progress-track">
+                    <div class="progress-fill" id="progressFill">
+                        <div class="progress-glow"></div>
+                    </div>
+                </div>
+                <div class="progress-details">
+                    <div class="progress-stat">
+                        <span class="stat-label">Scenes Completed</span>
+                        <span class="stat-value" id="scenesCompleted">0 / 8</span>
+                    </div>
+                    <div class="progress-stat">
+                        <span class="stat-label">Time Played</span>
+                        <span class="stat-value" id="timePlayed">0 mins</span>
+                    </div>
+                    <div class="progress-stat">
+                        <span class="stat-label">Choices Made</span>
+                        <span class="stat-value" id="choicesMade">0</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Mission Path Visualization -->
+        <section class="mission-path-section">
+            <div class="path-container">
+                <svg class="path-svg" viewBox="0 0 1200 200" preserveAspectRatio="xMidYMid meet">
+                    <defs>
+                        <linearGradient id="pathGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                            <stop offset="0%" style="stop-color:#667eea;stop-opacity:1" />
+                            <stop offset="100%" style="stop-color:#764ba2;stop-opacity:1" />
+                        </linearGradient>
+                    </defs>
+                    <path d="M 50 100 Q 200 50 350 100 T 650 100 T 950 100 T 1150 100" 
+                          stroke="url(#pathGradient)" 
+                          stroke-width="4" 
+                          fill="none" 
+                          stroke-linecap="round"
+                          class="mission-path-line"/>
+                </svg>
+            </div>
+        </section>
+
+                <!-- Scenes Grid Section -->
+        <section class="scenes-section">
+            <div class="scenes-container">
+                <h2 class="section-title">
+                    <span class="title-icon"><i class="fas fa-film"></i></span>
+                    <span class="title-text">Chapter Scenes</span>
+                    <span class="title-line"></span>
+                </h2>
+                
+                <div class="scenes-grid" id="scenesGrid">
+                    <!-- Scene 1 Card -->
+                    <div class="scene-card" data-scene="1" data-status="available">
+                        <div class="scene-card-inner">
+                            <div class="scene-number">
+                                <span>01</span>
+                            </div>
+                            <div class="scene-icon-wrapper">
+                                <div class="scene-icon">
+                                    <i class="fas fa-building"></i>
+                                </div>
+                                <div class="scene-icon-bg"></div>
+                            </div>
+                            <div class="scene-content">
+                                <h3 class="scene-title">Welcome to the Office</h3>
+                                <p class="scene-description">
+                                    Arjun's first day at the Central Tax Department. Fresh hopes and dreams collide with reality.
+                                </p>
+                                <div class="scene-meta">
+                                    <div class="meta-item">
+                                        <i class="fas fa-clock"></i>
+                                        <span>5 mins</span>
+                                    </div>
+                                    <div class="meta-item">
+                                        <i class="fas fa-code-branch"></i>
+                                        <span>2 choices</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="scene-status">
+                                <button class="status-button play-button" onclick="navigateToScene(1)">
+                                    <i class="fas fa-play"></i>
+                                    <span>Start Scene</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Scene 2 Card -->
+                    <div class="scene-card locked" data-scene="2" data-status="locked">
+                        <div class="scene-card-inner">
+                            <div class="scene-number">
+                                <span>02</span>
+                            </div>
+                            <div class="scene-icon-wrapper">
+                                <div class="scene-icon">
+                                    <i class="fas fa-door-open"></i>
+                                </div>
+                                <div class="scene-icon-bg"></div>
+                            </div>
+                            <div class="scene-content">
+                                <h3 class="scene-title">The First Door</h3>
+                                <p class="scene-description">
+                                    Face Mohan Sinha's arrogance and make your first crucial decision about integrity.
+                                </p>
+                                <div class="scene-meta">
+                                    <div class="meta-item">
+                                        <i class="fas fa-clock"></i>
+                                        <span>6 mins</span>
+                                    </div>
+                                    <div class="meta-item">
+                                        <i class="fas fa-code-branch"></i>
+                                        <span>2 choices</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="scene-status">
+                                <button class="status-button locked-button" disabled>
+                                    <i class="fas fa-lock"></i>
+                                    <span>Locked</span>
+                                </button>
+                            </div>
+                            <div class="scene-lock-overlay">
+                                <i class="fas fa-lock"></i>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Scene 3 Card -->
+                    <div class="scene-card locked" data-scene="3" data-status="locked">
+                        <div class="scene-card-inner">
+                            <div class="scene-number">
+                                <span>03</span>
+                            </div>
+                            <div class="scene-icon-wrapper">
+                                <div class="scene-icon">
+                                    <i class="fas fa-folder-open"></i>
+                                </div>
+                                <div class="scene-icon-bg"></div>
+                            </div>
+                            <div class="scene-content">
+                                <h3 class="scene-title">Paperwork Purgatory</h3>
+                                <p class="scene-description">
+                                    Missing files and failing systems reveal the depth of corruption in the department.
+                                </p>
+                                <div class="scene-meta">
+                                    <div class="meta-item">
+                                        <i class="fas fa-clock"></i>
+                                        <span>5 mins</span>
+                                    </div>
+                                    <div class="meta-item">
+                                        <i class="fas fa-code-branch"></i>
+                                        <span>2 choices</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="scene-status">
+                                <button class="status-button locked-button" disabled>
+                                    <i class="fas fa-lock"></i>
+                                    <span>Locked</span>
+                                </button>
+                            </div>
+                            <div class="scene-lock-overlay">
+                                <i class="fas fa-lock"></i>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Scene 4 Card -->
+                    <div class="scene-card locked" data-scene="4" data-status="locked">
+                        <div class="scene-card-inner">
+                            <div class="scene-number">
+                                <span>04</span>
+                            </div>
+                            <div class="scene-icon-wrapper">
+                                <div class="scene-icon">
+                                    <i class="fas fa-mug-hot"></i>
+                                </div>
+                                <div class="scene-icon-bg"></div>
+                            </div>
+                            <div class="scene-content">
+                                <h3 class="scene-title">Tea-Time Truths</h3>
+                                <p class="scene-description">
+                                    Office gossip reveals dark secrets. Meet Riya, your potential ally in this chaos.
+                                </p>
+                                <div class="scene-meta">
+                                    <div class="meta-item">
+                                        <i class="fas fa-clock"></i>
+                                        <span>7 mins</span>
+                                    </div>
+                                    <div class="meta-item">
+                                        <i class="fas fa-code-branch"></i>
+                                        <span>2 choices</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="scene-status">
+                                <button class="status-button locked-button" disabled>
+                                    <i class="fas fa-lock"></i>
+                                    <span>Locked</span>
+                                </button>
+                            </div>
+                            <div class="scene-lock-overlay">
+                                <i class="fas fa-lock"></i>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Scene 5 Card -->
+                    <div class="scene-card locked" data-scene="5" data-status="locked">
+                        <div class="scene-card-inner">
+                            <div class="scene-number">
+                                <span>05</span>
+                            </div>
+                            <div class="scene-icon-wrapper">
+                                <div class="scene-icon">
+                                    <i class="fas fa-phone-volume"></i>
+                                </div>
+                                <div class="scene-icon-bg"></div>
+                            </div>
+                            <div class="scene-content">
+                                <h3 class="scene-title">A Call from Above</h3>
+                                <p class="scene-description">
+                                    An anonymous warning arrives. Someone powerful is watching your every move.
+                                </p>
+                                <div class="scene-meta">
+                                    <div class="meta-item">
+                                        <i class="fas fa-clock"></i>
+                                        <span>5 mins</span>
+                                    </div>
+                                    <div class="meta-item">
+                                        <i class="fas fa-code-branch"></i>
+                                        <span>2 choices</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="scene-status">
+                                <button class="status-button locked-button" disabled>
+                                    <i class="fas fa-lock"></i>
+                                    <span>Locked</span>
+                                </button>
+                            </div>
+                            <div class="scene-lock-overlay">
+                                <i class="fas fa-lock"></i>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Scene 6 Card -->
+                    <div class="scene-card locked" data-scene="6" data-status="locked">
+                        <div class="scene-card-inner">
+                            <div class="scene-number">
+                                <span>06</span>
+                            </div>
+                            <div class="scene-icon-wrapper">
+                                <div class="scene-icon">
+                                    <i class="fas fa-cloud-rain"></i>
+                                </div>
+                                <div class="scene-icon-bg"></div>
+                            </div>
+                            <div class="scene-content">
+                                <h3 class="scene-title">The Bribe Chase Prelude</h3>
+                                <p class="scene-description">
+                                    Witness corruption firsthand. Will you pursue justice or gather evidence quietly?
+                                </p>
+                                <div class="scene-meta">
+                                    <div class="meta-item">
+                                        <i class="fas fa-clock"></i>
+                                        <span>6 mins</span>
+                                    </div>
+                                    <div class="meta-item">
+                                        <i class="fas fa-code-branch"></i>
+                                        <span>2 choices</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="scene-status">
+                                <button class="status-button locked-button" disabled>
+                                    <i class="fas fa-lock"></i>
+                                    <span>Locked</span>
+                                </button>
+                            </div>
+                            <div class="scene-lock-overlay">
+                                <i class="fas fa-lock"></i>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Scene 7 Card -->
+                    <div class="scene-card locked" data-scene="7" data-status="locked">
+                        <div class="scene-card-inner">
+                            <div class="scene-number">
+                                <span>07</span>
+                            </div>
+                            <div class="scene-icon-wrapper">
+                                <div class="scene-icon">
+                                    <i class="fas fa-balance-scale"></i>
+                                </div>
+                                <div class="scene-icon-bg"></div>
+                            </div>
+                            <div class="scene-content">
+                                <h3 class="scene-title">Office Showdown</h3>
+                                <p class="scene-description">
+                                    Confront Boss Mehta directly. Your reputation and future hang in the balance.
+                                </p>
+                                <div class="scene-meta">
+                                    <div class="meta-item">
+                                        <i class="fas fa-clock"></i>
+                                        <span>5 mins</span>
+                                    </div>
+                                    <div class="meta-item">
+                                        <i class="fas fa-code-branch"></i>
+                                        <span>2 choices</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="scene-status">
+                                <button class="status-button locked-button" disabled>
+                                    <i class="fas fa-lock"></i>
+                                    <span>Locked</span>
+                                </button>
+                            </div>
+                            <div class="scene-lock-overlay">
+                                <i class="fas fa-lock"></i>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Scene 8 Card - Boss Scene -->
+                    <div class="scene-card locked boss-scene" data-scene="8" data-status="locked">
+                        <div class="scene-card-inner">
+                            <div class="scene-number boss-number">
+                                <span>08</span>
+                                <i class="fas fa-crown"></i>
+                            </div>
+                            <div class="scene-icon-wrapper">
+                                <div class="scene-icon">
+                                    <i class="fas fa-user-tie"></i>
+                                </div>
+                                <div class="scene-icon-bg"></div>
+                            </div>
+                            <div class="scene-content">
+                                <h3 class="scene-title">The Director Arrives</h3>
+                                <p class="scene-description">
+                                    Devendra Rathore makes his entrance. The real game of power and corruption begins.
+                                </p>
+                                <div class="scene-meta">
+                                    <div class="meta-item">
+                                        <i class="fas fa-clock"></i>
+                                        <span>8 mins</span>
+                                    </div>
+                                    <div class="meta-item">
+                                        <i class="fas fa-exclamation-triangle"></i>
+                                        <span>Boss Fight</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="scene-status">
+                                <button class="status-button locked-button boss-button" disabled>
+                                    <i class="fas fa-lock"></i>
+                                    <span>Boss Locked</span>
+                                </button>
+                            </div>
+                            <div class="scene-lock-overlay">
+                                <i class="fas fa-lock"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Character Stats Section -->
+        <section class="stats-section">
+            <div class="stats-container">
+                <h2 class="section-title">
+                    <span class="title-icon"><i class="fas fa-chart-bar"></i></span>
+                    <span class="title-text">Character Statistics</span>
+                    <span class="title-line"></span>
+                </h2>
+                
+                <div class="stats-grid">
+                    <!-- Integrity Stat -->
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h4 class="stat-label">Integrity Level</h4>
+                            <div class="stat-value" id="integrityValue">100%</div>
+                            <div class="stat-bar">
+                                <div class="stat-bar-fill integrity-fill" id="integrityBar" style="width: 100%"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Reputation Stat -->
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h4 class="stat-label">Reputation</h4>
+                            <div class="stat-value" id="reputationValue">Neutral</div>
+                            <div class="stat-bar">
+                                <div class="stat-bar-fill reputation-fill" id="reputationBar" style="width: 50%"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Moral Path Stat -->
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-compass"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h4 class="stat-label">Moral Path</h4>
+                            <div class="stat-value" id="moralPathValue">Undecided</div>
+                            <div class="stat-bar">
+                                <div class="stat-bar-fill moral-fill" id="moralBar" style="width: 50%"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Influence Stat -->
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h4 class="stat-label">Influence</h4>
+                            <div class="stat-value" id="influenceValue">Minimal</div>
+                            <div class="stat-bar">
+                                <div class="stat-bar-fill influence-fill" id="influenceBar" style="width: 10%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Achievements Preview -->
+                <div class="achievements-preview">
+                    <h3 class="achievements-title">
+                        <i class="fas fa-trophy"></i>
+                        Recent Achievements
+                    </h3>
+                    <div class="achievements-list" id="achievementsList">
+                        <div class="achievement-item locked">
+                            <i class="fas fa-lock"></i>
+                            <span>Complete Chapter 1 to unlock</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    
+    <!-- Modal for Scene Information -->
+    <div class="modal" id="sceneModal">
+        <div class="modal-backdrop" onclick="closeModal()"></div>
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal()">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="modal-header">
+                <h3 class="modal-title" id="modalTitle">Scene Information</h3>
+            </div>
+            <div class="modal-body" id="modalBody">
+                <!-- Dynamic content -->
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeModal()">Close</button>
+                <button class="btn btn-primary" id="modalActionButton">Start Scene</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Toast Notifications Container -->
+    <div class="toast-container" id="toastContainer"></div>
+    
+    <!-- External Scripts -->
+    <script type="module" src="../js/firebase/firebase-config.js"></script>
+    <script type="module" src="../js/firebase/auth-service.js"></script>
+    <script type="module" src="../js/firebase/user-service.js"></script>
+    <script type="module" src="../js/game-state.js"></script>
+    <script type="module" src="../js/chapters.js"></script>
+</body>
+</html>

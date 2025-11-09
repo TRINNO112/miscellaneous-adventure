@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scene Test - No Images</title>
+    <link rel="stylesheet" href="../../css/scenes.css">
+</head>
+<body>
+    <div id="scene-background" class="scene-bg"></div>
+
+    <div id="dialogue-card" class="dialogue-card hidden">
+        <div class="character-portrait">
+            <img id="character-image" src="" alt="Character">
+        </div>
+
+        <div class="dialogue-content">
+            <h3 id="speaker-name" class="speaker-name"></h3>
+            <p id="dialogue-text" class="dialogue-text"></p>
+            
+            <button id="next-btn" class="next-btn hidden">→</button>
+        </div>
+    </div>
+
+    <div id="choice-container" class="choice-container hidden"></div>
+
+    <div id="loading" class="loading">Loading story...</div>
+
+    <script type="module" src="../../js/scene.js"></script>
+</body>
+</html>

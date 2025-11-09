@@ -3871,10 +3871,8 @@
   </div>
 
   <script type="module">
-    // Import centralized services
-    import { authService } from './js/Firebase/auth-service.js';
-    import { userService } from './js/Firebase/user-service.js';
-
+    // Import combined Firebase services
+    import { authService, userService } from './js/Firebase/firebase-config.js';
     /* ==========================================
     JAVASCRIPT - Complete Application Logic (Updated for Centralized Services)
     ========================================== */
@@ -4230,14 +4228,14 @@
                 <span>${user.displayName || 'Account'}</span>
               </button>
               <div class="dropdown-menu">
-                <a href="#dashboard" class="dropdown-item">
+                <a href="./progress.html" class="dropdown-item">
                   <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
                     <rect x="3" y="3" width="7" height="7"/>
                     <rect x="14" y="3" width="7" height="7"/>
                     <rect x="14" y="14" width="7" height="7"/>
                     <rect x="3" y="14" width="7" height="7"/>
                   </svg>
-                  Dashboard
+                  Progress
                 </a>
                 <a href="#profile" class="dropdown-item">
                   <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
@@ -4369,10 +4367,14 @@
           return;
         }
         
-        // Construct the chapter URL based on the chapter ID
-        const chapterUrl = `chapter-${chapter.number}.html`;
+        // Construct the correct chapter URL based on the chapter number
+        const folderName = `Chapter ${chapter.number}`; // Capital C + space before the number
+        const fileName = `chapter-${chapter.number}.html`; // Matches file naming pattern
+        const chapterUrl = `${folderName}/${fileName}`; // Combines both
+
         utils.showToast(`Loading ${chapter.title}...`, 'info');
         window.location.href = chapterUrl;
+
       },
 
       async completeChapter(chapterId) {

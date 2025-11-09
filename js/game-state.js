@@ -1,10 +1,9 @@
 // ============================================
-// GAME STATE MANAGER
+// GAME STATE MANAGER (UPDATED FOR SCENE PLAYER)
 // Handles all game progress, stats, and Firebase sync
 // ============================================
 
-import { authService } from './firebase/auth-service.js';
-import { userService } from './firebase/user-service.js';
+import { authService, userService } from './firebase/firebase-config.js';
 
 class GameState {
     constructor() {
@@ -33,7 +32,7 @@ class GameState {
         this.stats = {
             integrity: 100,
             reputation: 50,
-            moralPath: 50, // 0 = corrupt, 100 = righteous
+            moralPath: 50,
             influence: 10,
             totalPlayTime: 0,
             choicesMade: 0
@@ -57,7 +56,23 @@ class GameState {
     
     async loadProgress() {
         try {
-            if (!this.currentUser) return;
+            if (!this.currentUser) {
+                // Load from localStorage for guest users
+                const savedProgress = localStorage.getItem('gameProgress');
+                const savedStats = localStorage.getItem('gameStats');
+                
+                if (savedProgress) {
+                    this.progress = JSON.parse(savedProgress);
+                }
+                if (savedStats) {
+                    this.stats = JSON.parse(savedStats);
+                }
+                
+                window.dispatchEvent(new CustomEvent('progressLoaded', { 
+                    detail: { progress: this.progress, stats: this.stats } 
+                }));
+                return;
+            }
             
             const userProgress = await userService.getUserProgress(this.currentUser.uid);
             const userStats = await userService.getUserStats(this.currentUser.uid);
@@ -70,10 +85,6 @@ class GameState {
                 this.stats = { ...this.stats, ...userStats };
             }
             
-            console.log('Progress loaded:', this.progress);
-            console.log('Stats loaded:', this.stats);
-            
-            // Dispatch event for UI to update
             window.dispatchEvent(new CustomEvent('progressLoaded', { 
                 detail: { progress: this.progress, stats: this.stats } 
             }));
@@ -86,14 +97,14 @@ class GameState {
     async saveProgress() {
         try {
             if (!this.currentUser) {
-                console.warn('No user logged in, saving to localStorage');
+                // Save to localStorage for guest users
                 localStorage.setItem('gameProgress', JSON.stringify(this.progress));
                 localStorage.setItem('gameStats', JSON.stringify(this.stats));
                 return;
             }
             
             await userService.updateUserProgress(this.currentUser.uid, this.progress);
-            console.log('Progress saved to Firebase');
+            await userService.updateUserStats(this.currentUser.uid, this.stats);
             
         } catch (error) {
             console.error('Error saving progress:', error);
@@ -101,26 +112,36 @@ class GameState {
     }
     
     // ============================================
-    // SCENE MANAGEMENT
+    // SCENE MANAGEMENT (NEW FOR SCENE PLAYER)
     // ============================================
     
-    completeScene(chapter, sceneNumber) {
-        const chapterKey = `chapter${chapter}`;
+    /**
+     * Mark a scene as completed
+     * @param {number} part - Part number (1, 2, 3)
+     * @param {number} sceneNumber - Scene number
+     */
+    completeScene(part, sceneNumber) {
+        const chapterKey = `chapter${part}`;
         
         if (!this.progress[chapterKey].scenesCompleted.includes(sceneNumber)) {
             this.progress[chapterKey].scenesCompleted.push(sceneNumber);
             this.progress[chapterKey].currentScene = sceneNumber + 1;
             this.saveProgress();
             
-            // Dispatch event
             window.dispatchEvent(new CustomEvent('sceneCompleted', { 
-                detail: { chapter, sceneNumber } 
+                detail: { part, sceneNumber } 
             }));
         }
     }
     
-    isSceneUnlocked(chapter, sceneNumber) {
-        const chapterKey = `chapter${chapter}`;
+    /**
+     * Check if a scene is unlocked
+     * @param {number} part - Part number
+     * @param {number} sceneNumber - Scene number
+     * @returns {boolean}
+     */
+    isSceneUnlocked(part, sceneNumber) {
+        const chapterKey = `chapter${part}`;
         
         // Scene 1 is always unlocked
         if (sceneNumber === 1) return true;
@@ -130,14 +151,46 @@ class GameState {
         return this.progress[chapterKey].scenesCompleted.includes(previousScene);
     }
     
-    isSceneCompleted(chapter, sceneNumber) {
-        const chapterKey = `chapter${chapter}`;
+    /**
+     * Check if a scene is completed
+     * @param {number} part - Part number
+     * @param {number} sceneNumber - Scene number
+     * @returns {boolean}
+     */
+    isSceneCompleted(part, sceneNumber) {
+        const chapterKey = `chapter${part}`;
         return this.progress[chapterKey].scenesCompleted.includes(sceneNumber);
     }
     
-    getChapterProgress(chapter) {
-        const chapterKey = `chapter${chapter}`;
-        const totalScenes = 8; // Each chapter has 8 scenes
+    /**
+     * Get current scene for a part
+     * @param {number} part - Part number
+     * @returns {number}
+     */
+    getCurrentScene(part) {
+        const chapterKey = `chapter${part}`;
+        return this.progress[chapterKey].currentScene || 1;
+    }
+    
+    /**
+     * Set current scene for a part
+     * @param {number} part - Part number
+     * @param {number} sceneNumber - Scene number
+     */
+    setCurrentScene(part, sceneNumber) {
+        const chapterKey = `chapter${part}`;
+        this.progress[chapterKey].currentScene = sceneNumber;
+        this.saveProgress();
+    }
+    
+    /**
+     * Get chapter progress
+     * @param {number} part - Part number
+     * @returns {object}
+     */
+    getChapterProgress(part) {
+        const chapterKey = `chapter${part}`;
+        const totalScenes = 8; // Default, can be dynamic from story.json
         const completed = this.progress[chapterKey].scenesCompleted.length;
         return {
             completed,
@@ -147,11 +200,18 @@ class GameState {
     }
     
     // ============================================
-    // CHOICE MANAGEMENT
+    // CHOICE MANAGEMENT (UPDATED)
     // ============================================
     
-    recordChoice(chapter, sceneNumber, choiceId, choiceText) {
-        const chapterKey = `chapter${chapter}`;
+    /**
+     * Record a choice made in a scene
+     * @param {number} part - Part number
+     * @param {number} sceneNumber - Scene number
+     * @param {number} choiceIndex - Index of choice selected
+     * @param {string} choiceText - Text of the choice
+     */
+    recordChoice(part, sceneNumber, choiceIndex, choiceText) {
+        const chapterKey = `chapter${part}`;
         const choiceKey = `scene${sceneNumber}`;
         
         if (!this.progress[chapterKey].choices[choiceKey]) {
@@ -159,7 +219,7 @@ class GameState {
         }
         
         this.progress[chapterKey].choices[choiceKey].push({
-            id: choiceId,
+            index: choiceIndex,
             text: choiceText,
             timestamp: Date.now()
         });
@@ -167,14 +227,19 @@ class GameState {
         this.stats.choicesMade++;
         this.saveProgress();
         
-        // Dispatch event
         window.dispatchEvent(new CustomEvent('choiceMade', { 
-            detail: { chapter, sceneNumber, choiceId } 
+            detail: { part, sceneNumber, choiceIndex } 
         }));
     }
     
-    getSceneChoices(chapter, sceneNumber) {
-        const chapterKey = `chapter${chapter}`;
+    /**
+     * Get choices made in a scene
+     * @param {number} part - Part number
+     * @param {number} sceneNumber - Scene number
+     * @returns {array}
+     */
+    getSceneChoices(part, sceneNumber) {
+        const chapterKey = `chapter${part}`;
         const choiceKey = `scene${sceneNumber}`;
         return this.progress[chapterKey].choices[choiceKey] || [];
     }
@@ -183,9 +248,11 @@ class GameState {
     // STATS MANAGEMENT
     // ============================================
     
+    /**
+     * Update character stats
+     * @param {object} changes - Object with stat changes
+     */
     updateStats(changes) {
-        // changes = { integrity: -10, reputation: 5, moralPath: -5, influence: 2 }
-        
         Object.keys(changes).forEach(stat => {
             if (this.stats.hasOwnProperty(stat)) {
                 this.stats[stat] = Math.max(0, Math.min(100, this.stats[stat] + changes[stat]));
@@ -194,12 +261,17 @@ class GameState {
         
         this.saveProgress();
         
-        // Dispatch event
         window.dispatchEvent(new CustomEvent('statsUpdated', { 
             detail: this.stats 
         }));
     }
     
+    /**
+     * Get stat label based on value
+     * @param {string} stat - Stat name
+     * @param {number} value - Stat value
+     * @returns {string}
+     */
     getStatLabel(stat, value) {
         const labels = {
             integrity: [
@@ -233,6 +305,8 @@ class GameState {
         };
         
         const statLabels = labels[stat];
+        if (!statLabels) return 'Unknown';
+        
         for (let i = 0; i < statLabels.length; i++) {
             if (value <= statLabels[i].max) {
                 return statLabels[i].label;
@@ -246,7 +320,7 @@ class GameState {
     // ============================================
     
     updatePlayTime() {
-        const elapsed = Math.floor((Date.now() - this.startTime) / 1000 / 60); // minutes
+        const elapsed = Math.floor((Date.now() - this.startTime) / 1000 / 60);
         this.stats.totalPlayTime += elapsed;
         this.startTime = Date.now();
         this.saveProgress();
@@ -272,34 +346,27 @@ class GameState {
             this.achievements.push(achievementId);
             this.saveProgress();
             
-            // Show achievement notification
-            this.showAchievementNotification(title, description);
+            window.dispatchEvent(new CustomEvent('showToast', {
+                detail: {
+                    type: 'success',
+                    title: '🏆 Achievement Unlocked!',
+                    message: `${title}: ${description}`,
+                    duration: 5000
+                }
+            }));
             
-            // Dispatch event
             window.dispatchEvent(new CustomEvent('achievementUnlocked', { 
                 detail: { id: achievementId, title, description } 
             }));
         }
     }
     
-    showAchievementNotification(title, description) {
-        // This will be called by the UI
-        window.dispatchEvent(new CustomEvent('showToast', {
-            detail: {
-                type: 'success',
-                title: '🏆 Achievement Unlocked!',
-                message: `${title}: ${description}`,
-                duration: 5000
-            }
-        }));
-    }
-    
     // ============================================
     // CHAPTER COMPLETION
     // ============================================
     
-    async completeChapter(chapter) {
-        const chapterKey = `chapter${chapter}`;
+    async completeChapter(part) {
+        const chapterKey = `chapter${part}`;
         this.progress[chapterKey].completedAt = Date.now();
         
         if (this.currentUser) {
@@ -308,18 +375,17 @@ class GameState {
         
         this.saveProgress();
         
-        // Check for chapter completion achievements
         const chapterNames = {
             1: 'Office Chaos Master',
             2: 'Field Operations Expert',
             3: 'Final Confrontation Victor'
         };
         
-        if (chapterNames[chapter]) {
+        if (chapterNames[part]) {
             this.unlockAchievement(
-                `chapter${chapter}_complete`,
-                chapterNames[chapter],
-                `Completed Chapter ${chapter}`
+                `chapter${part}_complete`,
+                chapterNames[part],
+                `Completed Chapter ${part}`
             );
         }
     }
@@ -352,9 +418,8 @@ class GameState {
         }
     }
     
-    // Debug method to unlock all scenes
     unlockAllScenes() {
-        this.progress.chapter1.scenesCompleted = [1, 2, 3, 4, 5, 6, 7];
+        this.progress.chapter1.scenesCompleted = [1, 2, 3, 4, 5, 6, 7, 8];
         this.saveProgress();
         window.location.reload();
     }

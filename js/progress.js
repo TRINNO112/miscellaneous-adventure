@@ -3,8 +3,7 @@
 // ============================================
 
 import gameState from './game-state.js';
-import { authService } from './firebase/auth-service.js';
-import { userService } from './firebase/user-service.js';
+import { authService, userService } from './firebase/firebase-config.js';
 
 class ProgressController {
     constructor() {

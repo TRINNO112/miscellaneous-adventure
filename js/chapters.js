@@ -4,8 +4,7 @@
 // ============================================
 
 import gameState from './game-state.js';
-import { authService } from './firebase/auth-service.js';
-import { userService } from './Firebase/user-service.js';
+import { authService, userService } from './firebase/firebase-config.js';
 
 class ChapterController {
     constructor() {

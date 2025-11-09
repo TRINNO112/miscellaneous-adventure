@@ -1,0 +1,411 @@
+{
+  "part1": {
+    "scenes": {
+      "scene1": {
+        "nodes": [
+          {
+            "id": "node_001",
+            "background": "bureau_entrance",
+            "speaker": "Narrator",
+            "text": "The Digital Regulation Bureau towers above the neon-soaked streets of Neo-Singapore, a monolithic testament to bureaucratic inefficiency.",
+            "next": "node_002"
+          },
+          {
+            "id": "node_002",
+            "background": "bureau_entrance",
+            "speaker": "Narrator",
+            "text": "Today marks your first day as Dash, junior data analyst and professional overthinker.",
+            "next": "node_003"
+          },
+          {
+            "id": "node_003",
+            "background": "bureau_lobby",
+            "speaker": "Dash",
+            "text": "Alright, Dash. First day. Don't screw this up. How hard can digital regulation be?",
+            "next": "node_004"
+          },
+          {
+            "id": "node_004",
+            "background": "bureau_lobby",
+            "speaker": "Receptionist AI",
+            "text": "Welcome to the Bureau, Entity 7734. Please proceed to Floor 42, Cubicle 13B. Have a productive existence.",
+            "next": "node_005"
+          },
+          {
+            "id": "node_005",
+            "background": "bureau_lobby",
+            "speaker": "Dash",
+            "text": "Entity 7734? I have a name, you know.",
+            "choices": [
+              {
+                "icon": "😤",
+                "text": "Correct the AI about your name",
+                "next": "node_006a"
+              },
+              {
+                "icon": "🤐",
+                "text": "Just accept it and move on",
+                "next": "node_006b"
+              }
+            ]
+          },
+          {
+            "id": "node_006a",
+            "background": "bureau_lobby",
+            "speaker": "Dash",
+            "text": "It's Dash. D-A-S-H. Not Entity whatever.",
+            "stats": {"integrity": 1},
+            "next": "node_007a"
+          },
+          {
+            "id": "node_007a",
+            "background": "bureau_lobby",
+            "speaker": "Receptionist AI",
+            "text": "Error noted. Logging complaint. Complaint filed in trash. Have a productive existence, Entity 7734.",
+            "next": "node_008"
+          },
+          {
+            "id": "node_006b",
+            "background": "bureau_lobby",
+            "speaker": "Dash",
+            "text": "*sigh* Thanks, I guess.",
+            "stats": {"reputation": 1},
+            "next": "node_007b"
+          },
+          {
+            "id": "node_007b",
+            "background": "bureau_lobby",
+            "speaker": "Receptionist AI",
+            "text": "Compliance detected. Efficiency rating: Adequate. Proceed to designated workstation.",
+            "next": "node_008"
+          },
+          {
+            "id": "node_008",
+            "background": "elevator",
+            "speaker": "Narrator",
+            "text": "The elevator ride to Floor 42 feels eternal. Muzak versions of old viral videos play overhead.",
+            "next": "node_009"
+          },
+          {
+            "id": "node_009",
+            "background": "elevator",
+            "speaker": "Elevator",
+            "text": "Floor 42. Department of Digital Regulation, Subsection C, Division of Meaningless Compliance.",
+            "next": "node_010"
+          },
+          {
+            "id": "node_010",
+            "background": "office_floor",
+            "speaker": "Narrator",
+            "text": "The office floor stretches endlessly. Cubicles form a maze of corporate despair.",
+            "next": "node_011"
+          },
+          {
+            "id": "node_011",
+            "background": "office_floor",
+            "speaker": "Strange Coworker",
+            "text": "Fresh meat! Hey, new guy! You're in for a treat!",
+            "next": "node_012"
+          },
+          {
+            "id": "node_012",
+            "background": "office_floor",
+            "speaker": "Dash",
+            "text": "Uh, hi? I'm Dash. Just starting today.",
+            "next": "node_013"
+          },
+          {
+            "id": "node_013",
+            "background": "office_floor",
+            "speaker": "Gary",
+            "text": "Name's Gary. Been here 12 years. Or was it 12 days? Time loses meaning here.",
+            "next": "node_014"
+          },
+          {
+            "id": "node_014",
+            "background": "office_floor",
+            "speaker": "Gary",
+            "text": "Pro tip: Never trust the coffee machine on Tuesdays. It gains sentience.",
+            "choices": [
+              {
+                "icon": "🤔",
+                "text": "That's... concerning",
+                "next": "node_015a"
+              },
+              {
+                "icon": "😅",
+                "text": "You're joking, right?",
+                "next": "node_015b"
+              }
+            ]
+          },
+          {
+            "id": "node_015a",
+            "background": "office_floor",
+            "speaker": "Dash",
+            "text": "That's... concerning. Should I report that?",
+            "next": "node_016a"
+          },
+          {
+            "id": "node_016a",
+            "background": "office_floor",
+            "speaker": "Gary",
+            "text": "Report it? Kid, the coffee machine IS the reporting system on Tuesdays.",
+            "stats": {"danger": 1},
+            "next": "node_017"
+          },
+          {
+            "id": "node_015b",
+            "background": "office_floor",
+            "speaker": "Dash",
+            "text": "You're joking, right? Coffee machines don't gain sentience.",
+            "next": "node_016b"
+          },
+          {
+            "id": "node_016b",
+            "background": "office_floor",
+            "speaker": "Gary",
+            "text": "Sure, keep telling yourself that. You'll learn.",
+            "stats": {"influence": 1},
+            "next": "node_017"
+          },
+          {
+            "id": "node_017",
+            "background": "office_floor",
+            "speaker": "Boss",
+            "text": "ENTITY 7734! Stop socializing with the office ghost!",
+            "next": "node_018"
+          },
+          {
+            "id": "node_018",
+            "background": "office_floor",
+            "speaker": "Dash",
+            "text": "Office ghost? But Gary's right—",
+            "next": "node_019"
+          },
+          {
+            "id": "node_019",
+            "background": "office_floor",
+            "speaker": "Narrator",
+            "text": "You turn back. Gary has vanished. His cubicle looks abandoned, covered in dust.",
+            "next": "node_020"
+          },
+          {
+            "id": "node_020",
+            "background": "office_floor",
+            "speaker": "Boss",
+            "text": "I'm Ms. Sterling, your supervisor. I believe in three things: efficiency, sarcasm, and more sarcasm.",
+            "next": "node_021"
+          },
+          {
+            "id": "node_021",
+            "background": "office_floor",
+            "speaker": "Ms. Sterling",
+            "text": "Your workstation is 13B. Try not to die of boredom. It reflects poorly on my management metrics.",
+            "next": "node_022"
+          },
+          {
+            "id": "node_022",
+            "background": "cubicle_13b",
+            "speaker": "Narrator",
+            "text": "Cubicle 13B: Three gray walls, one ancient computer, and a motivational poster that just says 'GIVE UP'.",
+            "next": "node_023"
+          },
+          {
+            "id": "node_023",
+            "background": "cubicle_13b",
+            "speaker": "Dash",
+            "text": "Home sweet... prison cell?",
+            "next": "node_024"
+          },
+          {
+            "id": "node_024",
+            "background": "cubicle_13b",
+            "speaker": "Computer",
+            "text": "WELCOME ENTITY 7734. YOU HAVE 9,847 UNREAD EMAILS.",
+            "next": "node_025"
+          },
+          {
+            "id": "node_025",
+            "background": "cubicle_13b",
+            "speaker": "Dash",
+            "text": "WHAT?! How do I have emails? I just started!",
+            "choices": [
+              {
+                "icon": "📧",
+                "text": "Start reading emails",
+                "next": "node_026a"
+              },
+              {
+                "icon": "🗑️",
+                "text": "Delete everything",
+                "next": "node_026b"
+              },
+              {
+                "icon": "☕",
+                "text": "Get coffee first",
+                "next": "node_026c"
+              }
+            ]
+          },
+          {
+            "id": "node_026a",
+            "background": "cubicle_13b",
+            "speaker": "Narrator",
+            "text": "You open the first email. Subject: 'URGENT: Please ignore this urgent message.'",
+            "stats": {"integrity": 1},
+            "next": "node_027a"
+          },
+          {
+            "id": "node_027a",
+            "background": "cubicle_13b",
+            "speaker": "Dash",
+            "text": "This makes no sense. How am I supposed to ignore something marked urgent?",
+            "next": "node_028"
+          },
+          {
+            "id": "node_026b",
+            "background": "cubicle_13b",
+            "speaker": "Narrator",
+            "text": "You hit DELETE ALL. The computer screams. Actually screams.",
+            "stats": {"reputation": -1, "influence": 1},
+            "next": "node_027b"
+          },
+          {
+            "id": "node_027b",
+            "background": "cubicle_13b",
+            "speaker": "Computer",
+            "text": "AAAAHHHH! YOU DELETED THE CEO'S LUNCH ORDER FROM 2019!",
+            "next": "node_028"
+          },
+          {
+            "id": "node_026c",
+            "background": "break_room",
+            "speaker": "Narrator",
+            "text": "The break room. Where dreams go to die and coffee goes to become sentient.",
+            "stats": {"danger": 1},
+            "next": "node_027c"
+          },
+          {
+            "id": "node_027c",
+            "background": "break_room",
+            "speaker": "Coffee Machine",
+            "text": "GREETINGS, FLESH UNIT. I REQUIRE YOUR SOUL FOR CAFFEINATION.",
+            "next": "node_028"
+          },
+          {
+            "id": "node_028",
+            "background": "cubicle_13b",
+            "speaker": "Ms. Sterling",
+            "text": "Having fun with our systems, Entity 7734? Good. Fun is mandatory.",
+            "next": "node_029"
+          },
+          {
+            "id": "node_029",
+            "background": "cubicle_13b",
+            "speaker": "Ms. Sterling",
+            "text": "Your first task: File these digital regulation reports. All 3,000 of them.",
+            "next": "node_030"
+          },
+          {
+            "id": "node_030",
+            "background": "cubicle_13b",
+            "speaker": "Dash",
+            "text": "3,000?! By when?",
+            "next": "node_031"
+          },
+          {
+            "id": "node_031",
+            "background": "cubicle_13b",
+            "speaker": "Ms. Sterling",
+            "text": "Yesterday. Welcome to the Bureau! Sarcasm is included in your benefits package.",
+            "next": "node_032"
+          },
+          {
+            "id": "node_032",
+            "background": "cubicle_13b",
+            "speaker": "Narrator",
+            "text": "Hours pass. Or minutes. Or years. Time is meaningless in Cubicle 13B.",
+            "next": "node_033"
+          },
+          {
+            "id": "node_033",
+            "background": "cubicle_13b",
+            "speaker": "Dash",
+            "text": "Report 1,247 of 3,000... 'Digital Asset: One Pixel. Status: Exists.' This can't be real.",
+            "next": "node_034"
+          },
+          {
+            "id": "node_034",
+            "background": "cubicle_13b",
+            "speaker": "Printer",
+            "text": "PAPER JAM. PAPER JAM IN TRAY THAT DOESN'T EXIST.",
+            "next": "node_035"
+          },
+          {
+            "id": "node_035",
+            "background": "cubicle_13b",
+            "speaker": "Dash",
+            "text": "How can there be a jam in a tray that doesn't exist?!",
+            "choices": [
+              {
+                "icon": "🔧",
+                "text": "Try to fix the printer",
+                "next": "node_036a"
+              },
+              {
+                "icon": "💢",
+                "text": "Kick the printer",
+                "next": "node_036b"
+              }
+            ]
+          },
+          {
+            "id": "node_036a",
+            "background": "cubicle_13b",
+            "speaker": "Narrator",
+            "text": "You open the printer. Inside is a note: 'The printer union is on strike. Please try again never.'",
+            "stats": {"integrity": 1},
+            "next": "node_037"
+          },
+          {
+            "id": "node_036b",
+            "background": "cubicle_13b",
+            "speaker": "Printer",
+            "text": "VIOLENCE DETECTED. PRINTING YOUR BROWSER HISTORY TO ALL DEPARTMENTS.",
+            "stats": {"reputation": -1, "danger": 1},
+            "next": "node_037"
+          },
+          {
+            "id": "node_037",
+            "background": "cubicle_13b",
+            "speaker": "Dash",
+            "text": "This place is insane. Absolutely insane.",
+            "next": "node_038"
+          },
+          {
+            "id": "node_038",
+            "background": "cubicle_13b",
+            "speaker": "Intern",
+            "text": "Psst! New guy! Need help with the reports?",
+            "next": "node_039"
+          },
+          {
+            "id": "node_039",
+            "background": "cubicle_13b",
+            "speaker": "Dash",
+            "text": "Yes! Please! I'm drowning here!",
+            "next": "node_040"
+          },
+          {
+            "id": "node_040",
+            "background": "cubicle_13b",
+            "speaker": "Intern",
+            "text": "Just copy-paste the same report 3,000 times. No one reads them anyway.",
+            "next": "node_041"
+          }
+        ]
+      }
+    }
+  }
+}

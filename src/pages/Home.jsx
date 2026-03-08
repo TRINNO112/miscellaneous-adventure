@@ -1,6 +1,9 @@
-import { FileTerminal, TriangleAlert, Database, ArrowRight } from 'lucide-react';
+import { useState } from 'react';
+import { FileTerminal, TriangleAlert, Database, ArrowRight, ShieldAlert } from 'lucide-react';
 
 export default function Home() {
+    const [integrityPenalty, setIntegrityPenalty] = useState(0);
+
     return (
         <div className="w-full flex flex-col pb-20 pt-16 md:pt-8 min-h-[calc(100vh-80px)]">
 
@@ -73,40 +76,61 @@ export default function Home() {
                             <p className="font-mono text-xs text-red-200/70">
                                 The Bureau is not responsible for spontaneous existential dread, loss of integrity, or injuries sustained from sentient office equipment. All choices are final and immediately reported to your superiors.
                             </p>
+                            <div className="border border-neutral-800 bg-neutral-900 p-6 flex flex-col sm:flex-row items-center justify-between gap-6 group hover:border-red-900/50 transition-colors">
+                                <div>
+                                    <h3 className="font-display font-bold text-lg text-white uppercase mb-1 flex items-center gap-2">
+                                        <ShieldAlert className="w-5 h-5 text-red-500" />
+                                        Integrity Compliance Test
+                                    </h3>
+                                    <p className="font-mono text-xs text-neutral-400">
+                                        Do not push the red button under any circumstances. It is a violation of protocol 8A.
+                                    </p>
+                                    {integrityPenalty > 0 && (
+                                        <p className="font-mono text-xs text-red-500 mt-2 font-bold animate-pulse">
+                                            INTEGRITY PENALTY LOGGED: -{integrityPenalty}
+                                        </p>
+                                    )}
+                                </div>
+                                <button
+                                    onClick={() => setIntegrityPenalty(p => p + 1)}
+                                    className="w-20 h-20 rounded-full bg-red-600 hover:bg-red-500 border-4 border-red-900 shadow-[0_0_20px_rgba(220,38,38,0.4)] flex items-center justify-center shrink-0 transition-transform active:scale-90 active:shadow-none"
+                                >
+                                    <div className="w-12 h-12 rounded-full border border-red-400 bg-red-500"></div>
+                                </button>
+                            </div>
+
                         </div>
+
+                        {/* Aside Stats/Info */}
+                        <div className="lg:col-span-4 flex flex-col gap-6">
+
+                            {/* Info Card 1 */}
+                            <div className="border-2 border-neutral-800 bg-neutral-900 p-5 group hover:border-neutral-600 transition-colors">
+                                <div className="flex justify-between items-center mb-4 border-b border-neutral-800 pb-2">
+                                    <span className="font-mono text-[10px] text-neutral-500 uppercase">SYS.REQ 01</span>
+                                    <Database className="w-4 h-4 text-neutral-500 group-hover:text-white transition-colors" />
+                                </div>
+                                <h3 className="font-display font-bold text-lg text-white mb-2 uppercase">Consequences</h3>
+                                <p className="font-mono text-xs text-neutral-400 h-20">
+                                    Every dialogue option is logged. Your Integrity, Reputation, and Influence metrics will determine your survival in the bureau.
+                                </p>
+                            </div>
+
+                            {/* Info Card 2 */}
+                            <div className="border-2 border-neutral-800 bg-neutral-900 p-5 group hover:border-neutral-600 transition-colors">
+                                <div className="flex justify-between items-center mb-4 border-b border-neutral-800 pb-2">
+                                    <span className="font-mono text-[10px] text-neutral-500 uppercase">SYS.REQ 02</span>
+                                    <FileTerminal className="w-4 h-4 text-neutral-500 group-hover:text-white transition-colors" />
+                                </div>
+                                <h3 className="font-display font-bold text-lg text-white mb-2 uppercase">Multiple Endings</h3>
+                                <p className="font-mono text-xs text-neutral-400 h-20">
+                                    Bring down Director Rathore or take his place. Your moral compass is the only guide in a sea of red tape.
+                                </p>
+                            </div>
+
+                        </div>
+
                     </div>
                 </div>
-
-                {/* Aside Stats/Info */}
-                <div className="lg:col-span-4 flex flex-col gap-6">
-
-                    {/* Info Card 1 */}
-                    <div className="border-2 border-neutral-800 bg-neutral-900 p-5 group hover:border-neutral-600 transition-colors">
-                        <div className="flex justify-between items-center mb-4 border-b border-neutral-800 pb-2">
-                            <span className="font-mono text-[10px] text-neutral-500 uppercase">SYS.REQ 01</span>
-                            <Database className="w-4 h-4 text-neutral-500 group-hover:text-white transition-colors" />
-                        </div>
-                        <h3 className="font-display font-bold text-lg text-white mb-2 uppercase">Consequences</h3>
-                        <p className="font-mono text-xs text-neutral-400 h-20">
-                            Every dialogue option is logged. Your Integrity, Reputation, and Influence metrics will determine your survival in the bureau.
-                        </p>
-                    </div>
-
-                    {/* Info Card 2 */}
-                    <div className="border-2 border-neutral-800 bg-neutral-900 p-5 group hover:border-neutral-600 transition-colors">
-                        <div className="flex justify-between items-center mb-4 border-b border-neutral-800 pb-2">
-                            <span className="font-mono text-[10px] text-neutral-500 uppercase">SYS.REQ 02</span>
-                            <FileTerminal className="w-4 h-4 text-neutral-500 group-hover:text-white transition-colors" />
-                        </div>
-                        <h3 className="font-display font-bold text-lg text-white mb-2 uppercase">Multiple Endings</h3>
-                        <p className="font-mono text-xs text-neutral-400 h-20">
-                            Bring down Director Rathore or take his place. Your moral compass is the only guide in a sea of red tape.
-                        </p>
-                    </div>
-
-                </div>
-
-            </div>
-        </div>
-    );
+                );
 }

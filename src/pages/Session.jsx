@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import StoryEngine from '../components/StoryEngine';
 import { Terminal, ShieldAlert, Wifi, Battery, Clock, Cpu, HardDrive } from 'lucide-react';
-import { useAuth } from '../context/AuthContext';
+import { useAuth } from '../hooks/useAuth';
 
 export default function Session() {
     const { user } = useAuth();

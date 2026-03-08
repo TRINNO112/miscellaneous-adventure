@@ -8,16 +8,14 @@ import {
     signInWithPopup
 } from 'firebase/auth';
 import { auth, db } from '../lib/firebase';
-import { doc, getDoc, setDoc } from 'firebase/firestore';
+import { doc, getDoc, setDoc, updateDoc } from 'firebase/firestore';
 
-const AuthContext = createContext();
-const googleProvider = new GoogleAuthProvider();
-
-export function useAuth() {
-    return useContext(AuthContext);
-}
+// Context and Hook exported together at bottom to satisfy Fast Refresh
+// Export the context so useAuth hook in separate file can access it
+export const AuthContext = createContext();
 
 export function AuthProvider({ children }) {
+    const googleProvider = new GoogleAuthProvider();
     const [user, setUser] = useState(null);
     const [userData, setUserData] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -71,6 +69,22 @@ export function AuthProvider({ children }) {
         return signOut(auth);
     }
 
+    // Centralized Data Update Helper
+    async function updateUserData(updates) {
+        const newData = { ...userData, ...updates };
+        setUserData(newData);
+
+        if (user) {
+            try {
+                await updateDoc(doc(db, 'users', user.uid), updates);
+            } catch (err) {
+                console.error("Cloud sync failed:", err);
+            }
+        } else {
+            localStorage.setItem('guest_progress', JSON.stringify(newData));
+        }
+    }
+
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, async (user) => {
             setUser(user);
@@ -106,7 +120,8 @@ export function AuthProvider({ children }) {
         login,
         googleLogin,
         logout,
-        setUserData
+        setUserData,
+        updateUserData
     };
 
     return (

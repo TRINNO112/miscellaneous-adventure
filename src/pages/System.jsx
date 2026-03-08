@@ -1,5 +1,5 @@
 import { Settings as SettingsIcon, Monitor, Volume2, Save, PowerOff, ShieldAlert, LogOut } from 'lucide-react';
-import { useAuth } from '../context/AuthContext';
+import { useAuth } from '../hooks/useAuth';
 
 export default function System() {
     const { logout, user } = useAuth();

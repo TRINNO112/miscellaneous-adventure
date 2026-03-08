@@ -1,12 +1,17 @@
 import { FileTerminal, TriangleAlert, Database, ShieldAlert, Play } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
+import { useAuth } from '../hooks/useAuth';
+import React, { useState } from 'react';
 
 export default function Home() {
     const { user, userData, updateUserData } = useAuth();
+    const [glitch, setGlitch] = useState(false);
 
     const handleIntegrityTest = async () => {
         if (!userData) return;
+        setGlitch(true);
+        setTimeout(() => setGlitch(false), 500);
+
         const newIntegrity = Math.max(0, (userData.stats?.integrity || 50) - 5);
         await updateUserData({
             stats: {
@@ -14,11 +19,10 @@ export default function Home() {
                 integrity: newIntegrity
             }
         });
-        alert("COMPLIANCE FAILURE DETECTED: -5% INTEGRITY");
     };
 
     return (
-        <div className="w-full flex flex-col pb-20 pt-16 md:pt-8 min-h-[calc(100vh-80px)]">
+        <div className={`w-full flex flex-col pb-20 pt-16 md:pt-8 min-h-[calc(100vh-80px)] transition-all duration-75 ${glitch ? 'bg-red-900/40 mix-blend-hard-light invert-[0.1]' : ''}`}>
 
             {/* Bureaucratic Header */}
             <div className="border-b-4 border-neutral-800 pb-8 mb-12 flex flex-col md:flex-row md:items-end justify-between gap-6">

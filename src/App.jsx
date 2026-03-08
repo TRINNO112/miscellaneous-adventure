@@ -1,4 +1,4 @@
-import { Routes, Route, Navigate } from 'react-router-dom';
+import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Home from './pages/Home';
 import Dossier from './pages/Dossier';
@@ -9,8 +9,17 @@ import Session from './pages/Session';
 import { AuthProvider } from './context/AuthContext';
 
 function AppContent() {
+  const location = useLocation();
+
+  // Dynamic Background based on Route
+  const getBgClass = () => {
+    if (location.pathname === '/') return 'bg-constellation';
+    if (['/about', '/records', '/system'].includes(location.pathname)) return 'bg-nebula';
+    return 'bg-bureau-900'; // Default / Session
+  };
+
   return (
-    <div className="min-h-screen bg-bureau-900 bg-dot-pattern flex flex-col md:flex-row max-w-[100vw] overflow-x-hidden">
+    <div className={`min-h-screen ${getBgClass()} flex flex-col md:flex-row max-w-[100vw] overflow-x-hidden transition-colors duration-1000`}>
       <Navbar />
 
       <main className="flex-1 min-h-screen max-w-full border-l border-neutral-800">
@@ -27,7 +36,7 @@ function AppContent() {
       </main>
 
       {/* Scanline Effect */}
-      <div className="pointer-events-none fixed inset-0 z-50 h-full w-full bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.25)_50%),linear-gradient(90deg,rgba(255,0,0,0.06),rgba(0,255,0,0.02),rgba(0,0,255,0.06))] bg-[length:100%_4px,3px_100%] opacity-20"></div>
+      <div className="pointer-events-none fixed inset-0 z-50 h-full w-full bg-scanlines opacity-20"></div>
     </div>
   );
 }

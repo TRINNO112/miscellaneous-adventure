@@ -39,7 +39,72 @@
 
   .bg-dot-pattern {
     background-image: radial-gradient(#222 1px, transparent 1px);
-    background-size: 20px 20px;
+    background-size: 24px 24px;
+  }
+
+  .bg-constellation {
+    background:
+      radial-gradient(1px 1px at 20px 30px, #eee, rgba(0, 0, 0, 0)),
+      radial-gradient(1.5px 1.5px at 50px 160px, #ddd, rgba(0, 0, 0, 0)),
+      radial-gradient(1px 1px at 130px 80px, #fff, rgba(0, 0, 0, 0)),
+      linear-gradient(180deg, #050505 0%, #0a0a0a 100%);
+    background-repeat: repeat;
+    background-size: 200px 200px, 250px 250px, 350px 350px, 100% 100%;
+    animation: stars-drift 120s linear infinite;
+    will-change: background-position;
+  }
+
+  @keyframes stars-drift {
+    from {
+      background-position: 0 0;
+    }
+
+    to {
+      background-position: 500px 500px;
+    }
+  }
+
+  .bg-nebula {
+    background:
+      radial-gradient(circle at 20% 30%, rgba(255, 85, 0, 0.2), transparent 50%),
+      radial-gradient(circle at 80% 70%, rgba(56, 189, 248, 0.15), transparent 50%),
+      radial-gradient(circle at 50% 50%, rgba(239, 68, 68, 0.08), transparent 70%),
+      #050505;
+    position: relative;
+    overflow: hidden;
+    animation: nebula-drift 30s ease-in-out infinite alternate;
+  }
+
+  @keyframes nebula-drift {
+    0% {
+      background-position: 0% 0%;
+      scale: 1;
+    }
+
+    100% {
+      background-position: 5% 5%;
+      scale: 1.02;
+    }
+  }
+
+  .bg-nebula::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3	%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+    opacity: 0.05;
+    pointer-events: none;
+  }
+
+  .bg-scanlines {
+    background: linear-gradient(rgba(18, 16, 16, 0) 50%,
+        rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg,
+        rgba(255, 0, 0, 0.06),
+        rgba(0, 255, 0, 0.02),
+        rgba(0, 0, 255, 0.06));
+    z-index: 2;
+    background-size: 100% 2px, 3px 100%;
+    pointer-events: none;
   }
 }
 

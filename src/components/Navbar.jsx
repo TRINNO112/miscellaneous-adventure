@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Shield, ChevronRight, Terminal, User, BookOpen, Settings } from 'lucide-react';
-import { useAuth } from '../context/AuthContext';
+import { useAuth } from '../hooks/useAuth';
 
 export default function Navbar() {
     const [isOpen, setIsOpen] = useState(false);

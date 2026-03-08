@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { useAuth } from '../context/AuthContext';
+import { useAuth } from '../hooks/useAuth';
 import storyData from '../data/story.json';
 import { ChevronRight, ArrowRight, User, Terminal } from 'lucide-react';
-import { doc, updateDoc } from 'firebase/firestore';
-import { db } from '../lib/firebase';
 
 export default function StoryEngine({ onSceneData }) {
-    const { user, userData, setUserData } = useAuth();
+    const { user, userData, updateUserData } = useAuth();
     const [currentSceneId, setCurrentSceneId] = useState(userData?.currentScene || 'chapter_1_start');
     const [dialogueIndex, setDialogueIndex] = useState(0);
     const [isTyping, setIsTyping] = useState(false);
@@ -78,7 +76,6 @@ export default function StoryEngine({ onSceneData }) {
         setCurrentSceneId(nextSceneId);
         setDialogueIndex(0);
 
-        // Calculate new stats
         const newStats = { ...userData.stats };
         if (choice.statChanges) {
             Object.keys(choice.statChanges).forEach(stat => {
@@ -86,28 +83,11 @@ export default function StoryEngine({ onSceneData }) {
             });
         }
 
-        const updatedData = {
-            ...userData,
+        // Centralized Sync using AuthContext helper
+        await updateUserData({
             currentScene: nextSceneId,
             stats: newStats
-        };
-
-        setUserData(updatedData);
-
-        // Sync progress
-        if (user) {
-            try {
-                await updateDoc(doc(db, 'users', user.uid), {
-                    currentScene: nextSceneId,
-                    stats: newStats
-                });
-            } catch (err) {
-                console.error("Failed to sync progress:", err);
-            }
-        } else {
-            // Guest Mode: Save to LocalStorage
-            localStorage.setItem('guest_progress', JSON.stringify(updatedData));
-        }
+        });
     };
 
     const isDialogueFinished = dialogueIndex === currentScene.dialogue.length - 1;

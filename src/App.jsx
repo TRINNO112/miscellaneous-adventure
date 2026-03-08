@@ -5,11 +5,11 @@ import Home from './pages/Home';
 
 function App() {
   return (
-    <div className="min-h-screen bg-bureau-900 bg-dot-pattern flex flex-col md:flex-row">
+    <div className="min-h-screen bg-bureau-900 bg-dot-pattern flex flex-col md:flex-row max-w-[100vw] overflow-x-hidden">
       <Navbar />
 
-      <main className="flex-1 min-h-screen w-full md:pl-64 border-l border-neutral-800">
-        <div className="h-full w-full max-w-6xl mx-auto p-4 md:p-12 relative z-10">
+      <main className="flex-1 min-h-screen max-w-full border-l border-neutral-800">
+        <div className="h-full w-full p-4 sm:p-6 md:p-10 lg:p-12 relative z-10">
           <Routes>
             <Route path="/" element={<Home />} />
           </Routes>

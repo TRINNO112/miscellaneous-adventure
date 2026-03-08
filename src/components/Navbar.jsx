@@ -1,117 +1,114 @@
-import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { Menu, X, Shield, User, Settings, LogOut } from 'lucide-react';
+import { useState } from 'react';
+import { Link, useLocation } from 'react-router-dom';
+import { Shield, ChevronRight, Terminal, User, BookOpen, Settings } from 'lucide-react';
 
 export default function Navbar() {
-    const [scrolled, setScrolled] = useState(false);
-    const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-    const [profileOpen, setProfileOpen] = useState(false);
+    const [isOpen, setIsOpen] = useState(false);
+    const location = useLocation();
 
-    useEffect(() => {
-        const handleScroll = () => {
-            setScrolled(window.scrollY > 20);
-        };
-        window.addEventListener('scroll', handleScroll);
-        return () => window.removeEventListener('scroll', handleScroll);
-    }, []);
+    const navLinks = [
+        { name: 'INDEX', path: '/', icon: Terminal },
+        { name: 'DOSSIER', path: '/about', icon: BookOpen },
+        { name: 'RECORDS', path: '/records', icon: User },
+        { name: 'SYSTEM', path: '/system', icon: Settings },
+    ];
 
     return (
-        <nav className={`fixed w-full top-0 z-50 transition-all duration-300 ${scrolled ? 'bg-surface-900/80 backdrop-blur-md border-b border-white/10 shadow-lg py-3' : 'bg-transparent py-5'
-            }`}>
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="flex justify-between items-center">
-
-                    {/* Logo */}
-                    <Link to="/" className="flex items-center gap-3 group">
-                        <div className="relative flex items-center justify-center w-10 h-10 rounded-xl bg-gradient-to-br from-primary-500 to-primary-700 shadow-lg group-hover:shadow-primary-500/50 transition-all duration-300">
-                            <Shield className="w-5 h-5 text-white" />
-                            <div className="absolute inset-0 rounded-xl border border-white/20"></div>
-                        </div>
-                        <div>
-                            <h1 className="font-display font-bold text-lg tracking-tight text-white leading-tight group-hover:text-primary-300 transition-colors">
-                                Miscellaneous
-                            </h1>
-                            <span className="text-[10px] font-semibold tracking-widest text-primary-400 uppercase leading-none block">
-                                Adventure
-                            </span>
-                        </div>
-                    </Link>
-
-                    {/* Desktop Nav */}
-                    <div className="hidden md:flex items-center gap-8">
-                        <div className="flex items-center gap-6 text-sm font-medium text-slate-300">
-                            <Link to="/" className="hover:text-white transition-colors">Home</Link>
-                            <Link to="/about" className="hover:text-white transition-colors">About</Link>
-                            <Link to="/leaderboard" className="hover:text-white transition-colors">Leaderboard</Link>
-                        </div>
-
-                        <div className="flex items-center gap-4">
-                            <div className="relative">
-                                <button
-                                    onClick={() => setProfileOpen(!profileOpen)}
-                                    className="flex items-center gap-2 hover:bg-white/5 p-2 rounded-lg transition-colors"
-                                >
-                                    <div className="w-8 h-8 rounded-full bg-surface-700 border border-white/10 flex items-center justify-center overflow-hidden">
-                                        <User className="w-4 h-4 text-slate-400" />
-                                    </div>
-                                </button>
-
-                                {/* Dropdown */}
-                                {profileOpen && (
-                                    <div className="absolute right-0 mt-2 w-48 rounded-xl glass-panel shadow-2xl py-1 transform opacity-100 scale-100 transition-all origin-top-right">
-                                        <div className="px-4 py-3 border-b border-white/5">
-                                            <p className="text-sm font-medium text-white">Player One</p>
-                                            <p className="text-xs text-slate-400">Level 1 Investigator</p>
-                                        </div>
-                                        <div className="py-1 border-b border-white/5">
-                                            <Link to="/profile" className="flex items-center gap-2 px-4 py-2 text-sm text-slate-300 hover:bg-white/5 hover:text-white">
-                                                <User className="w-4 h-4" /> Profile
-                                            </Link>
-                                            <Link to="/settings" className="flex items-center gap-2 px-4 py-2 text-sm text-slate-300 hover:bg-white/5 hover:text-white">
-                                                <Settings className="w-4 h-4" /> Settings
-                                            </Link>
-                                        </div>
-                                        <div className="py-1">
-                                            <button className="w-full flex items-center gap-2 px-4 py-2 text-sm text-red-400 hover:bg-red-400/10 transition-colors">
-                                                <LogOut className="w-4 h-4" /> Sign Out
-                                            </button>
-                                        </div>
-                                    </div>
-                                )}
-                            </div>
-                            <button className="bg-primary-600 hover:bg-primary-500 text-white px-5 py-2.5 rounded-lg text-sm font-semibold shadow-lg shadow-primary-500/30 transition-all hover:-translate-y-0.5">
-                                Play Now
-                            </button>
-                        </div>
-                    </div>
-
-                    {/* Mobile Menu Button */}
-                    <div className="md:hidden flex items-center">
-                        <button
-                            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                            className="p-2 text-slate-300 hover:text-white"
-                        >
-                            {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-                        </button>
-                    </div>
+        <>
+            {/* Mobile Toggle Bar */}
+            <div className="md:hidden fixed top-0 w-full bg-bureau-900 border-b-2 border-neutral-800 p-4 z-50 flex justify-between items-center">
+                <div className="flex items-center gap-2">
+                    <Shield className="w-5 h-5 text-accent-amber" />
+                    <span className="font-display font-bold tracking-tight uppercase">Misc.Adv</span>
                 </div>
+                <button
+                    onClick={() => setIsOpen(!isOpen)}
+                    className="text-neutral-400 hover:text-white border border-neutral-800 p-1"
+                >
+                    <span className="font-mono text-xs uppercase px-2">Menu // {isOpen ? 'X' : '='}</span>
+                </button>
             </div>
 
-            {/* Mobile Menu */}
-            {mobileMenuOpen && (
-                <div className="md:hidden glass-panel border-t border-white/10 mt-3 absolute w-full">
-                    <div className="px-4 pt-2 pb-6 space-y-1">
-                        <Link to="/" className="block px-3 py-3 text-base font-medium text-white hover:bg-white/5 rounded-lg">Home</Link>
-                        <Link to="/about" className="block px-3 py-3 text-base font-medium text-slate-300 hover:bg-white/5 rounded-lg hover:text-white">About</Link>
-                        <Link to="/leaderboard" className="block px-3 py-3 text-base font-medium text-slate-300 hover:bg-white/5 rounded-lg hover:text-white">Leaderboard</Link>
-                        <div className="mt-4 pt-4 border-t border-white/10">
-                            <button className="w-full bg-primary-600 hover:bg-primary-500 text-white px-5 py-3 rounded-lg text-base font-semibold shadow-lg shadow-primary-500/30 transition-all">
-                                Play Now
-                            </button>
+            {/* Sidebar Navigation */}
+            <nav className={`fixed md:sticky top-0 left-0 h-screen w-64 bg-bureau-900 border-r-2 border-neutral-800 z-40 transform transition-transform duration-300 ease-in-out ${isOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'
+                } flex flex-col pt-16 md:pt-0`}>
+
+                {/* Branding header */}
+                <div className="p-4 border-b-2 border-neutral-800 bg-neutral-900/50">
+                    <div className="flex items-start gap-3">
+                        <div className="bg-accent-amber p-1.5 shadow-[2px_2px_0px_#fff] shrink-0 mt-1">
+                            <Shield className="w-5 h-5 text-black" strokeWidth={2.5} />
+                        </div>
+                        <div className="flex flex-col">
+                            <h1 className="font-display font-black text-sm uppercase tracking-tight text-white leading-tight">
+                                Miscellaneous<br />Adventure
+                            </h1>
+                            <span className="font-mono text-[9px] text-accent-amber mt-1 bg-accent-amber/10 px-1 py-0.5 inline-block border border-accent-amber/30 w-fit whitespace-nowrap">
+                                SYS. VER. 2.0.4
+                            </span>
                         </div>
                     </div>
                 </div>
+
+                {/* User Identity Block */}
+                <div className="p-6 border-b-2 border-neutral-800 font-mono text-xs text-neutral-400 space-y-2">
+                    <div className="flex justify-between">
+                        <span>ID:</span>
+                        <span className="text-white">ENTITY 7734</span>
+                    </div>
+                    <div className="flex justify-between">
+                        <span>STATUS:</span>
+                        <span className="text-accent-amber animate-pulse">ACTIVE</span>
+                    </div>
+                    <div className="flex justify-between">
+                        <span>CLEARANCE:</span>
+                        <span>LEVEL 1</span>
+                    </div>
+                </div>
+
+                {/* Navigation Links */}
+                <div className="flex-1 overflow-y-auto py-6 flex flex-col gap-2 px-4">
+                    <span className="font-mono text-[10px] text-neutral-600 mb-2 uppercase tracking-widest pl-2">Directory</span>
+
+                    {navLinks.map((link) => {
+                        const Icon = link.icon;
+                        const isActive = location.pathname === link.path;
+
+                        return (
+                            <Link
+                                key={link.name}
+                                to={link.path}
+                                onClick={() => setIsOpen(false)}
+                                className={`group flex items-center justify-between p-3 transition-colors border-2 ${isActive
+                                    ? 'bg-neutral-800 border-neutral-600 text-white shadow-[4px_4px_0px_#ff5500]'
+                                    : 'border-transparent text-neutral-400 hover:border-neutral-800 hover:bg-neutral-800/50 hover:text-white'
+                                    }`}
+                            >
+                                <div className="flex items-center gap-3">
+                                    <Icon className={`w-4 h-4 ${isActive ? 'text-accent-amber' : ''}`} />
+                                    <span className="font-mono font-medium tracking-wide text-sm">{link.name}</span>
+                                </div>
+                                {isActive && <ChevronRight className="w-4 h-4 text-accent-amber" />}
+                            </Link>
+                        );
+                    })}
+                </div>
+
+                {/* Footer actions */}
+                <div className="p-6 border-t-2 border-neutral-800">
+                    <button className="w-full bg-red-600 hover:bg-red-500 text-white font-mono font-bold text-xs py-3 border border-red-400 shadow-[2px_2px_0px_#fff] transition-all active:shadow-[0px_0px_0px_#fff] active:translate-y-0.5 active:translate-x-0.5 uppercase tracking-widest">
+                        Logout [Exit]
+                    </button>
+                </div>
+            </nav>
+
+            {/* Mobile Overlay */}
+            {isOpen && (
+                <div
+                    className="fixed inset-0 bg-black/80 z-30 md:hidden backdrop-blur-sm"
+                    onClick={() => setIsOpen(false)}
+                />
             )}
-        </nav>
+        </>
     );
 }

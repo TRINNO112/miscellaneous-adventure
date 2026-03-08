@@ -1,71 +1,109 @@
-import { ArrowRight, ShieldAlert, Sparkles, Binary } from 'lucide-react';
+import { FileTerminal, TriangleAlert, Database, ArrowRight } from 'lucide-react';
 
 export default function Home() {
     return (
-        <div className="pt-32 pb-20 lg:pt-48 lg:pb-32 flex flex-col items-center justify-center min-h-[calc(100vh-80px)]">
+        <div className="w-full flex flex-col pb-20 pt-16 md:pt-8 min-h-[calc(100vh-80px)]">
 
-            {/* Hero Badge */}
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary-500/10 border border-primary-500/20 text-primary-400 text-sm font-medium mb-8 animate-fade-in-up">
-                <Sparkles className="w-4 h-4" />
-                <span>A Choice-Driven IRS Thriller</span>
-            </div>
-
-            {/* Hero Title */}
-            <div className="text-center max-w-4xl mx-auto space-y-6 mb-12 animate-fade-in-up animation-delay-100">
-                <h1 className="text-5xl md:text-7xl font-display font-extrabold tracking-tight text-white leading-tight">
-                    Survive the <br className="hidden md:block" />
-                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary-400 via-fuchsia-400 to-cyan-400">
-                        Bureaucratic Nightmare
-                    </span>
-                </h1>
-                <p className="text-lg md:text-xl text-slate-400 max-w-2xl mx-auto leading-relaxed">
-                    Step into the shoes of Dash, a junior data analyst in the Department of Digital Regulation. Make choices, uncover corruption, and decide whether to break the system or let it break you.
-                </p>
-            </div>
-
-            {/* Call to Actions */}
-            <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto animate-fade-in-up animation-delay-200">
-                <button className="group flex items-center justify-center gap-2 bg-white text-surface-900 px-8 py-4 rounded-xl text-lg font-bold shadow-[0_0_40px_-10px_rgba(255,255,255,0.3)] hover:shadow-[0_0_60px_-15px_rgba(255,255,255,0.5)] transition-all hover:scale-105">
-                    Start Adventure
-                    <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                </button>
-                <button className="flex items-center justify-center gap-2 bg-surface-800/50 hover:bg-surface-700/50 border border-white/10 text-white px-8 py-4 rounded-xl text-lg font-medium backdrop-blur-md transition-all">
-                    <Binary className="w-5 h-5 text-primary-400" />
-                    Load Save
-                </button>
-            </div>
-
-            {/* Feature Highlights */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-24 w-full max-w-5xl animate-fade-in-up animation-delay-300">
-
-                <div className="glass-panel p-6 rounded-2xl hover:bg-surface-800/80 transition-colors">
-                    <div className="w-12 h-12 rounded-xl bg-blue-500/20 border border-blue-500/30 flex items-center justify-center mb-4">
-                        <ShieldAlert className="w-6 h-6 text-blue-400" />
+            {/* Bureaucratic Header */}
+            <div className="border-b-4 border-neutral-800 pb-8 mb-12 flex flex-col md:flex-row md:items-end justify-between gap-6">
+                <div>
+                    <div className="font-mono text-accent-amber text-xs tracking-widest uppercase mb-4 flex items-center gap-2">
+                        <span className="inline-block w-2 h-2 bg-accent-amber animate-pulse"></span>
+                        WARNING: UNAUTHORIZED ACCESS ATTEMPT LOGGED
                     </div>
-                    <h3 className="text-xl font-bold text-white mb-2">Meaningful Choices</h3>
-                    <p className="text-slate-400 text-sm leading-relaxed">
-                        Every dialogue option shapes your reputation, integrity, and influence within the Bureau.
-                    </p>
+                    <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-display font-black uppercase text-white tracking-tight leading-[0.9] mb-4 w-full">
+                        System <br />
+                        <span className="text-neutral-500 line-through decoration-red-500 decoration-8">Failure</span>
+                        <span className="text-accent-amber block mt-2 text-3xl sm:text-4xl md:text-5xl lg:text-6xl">Override</span>
+                    </h1>
                 </div>
 
-                <div className="glass-panel p-6 rounded-2xl hover:bg-surface-800/80 transition-colors">
-                    <div className="w-12 h-12 rounded-xl bg-purple-500/20 border border-purple-500/30 flex items-center justify-center mb-4">
-                        <Binary className="w-6 h-6 text-purple-400" />
+                <div className="bg-neutral-900 border border-neutral-800 p-4 font-mono text-xs text-neutral-400 max-w-xs md:text-right">
+                    <p>DEPARTMENT OF DIGITAL REGULATION</p>
+                    <p>SECTION 4, DIV 9, CUBICLE 13B</p>
+                    <p className="mt-2 text-white">"Obedience is Efficiency."</p>
+                </div>
+            </div>
+
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+
+                {/* Main Content Area */}
+                <div className="lg:col-span-8 flex flex-col gap-8">
+
+                    {/* Hero Description Box */}
+                    <div className="brutalist-panel relative overflow-hidden group">
+                        <div className="absolute top-0 right-0 w-32 h-32 bg-accent-dim rounded-full blur-[50px] group-hover:bg-accent-amber/30 transition-colors"></div>
+
+                        <h2 className="font-display text-3xl font-bold text-white mb-6 uppercase tracking-tight relative z-10">
+                            Your Tax Officer Story Awaits
+                        </h2>
+
+                        <div className="space-y-4 font-mono text-sm leading-relaxed text-neutral-300 relative z-10 border-l border-neutral-700 pl-4">
+                            <p>
+                                &gt; INITIALIZING SIMULATION...<br />
+                                &gt; LOADING PROFILE: <strong>DASH (ENTITY 7734)</strong><br />
+                                &gt; STATUS: EXPENDABLE JUNIOR DATA ANALYST
+                            </p>
+                            <p className="text-neutral-400">
+                                You work at the Central Tax Department. It's soul-crushing. The coffee machines are hostile. Your boss thrives on sarcasm. And worst of all, there are 9,847 unread emails waiting for you.
+                            </p>
+                            <p className="text-white font-semibold">
+                                Will you uncover the deep-rooted corruption, or will you become another cog in the machine? Choose wisely.
+                            </p>
+                        </div>
+
+                        <div className="mt-8 flex flex-col sm:flex-row gap-4 relative z-10">
+                            <button className="brutalist-button flex items-center justify-center gap-3">
+                                <FileTerminal className="w-5 h-5" />
+                                Initiate Sequence
+                                <ArrowRight className="w-5 h-5" />
+                            </button>
+
+                            <button className="font-mono text-sm uppercase tracking-wider px-6 py-3 border-2 border-neutral-700 text-neutral-400 hover:border-accent-amber hover:text-accent-amber transition-colors shadow-[4px_4px_0px_#222] hover:shadow-[4px_4px_0px_#ff5500]">
+                                Load Previous
+                            </button>
+                        </div>
                     </div>
-                    <h3 className="text-xl font-bold text-white mb-2">Multiple Endings</h3>
-                    <p className="text-slate-400 text-sm leading-relaxed">
-                        Will you expose the corrupt directors, or become the very thing you swore to destroy?
-                    </p>
+
+                    {/* Warning Banner */}
+                    <div className="bg-red-950/30 border border-red-900 p-4 flex items-start gap-4">
+                        <TriangleAlert className="w-6 h-6 text-red-500 shrink-0 mt-1" />
+                        <div>
+                            <h4 className="font-mono text-xs font-bold text-red-400 uppercase tracking-widest mb-1">Notice of Liability</h4>
+                            <p className="font-mono text-xs text-red-200/70">
+                                The Bureau is not responsible for spontaneous existential dread, loss of integrity, or injuries sustained from sentient office equipment. All choices are final and immediately reported to your superiors.
+                            </p>
+                        </div>
+                    </div>
                 </div>
 
-                <div className="glass-panel p-6 rounded-2xl hover:bg-surface-800/80 transition-colors">
-                    <div className="w-12 h-12 rounded-xl bg-emerald-500/20 border border-emerald-500/30 flex items-center justify-center mb-4">
-                        <Sparkles className="w-6 h-6 text-emerald-400" />
+                {/* Aside Stats/Info */}
+                <div className="lg:col-span-4 flex flex-col gap-6">
+
+                    {/* Info Card 1 */}
+                    <div className="border-2 border-neutral-800 bg-neutral-900 p-5 group hover:border-neutral-600 transition-colors">
+                        <div className="flex justify-between items-center mb-4 border-b border-neutral-800 pb-2">
+                            <span className="font-mono text-[10px] text-neutral-500 uppercase">SYS.REQ 01</span>
+                            <Database className="w-4 h-4 text-neutral-500 group-hover:text-white transition-colors" />
+                        </div>
+                        <h3 className="font-display font-bold text-lg text-white mb-2 uppercase">Consequences</h3>
+                        <p className="font-mono text-xs text-neutral-400 h-20">
+                            Every dialogue option is logged. Your Integrity, Reputation, and Influence metrics will determine your survival in the bureau.
+                        </p>
                     </div>
-                    <h3 className="text-xl font-bold text-white mb-2">Dynamic World</h3>
-                    <p className="text-slate-400 text-sm leading-relaxed">
-                        Experience a rich narrative where even the coffee machine might be plotting against you.
-                    </p>
+
+                    {/* Info Card 2 */}
+                    <div className="border-2 border-neutral-800 bg-neutral-900 p-5 group hover:border-neutral-600 transition-colors">
+                        <div className="flex justify-between items-center mb-4 border-b border-neutral-800 pb-2">
+                            <span className="font-mono text-[10px] text-neutral-500 uppercase">SYS.REQ 02</span>
+                            <FileTerminal className="w-4 h-4 text-neutral-500 group-hover:text-white transition-colors" />
+                        </div>
+                        <h3 className="font-display font-bold text-lg text-white mb-2 uppercase">Multiple Endings</h3>
+                        <p className="font-mono text-xs text-neutral-400 h-20">
+                            Bring down Director Rathore or take his place. Your moral compass is the only guide in a sea of red tape.
+                        </p>
+                    </div>
+
                 </div>
 
             </div>

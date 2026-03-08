@@ -1,9 +1,11 @@
 import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Shield, ChevronRight, Terminal, User, BookOpen, Settings } from 'lucide-react';
+import { useAuth } from '../context/AuthContext';
 
 export default function Navbar() {
     const [isOpen, setIsOpen] = useState(false);
+    const { user, logout } = useAuth();
     const location = useLocation();
 
     const navLinks = [
@@ -54,15 +56,17 @@ export default function Navbar() {
                 <div className="p-6 border-b-2 border-neutral-800 font-mono text-xs text-neutral-400 space-y-2">
                     <div className="flex justify-between">
                         <span>ID:</span>
-                        <span className="text-white">ENTITY 7734</span>
+                        <span className="text-white">{user ? `ENTITY ${user.uid.substring(0, 4)}` : 'GUEST_01'}</span>
                     </div>
                     <div className="flex justify-between">
                         <span>STATUS:</span>
-                        <span className="text-accent-amber animate-pulse">ACTIVE</span>
+                        <span className={`${user ? 'text-accent-amber' : 'text-neutral-600'} animate-pulse`}>
+                            {user ? 'ACTIVE' : 'UNVERIFIED'}
+                        </span>
                     </div>
                     <div className="flex justify-between">
                         <span>CLEARANCE:</span>
-                        <span>LEVEL 1</span>
+                        <span>{user ? 'LEVEL 1' : 'RESTRICTED'}</span>
                     </div>
                 </div>
 
@@ -96,9 +100,21 @@ export default function Navbar() {
 
                 {/* Footer actions */}
                 <div className="p-6 border-t-2 border-neutral-800">
-                    <button className="w-full bg-red-600 hover:bg-red-500 text-white font-mono font-bold text-xs py-3 border border-red-400 shadow-[2px_2px_0px_#fff] transition-all active:shadow-[0px_0px_0px_#fff] active:translate-y-0.5 active:translate-x-0.5 uppercase tracking-widest">
-                        Logout [Exit]
-                    </button>
+                    {user ? (
+                        <button
+                            onClick={logout}
+                            className="w-full bg-red-600 hover:bg-red-500 text-white font-mono font-bold text-xs py-3 border border-red-400 shadow-[2px_2px_0px_#fff] transition-all active:shadow-[0px_0px_0px_#fff] active:translate-y-0.5 active:translate-x-0.5 uppercase tracking-widest"
+                        >
+                            Logout [Exit]
+                        </button>
+                    ) : (
+                        <Link
+                            to="/auth"
+                            className="w-full bg-accent-amber hover:bg-white text-black font-mono font-bold text-xs py-3 border border-orange-400 shadow-[2px_2px_0px_#fff] transition-all flex items-center justify-center uppercase tracking-widest"
+                        >
+                            Authorize [Login]
+                        </Link>
+                    )}
                 </div>
             </nav>
 

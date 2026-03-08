@@ -1,6 +1,11 @@
 import { User, Activity, ShieldAlert, Cpu } from 'lucide-react';
+import { useAuth } from '../context/AuthContext';
 
 export default function Records() {
+    const { userData } = useAuth();
+
+    const stats = userData?.stats || { integrity: 45, reputation: 12, influence: 0 };
+
     return (
         <div className="w-full max-w-5xl mx-auto flex flex-col pb-20 pt-8">
 
@@ -15,6 +20,12 @@ export default function Records() {
                 </div>
             </div>
 
+            {!userData && (
+                <div className="mb-8 p-4 border border-accent-amber/50 bg-accent-amber/5 text-accent-amber font-mono text-xs animate-pulse">
+                    CAUTION: DATA SYNCHRONIZATION IN PROGRESS... LOCAL CACHE LOADED.
+                </div>
+            )}
+
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
 
                 {/* Integrity Stat */}
@@ -27,12 +38,15 @@ export default function Records() {
                             </h3>
                             <p className="font-mono text-xs text-neutral-500 mt-1">Moral adherence to Bureau guidelines.</p>
                         </div>
-                        <span className="font-mono text-2xl font-bold text-white">45%</span>
+                        <span className="font-mono text-2xl font-bold text-white">{stats.integrity}%</span>
                     </div>
                     <div className="w-full h-2 bg-neutral-900 overflow-hidden relative border border-neutral-700">
-                        <div className="absolute top-0 left-0 h-full bg-blue-500 w-[45%] transition-all duration-1000 ease-out group-hover:bg-blue-400"></div>
+                        <div
+                            className="absolute top-0 left-0 h-full bg-blue-500 transition-all duration-1000 ease-out group-hover:bg-blue-400"
+                            style={{ width: `${stats.integrity}%` }}
+                        ></div>
                     </div>
-                    <p className="font-mono text-[10px] text-neutral-500 mt-3 text-right">TREND: DECLINING</p>
+                    <p className="font-mono text-[10px] text-neutral-500 mt-3 text-right">TREND: {stats.integrity < 50 ? 'DECLINING' : 'STABLE'}</p>
                 </div>
 
                 {/* Reputation Stat */}
@@ -45,12 +59,15 @@ export default function Records() {
                             </h3>
                             <p className="font-mono text-xs text-neutral-500 mt-1">Peer perception and social standing.</p>
                         </div>
-                        <span className="font-mono text-2xl font-bold text-white">12%</span>
+                        <span className="font-mono text-2xl font-bold text-white">{stats.reputation}%</span>
                     </div>
                     <div className="w-full h-2 bg-neutral-900 overflow-hidden relative border border-neutral-700">
-                        <div className="absolute top-0 left-0 h-full bg-emerald-500 w-[12%] transition-all duration-1000 ease-out group-hover:bg-emerald-400 shadow-[0_0_10px_rgba(16,185,129,0.5)]"></div>
+                        <div
+                            className="absolute top-0 left-0 h-full bg-emerald-500 transition-all duration-1000 ease-out group-hover:bg-emerald-400 shadow-[0_0_10px_rgba(16,185,129,0.5)]"
+                            style={{ width: `${stats.reputation}%` }}
+                        ></div>
                     </div>
-                    <p className="font-mono text-[10px] text-neutral-500 mt-3 text-right">TREND: CRITICAL</p>
+                    <p className="font-mono text-[10px] text-neutral-500 mt-3 text-right">TREND: {stats.reputation < 30 ? 'CRITICAL' : 'RECOGNIZED'}</p>
                 </div>
 
                 {/* Influence Stat */}
@@ -63,15 +80,20 @@ export default function Records() {
                             </h3>
                             <p className="font-mono text-xs text-neutral-500 mt-1">Ability to bypass bureaucratic red tape.</p>
                         </div>
-                        <span className="font-mono text-2xl font-bold text-white">0%</span>
+                        <span className="font-mono text-2xl font-bold text-white">{stats.influence}%</span>
                     </div>
                     <div className="w-full h-4 bg-neutral-900 overflow-hidden relative border border-neutral-700">
-                        <div className="absolute top-0 left-0 h-full bg-fuchsia-500 w-[0%] transition-all duration-1000 ease-out"></div>
+                        <div
+                            className="absolute top-0 left-0 h-full bg-fuchsia-500 transition-all duration-1000 ease-out"
+                            style={{ width: `${stats.influence}%` }}
+                        ></div>
                         {/* Pattern overlay for empty state */}
-                        <div className="absolute inset-0 opacity-20 bg-[repeating-linear-gradient(45deg,transparent,transparent_10px,#fff_10px,#fff_20px)]"></div>
+                        {stats.influence === 0 && (
+                            <div className="absolute inset-0 opacity-20 bg-[repeating-linear-gradient(45deg,transparent,transparent_10px,#fff_10px,#fff_20px)]"></div>
+                        )}
                     </div>
                     <p className="font-mono text-xs text-fuchsia-500/50 mt-4 text-center border border-fuchsia-900/30 py-2 bg-fuchsia-950/20">
-                        ACCESS DENIED. PROMOTE TO LEVEL 2 TO UNLOCK INFLUENCE ACTIONS.
+                        {stats.influence < 10 ? 'ACCESS DENIED. PROMOTE TO LEVEL 2 TO UNLOCK INFLUENCE ACTIONS.' : 'INFLUENCE CHANNEL ESTABLISHED.'}
                     </p>
                 </div>
 
@@ -89,19 +111,9 @@ export default function Records() {
                     </thead>
                     <tbody className="text-neutral-300">
                         <tr className="border-b border-neutral-800/50 hover:bg-neutral-800/30">
-                            <td className="py-3 text-neutral-500">08:04:12</td>
-                            <td className="py-3">Arrived exactly on time (Suspicious)</td>
-                            <td className="py-3 text-right text-red-400">-1 INT</td>
-                        </tr>
-                        <tr className="border-b border-neutral-800/50 hover:bg-neutral-800/30">
-                            <td className="py-3 text-neutral-500">09:15:00</td>
-                            <td className="py-3">Ignored screaming printer</td>
-                            <td className="py-3 text-right text-emerald-400">+2 REP</td>
-                        </tr>
-                        <tr className="hover:bg-neutral-800/30">
-                            <td className="py-3 text-neutral-500">11:30:45</td>
-                            <td className="py-3">Drank experimental coffee</td>
-                            <td className="py-3 text-right text-neutral-500">0</td>
+                            <td className="py-3 text-neutral-500">SESSION START</td>
+                            <td className="py-3">New Entity Record Created</td>
+                            <td className="py-3 text-right text-emerald-400">INIT</td>
                         </tr>
                     </tbody>
                 </table>

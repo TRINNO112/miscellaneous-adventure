@@ -1,0 +1,92 @@
+{
+    "__comment__": "This is the architecture format we will use. You can define characters, global variables, and scenes here.",
+    "characters": {
+        "system": {
+            "name": "SYSTEM",
+            "color": "#ff5500",
+            "image": null
+        },
+        "dash": {
+            "name": "Dash (You)",
+            "color": "#38bdf8",
+            "image": "/images/characters/dash_neutral.png"
+        },
+        "rathore": {
+            "name": "Director Rathore",
+            "color": "#ef4444",
+            "image": "/images/characters/rathore_scowling.png"
+        }
+    },
+    "initialState": {
+        "stats": {
+            "integrity": 50,
+            "reputation": 50,
+            "influence": 0
+        },
+        "inventory": []
+    },
+    "scenes": {
+        "chapter_1_start": {
+            "id": "chapter_1_start",
+            "title": "Cubicle 13B",
+            "background": "/images/backgrounds/cubicle.png",
+            "music": "/audio/office_drone.mp3",
+            "dialogue": [
+                {
+                    "speaker": "system",
+                    "text": "DAY 1. 08:00 AM. ATTENDANCE LOGGED."
+                },
+                {
+                    "speaker": "dash",
+                    "text": "Another day. The flickering fluorescent light above my desk is plotting against me."
+                },
+                {
+                    "speaker": "rathore",
+                    "text": "Dash. I need the Form 404 audit on my desk by 09:00. No excuses."
+                }
+            ],
+            "choices": [
+                {
+                    "label": "Yes sir, getting on it immediately.",
+                    "nextScene": "audit_forms",
+                    "statChanges": {
+                        "reputation": 2,
+                        "integrity": 0
+                    }
+                },
+                {
+                    "label": "Ignore him and go get coffee instead.",
+                    "nextScene": "breakroom_incident",
+                    "statChanges": {
+                        "reputation": -5,
+                        "integrity": 1
+                    }
+                }
+            ]
+        },
+        "audit_forms": {
+            "id": "audit_forms",
+            "title": "Paperwork Purgatory",
+            "background": "/images/backgrounds/desk_zoom.png",
+            "dialogue": [
+                {
+                    "speaker": "dash",
+                    "text": "I'm digging through the 404s... wait, these numbers don't add up. Millions are missing."
+                }
+            ],
+            "choices": [
+                {
+                    "label": "Report the discrepancy.",
+                    "nextScene": "report_fraud",
+                    "requirements": {
+                        "integrity": 50
+                    }
+                },
+                {
+                    "label": "Look the other way.",
+                    "nextScene": "ignore_fraud"
+                }
+            ]
+        }
+    }
+}

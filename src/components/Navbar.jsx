@@ -30,7 +30,7 @@ export default function Navbar() {
             </div>
 
             {/* Sidebar Navigation */}
-            <nav className={`fixed md:sticky top-0 left-0 h-screen w-64 bg-bureau-900 border-r-2 border-neutral-800 z-40 transform transition-transform duration-300 ease-in-out ${isOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'
+            <nav className={`fixed md:sticky top-0 left-0 h-screen w-72 bg-bureau-900 border-r-2 border-neutral-800 z-40 transform transition-transform duration-300 ease-in-out ${isOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'
                 } flex flex-col pt-16 md:pt-0`}>
 
                 {/* Branding header */}

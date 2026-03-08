@@ -1,8 +1,21 @@
-import { useState } from 'react';
-import { FileTerminal, TriangleAlert, Database, ArrowRight, ShieldAlert } from 'lucide-react';
+import { FileTerminal, TriangleAlert, Database, ShieldAlert, Play } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 
 export default function Home() {
-    const [integrityPenalty, setIntegrityPenalty] = useState(0);
+    const { user, userData, updateUserData } = useAuth();
+
+    const handleIntegrityTest = async () => {
+        if (!userData) return;
+        const newIntegrity = Math.max(0, (userData.stats?.integrity || 50) - 5);
+        await updateUserData({
+            stats: {
+                ...userData.stats,
+                integrity: newIntegrity
+            }
+        });
+        alert("COMPLIANCE FAILURE DETECTED: -5% INTEGRITY");
+    };
 
     return (
         <div className="w-full flex flex-col pb-20 pt-16 md:pt-8 min-h-[calc(100vh-80px)]">
@@ -23,7 +36,7 @@ export default function Home() {
 
                 <div className="bg-neutral-900 border border-neutral-800 p-4 font-mono text-xs text-neutral-400 max-w-xs md:text-right">
                     <p>DEPARTMENT OF DIGITAL REGULATION</p>
-                    <p>SECTION 4, DIV 9, CUBICLE 13B</p>
+                    <p>IDENTITY: {user?.uid?.substring(0, 10) || 'GUEST_ENTITY'}</p>
                     <p className="mt-2 text-white">"Obedience is Efficiency."</p>
                 </div>
             </div>
@@ -33,38 +46,36 @@ export default function Home() {
                 {/* Main Content Area */}
                 <div className="lg:col-span-8 flex flex-col gap-8">
 
-                    {/* Hero Description Box */}
-                    <div className="brutalist-panel relative overflow-hidden group">
-                        <div className="absolute top-0 right-0 w-32 h-32 bg-accent-dim rounded-full blur-[50px] group-hover:bg-accent-amber/30 transition-colors"></div>
-
-                        <h2 className="font-display text-3xl font-bold text-white mb-6 uppercase tracking-tight relative z-10">
-                            Your Tax Officer Story Awaits
-                        </h2>
-
-                        <div className="space-y-4 font-mono text-sm leading-relaxed text-neutral-300 relative z-10 border-l border-neutral-700 pl-4">
-                            <p>
-                                &gt; INITIALIZING SIMULATION...<br />
-                                &gt; LOADING PROFILE: <strong>DASH (ENTITY 7734)</strong><br />
-                                &gt; STATUS: EXPENDABLE JUNIOR DATA ANALYST
+                    {/* Immersive Game Mode Portal */}
+                    <div className="brutalist-panel relative overflow-hidden group p-10 bg-neutral-900 border-2 border-neutral-800 hover:border-accent-amber transition-all duration-500 h-[400px] flex flex-col justify-center">
+                        <div className="absolute top-0 right-0 p-2 font-mono text-[8px] text-neutral-700">SESSION_ISOLATION_v3</div>
+                        <div className="relative z-10 space-y-6">
+                            <div className="flex items-center gap-4">
+                                <div className="bg-accent-amber p-3 shadow-[4px_4px_0px_#fff]">
+                                    <Play className="w-8 h-8 text-black" />
+                                </div>
+                                <div>
+                                    <h2 className="font-display text-4xl font-black text-white uppercase tracking-tighter">
+                                        Active <span className="text-accent-amber">Protocol</span>
+                                    </h2>
+                                    <p className="font-mono text-[10px] text-neutral-500 uppercase tracking-widest">
+                                        Enter the Narrative Core
+                                    </p>
+                                </div>
+                            </div>
+                            <p className="font-mono text-sm text-neutral-400 max-w-xl leading-relaxed">
+                                Experience the simulation in full visual mode. Backgrounds, characters, and real-time system diagnostics enabled.
                             </p>
-                            <p className="text-neutral-400">
-                                You work at the Central Tax Department. It's soul-crushing. The coffee machines are hostile. Your boss thrives on sarcasm. And worst of all, there are 9,847 unread emails waiting for you.
-                            </p>
-                            <p className="text-white font-semibold">
-                                Will you uncover the deep-rooted corruption, or will you become another cog in the machine? Choose wisely.
-                            </p>
+                            <Link
+                                to="/session"
+                                className="brutalist-button w-fit flex items-center gap-4 py-4 px-10 group mt-4"
+                            >
+                                <span className="text-xl font-black uppercase">Initiate Session</span>
+                                <Play className="w-5 h-5 fill-current" />
+                            </Link>
                         </div>
-
-                        <div className="mt-8 flex flex-col sm:flex-row gap-4 relative z-10">
-                            <button className="brutalist-button flex items-center justify-center gap-3">
-                                <FileTerminal className="w-5 h-5" />
-                                Initiate Sequence
-                                <ArrowRight className="w-5 h-5" />
-                            </button>
-
-                            <button className="font-mono text-sm uppercase tracking-wider px-6 py-3 border-2 border-neutral-700 text-neutral-400 hover:border-accent-amber hover:text-accent-amber transition-colors shadow-[4px_4px_0px_#222] hover:shadow-[4px_4px_0px_#ff5500]">
-                                Load Previous
-                            </button>
+                        <div className="absolute top-1/2 right-[-5%] -translate-y-1/2 opacity-[0.03] select-none pointer-events-none rotate-12">
+                            <ShieldAlert className="w-96 h-96 text-white" />
                         </div>
                     </div>
 
@@ -78,35 +89,28 @@ export default function Home() {
                             </p>
                         </div>
                     </div>
-
-                    {/* Interactive Widget */}
-                    <div className="border border-neutral-800 bg-neutral-900 p-6 flex flex-col sm:flex-row items-center justify-between gap-6 group hover:border-red-900/50 transition-colors">
-                        <div>
-                            <h3 className="font-display font-bold text-lg text-white uppercase mb-1 flex items-center gap-2">
-                                <ShieldAlert className="w-5 h-5 text-red-500" />
-                                Integrity Compliance Test
-                            </h3>
-                            <p className="font-mono text-xs text-neutral-400">
-                                Do not push the red button under any circumstances. It is a violation of protocol 8A.
-                            </p>
-                            {integrityPenalty > 0 && (
-                                <p className="font-mono text-xs text-red-500 mt-2 font-bold animate-pulse">
-                                    INTEGRITY PENALTY LOGGED: -{integrityPenalty}
-                                </p>
-                            )}
-                        </div>
-                        <button
-                            onClick={() => setIntegrityPenalty(p => p + 1)}
-                            className="w-20 h-20 rounded-full bg-red-600 hover:bg-red-500 border-4 border-red-900 shadow-[0_0_20px_rgba(220,38,38,0.4)] flex items-center justify-center shrink-0 transition-transform active:scale-90 active:shadow-none"
-                        >
-                            <div className="w-12 h-12 rounded-full border border-red-400 bg-red-500"></div>
-                        </button>
-                    </div>
-
                 </div>
 
                 {/* Aside Stats/Info */}
                 <div className="lg:col-span-4 flex flex-col gap-6">
+
+                    {/* INTERGRITY TEST WIDGET */}
+                    <div className="brutalist-panel bg-neutral-900 border-neutral-800 p-6 flex flex-col gap-4">
+                        <div className="flex justify-between items-center mb-2">
+                            <span className="font-mono text-[10px] text-neutral-500 uppercase">Interactive Widget</span>
+                            <span className="w-2 h-2 rounded-full bg-red-600 animate-pulse"></span>
+                        </div>
+                        <h3 className="font-display font-bold text-xl text-white uppercase leading-tight">Integrity Compliance Test</h3>
+                        <p className="font-mono text-[10px] text-neutral-500 uppercase leading-relaxed">
+                            Press the button to verify your absolute loyalty to the Bureau's core directives.
+                        </p>
+                        <button
+                            onClick={handleIntegrityTest}
+                            className="bg-red-600 hover:bg-red-500 text-white font-mono font-bold text-xs py-4 border-2 border-red-400 shadow-[4px_4px_0px_#fff] transition-all active:shadow-[0px_0px_0px_#fff] active:translate-y-1 active:translate-x-1 uppercase"
+                        >
+                            Execute Compliance [DO NOT PRESS]
+                        </button>
+                    </div>
 
                     {/* Info Card 1 */}
                     <div className="border-2 border-neutral-800 bg-neutral-900 p-5 group hover:border-neutral-600 transition-colors">
@@ -115,7 +119,7 @@ export default function Home() {
                             <Database className="w-4 h-4 text-neutral-500 group-hover:text-white transition-colors" />
                         </div>
                         <h3 className="font-display font-bold text-lg text-white mb-2 uppercase">Consequences</h3>
-                        <p className="font-mono text-xs text-neutral-400 h-20">
+                        <p className="font-mono text-xs text-neutral-400">
                             Every dialogue option is logged. Your Integrity, Reputation, and Influence metrics will determine your survival in the bureau.
                         </p>
                     </div>
@@ -126,9 +130,9 @@ export default function Home() {
                             <span className="font-mono text-[10px] text-neutral-500 uppercase">SYS.REQ 02</span>
                             <FileTerminal className="w-4 h-4 text-neutral-500 group-hover:text-white transition-colors" />
                         </div>
-                        <h3 className="font-display font-bold text-lg text-white mb-2 uppercase">Multiple Endings</h3>
-                        <p className="font-mono text-xs text-neutral-400 h-20">
-                            Bring down Director Rathore or take his place. Your moral compass is the only guide in a sea of red tape.
+                        <h3 className="font-display font-bold text-lg text-white mb-2 uppercase">Dossier Access</h3>
+                        <p className="font-mono text-xs text-neutral-400">
+                            The Dossier page contains your permanent record. It is updated in real-time based on your actions within the terminal.
                         </p>
                     </div>
 

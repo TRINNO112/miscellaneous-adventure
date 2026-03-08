@@ -1,18 +1,31 @@
-import { Settings as SettingsIcon, Monitor, Volume2, Save, PowerOff, ShieldAlert } from 'lucide-react';
+import { Settings as SettingsIcon, Monitor, Volume2, Save, PowerOff, ShieldAlert, LogOut } from 'lucide-react';
+import { useAuth } from '../context/AuthContext';
 
 export default function System() {
+    const { logout, user } = useAuth();
+
     return (
         <div className="w-full max-w-5xl mx-auto flex flex-col pb-20 pt-8">
 
             {/* Header */}
-            <div className="border-b-4 border-neutral-800 pb-6 mb-8 flex items-end gap-4">
-                <SettingsIcon className="w-10 h-10 text-neutral-500 animate-[spin_10s_linear_infinite]" />
-                <div>
-                    <h1 className="text-4xl md:text-5xl font-display font-black uppercase text-white tracking-tight">
-                        System <span className="text-accent-amber">Control</span>
-                    </h1>
-                    <p className="font-mono text-xs text-neutral-500 uppercase mt-1">Terminal Preferences // Save Management</p>
+            <div className="border-b-4 border-neutral-800 pb-6 mb-8 flex items-end justify-between gap-4">
+                <div className="flex items-end gap-4">
+                    <SettingsIcon className="w-10 h-10 text-neutral-500 animate-[spin_10s_linear_infinite]" />
+                    <div>
+                        <h1 className="text-4xl md:text-5xl font-display font-black uppercase text-white tracking-tight">
+                            System <span className="text-accent-amber">Control</span>
+                        </h1>
+                        <p className="font-mono text-xs text-neutral-500 uppercase mt-1">Terminal Preferences // Save Management</p>
+                    </div>
                 </div>
+
+                <button
+                    onClick={logout}
+                    className="font-mono text-[10px] text-red-500 hover:text-white flex items-center gap-2 border border-red-900 px-3 py-1 hover:bg-red-950 transition-colors"
+                >
+                    <LogOut className="w-3 h-3" />
+                    DISCONNECT_SESSION
+                </button>
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
@@ -91,7 +104,7 @@ export default function System() {
                         </div>
 
                         <p className="font-mono text-xs text-neutral-500 leading-relaxed">
-                            Caution: Saving state creates a detectable log entry. Do not leave the terminal unattended.
+                            Caution: Saving state creates a detectable log entry (Entity ID: {user?.uid?.substring(0, 8) || 'GUEST_PROTO'}...). Do not leave the terminal unattended.
                         </p>
 
                         <button className="w-full brutalist-button flex items-center justify-center gap-2 border-red-500 text-red-500 hover:bg-red-500 hover:text-black shadow-[4px_4px_0px_#ef4444]">
@@ -100,7 +113,10 @@ export default function System() {
                         </button>
                     </div>
 
-                    <button className="brutalist-button flex justify-between items-center w-full px-6 py-4 bg-transparent border-neutral-800 text-neutral-500 hover:border-red-500 hover:text-red-500 group shadow-none">
+                    <button
+                        className="brutalist-button flex justify-between items-center w-full px-6 py-4 bg-transparent border-neutral-800 text-neutral-500 hover:border-red-500 hover:text-red-500 group shadow-none"
+                        onClick={() => alert("WIPE_READY: Access Restricted.")}
+                    >
                         <span className="font-mono uppercase text-sm font-bold tracking-widest">Wipe Data</span>
                         <PowerOff className="w-5 h-5 group-hover:rotate-90 transition-transform" />
                     </button>

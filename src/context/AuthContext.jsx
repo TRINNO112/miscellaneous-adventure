@@ -1,0 +1,117 @@
+import React, { createContext, useContext, useEffect, useState } from 'react';
+import {
+    onAuthStateChanged,
+    signInWithEmailAndPassword,
+    createUserWithEmailAndPassword,
+    signOut,
+    GoogleAuthProvider,
+    signInWithPopup
+} from 'firebase/auth';
+import { auth, db } from '../lib/firebase';
+import { doc, getDoc, setDoc } from 'firebase/firestore';
+
+const AuthContext = createContext();
+const googleProvider = new GoogleAuthProvider();
+
+export function useAuth() {
+    return useContext(AuthContext);
+}
+
+export function AuthProvider({ children }) {
+    const [user, setUser] = useState(null);
+    const [userData, setUserData] = useState(null);
+    const [loading, setLoading] = useState(true);
+
+    // Initialize data for new users
+    async function initializeUserData(uid) {
+        const initialData = {
+            stats: {
+                integrity: 45,
+                reputation: 12,
+                influence: 0
+            },
+            currentScene: 'chapter_1_start',
+            inventory: [],
+            createdAt: new Date().toISOString()
+        };
+        await setDoc(doc(db, 'users', uid), initialData);
+        return initialData;
+    }
+
+    // Sign Up
+    async function signup(email, password) {
+        const res = await createUserWithEmailAndPassword(auth, email, password);
+        const data = await initializeUserData(res.user.uid);
+        setUserData(data);
+        return res;
+    }
+
+    // Login
+    function login(email, password) {
+        return signInWithEmailAndPassword(auth, email, password);
+    }
+
+    // Google Login
+    async function googleLogin() {
+        const res = await signInWithPopup(auth, googleProvider);
+        const docRef = doc(db, 'users', res.user.uid);
+        const docSnap = await getDoc(docRef);
+
+        if (!docSnap.exists()) {
+            const data = await initializeUserData(res.user.uid);
+            setUserData(data);
+        } else {
+            setUserData(docSnap.data());
+        }
+        return res;
+    }
+
+    // Logout
+    function logout() {
+        return signOut(auth);
+    }
+
+    useEffect(() => {
+        const unsubscribe = onAuthStateChanged(auth, async (user) => {
+            setUser(user);
+            if (user) {
+                const docRef = doc(db, 'users', user.uid);
+                const docSnap = await getDoc(docRef);
+                if (docSnap.exists()) {
+                    setUserData(docSnap.data());
+                }
+            } else {
+                // Handle Guest Mode (load from LocalStorage)
+                const guestData = localStorage.getItem('guest_progress');
+                if (guestData) {
+                    setUserData(JSON.parse(guestData));
+                } else {
+                    setUserData({
+                        stats: { integrity: 45, reputation: 12, influence: 0 },
+                        currentScene: 'chapter_1_start',
+                        inventory: []
+                    });
+                }
+            }
+            setLoading(false);
+        });
+
+        return unsubscribe;
+    }, []);
+
+    const value = {
+        user,
+        userData,
+        signup,
+        login,
+        googleLogin,
+        logout,
+        setUserData
+    };
+
+    return (
+        <AuthContext.Provider value={value}>
+            {!loading && children}
+        </AuthContext.Provider>
+    );
+}

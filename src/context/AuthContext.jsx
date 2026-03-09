@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useEffect, useState } from 'react';
+import React, { createContext, useEffect, useState } from 'react';
 import {
     onAuthStateChanged,
     signInWithEmailAndPassword,
@@ -15,7 +15,6 @@ import { doc, getDoc, setDoc, updateDoc } from 'firebase/firestore';
 export const AuthContext = createContext();
 
 export function AuthProvider({ children }) {
-    const googleProvider = new GoogleAuthProvider();
     const [user, setUser] = useState(null);
     const [userData, setUserData] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -37,21 +36,22 @@ export function AuthProvider({ children }) {
     }
 
     // Sign Up
-    async function signup(email, password) {
+    const signup = React.useCallback(async (email, password) => {
         const res = await createUserWithEmailAndPassword(auth, email, password);
         const data = await initializeUserData(res.user.uid);
         setUserData(data);
         return res;
-    }
+    }, []);
 
     // Login
-    function login(email, password) {
+    const login = React.useCallback((email, password) => {
         return signInWithEmailAndPassword(auth, email, password);
-    }
+    }, []);
 
     // Google Login
-    async function googleLogin() {
-        const res = await signInWithPopup(auth, googleProvider);
+    const googleLogin = React.useCallback(async () => {
+        const provider = new GoogleAuthProvider();
+        const res = await signInWithPopup(auth, provider);
         const docRef = doc(db, 'users', res.user.uid);
         const docSnap = await getDoc(docRef);
 
@@ -62,12 +62,12 @@ export function AuthProvider({ children }) {
             setUserData(docSnap.data());
         }
         return res;
-    }
+    }, []);
 
     // Logout
-    function logout() {
+    const logout = React.useCallback(() => {
         return signOut(auth);
-    }
+    }, []);
 
     // Centralized Data Update Helper
     async function updateUserData(updates) {

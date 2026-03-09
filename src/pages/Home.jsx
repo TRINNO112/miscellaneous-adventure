@@ -8,9 +8,9 @@ export default function Home() {
     const [glitch, setGlitch] = useState(false);
 
     const handleIntegrityTest = async () => {
-        if (!userData) return;
+        if (!userData || glitch) return;
         setGlitch(true);
-        setTimeout(() => setGlitch(false), 500);
+        setTimeout(() => setGlitch(false), 1500);
 
         const newIntegrity = Math.max(0, (userData.stats?.integrity || 50) - 5);
         await updateUserData({
@@ -22,7 +22,23 @@ export default function Home() {
     };
 
     return (
-        <div className={`w-full flex flex-col pb-20 pt-16 md:pt-8 min-h-[calc(100vh-80px)] transition-all duration-75 ${glitch ? 'bg-red-900/40 mix-blend-hard-light invert-[0.1]' : ''}`}>
+        <div className={`w-full flex flex-col pb-20 pt-16 md:pt-8 min-h-[calc(100vh-80px)] transition-all duration-75 ${glitch ? 'animate-[glitch-shake_0.15s_ease-in-out_infinite]' : ''}`}>
+
+            {/* Glitch Overlay */}
+            {glitch && (
+                <div className="fixed inset-0 z-50 pointer-events-none">
+                    <div className="absolute inset-0 bg-red-900/30 mix-blend-multiply animate-pulse" />
+                    <div className="absolute inset-0 bg-[repeating-linear-gradient(0deg,transparent,transparent_2px,rgba(255,0,0,0.08)_2px,rgba(255,0,0,0.08)_4px)]" />
+                    <div className="absolute inset-0 opacity-60" style={{ background: 'linear-gradient(transparent 50%, rgba(255,0,0,0.15) 50%)', backgroundSize: '100% 4px' }} />
+                    <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-[60] pointer-events-none">
+                        <div className="bg-red-950/90 border-2 border-red-500 px-8 py-6 shadow-[0_0_40px_rgba(239,68,68,0.5),8px_8px_0px_#000] animate-[glitch-shake_0.1s_ease-in-out_infinite]">
+                            <p className="font-display text-3xl md:text-5xl font-black text-red-500 uppercase tracking-tighter text-center">-5 Integrity</p>
+                            <p className="font-mono text-xs text-red-400/80 mt-3 text-center uppercase tracking-widest">Compliance Violation Logged</p>
+                        </div>
+                    </div>
+                </div>
+            )}
+
 
             {/* Bureaucratic Header */}
             <div className="border-b-4 border-neutral-800 pb-8 mb-12 flex flex-col md:flex-row md:items-end justify-between gap-6">

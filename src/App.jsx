@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Home from './pages/Home';
@@ -6,15 +7,39 @@ import Records from './pages/Records';
 import System from './pages/System';
 import Auth from './pages/Auth';
 import Session from './pages/Session';
-import { AuthProvider } from './context/AuthContext';
+import { useAuth } from './hooks/useAuth';
 
 function AppContent() {
   const location = useLocation();
+  const { updateUserData } = useAuth();
+
+  // Testing helper: Reset memory shortcut
+  useEffect(() => {
+    const handleKeyDown = async (e) => {
+      // Use Alt+R to clear local storage and restart
+      if (e.altKey && e.key.toLowerCase() === 'r') {
+        localStorage.clear();
+        const initialData = {
+          stats: { integrity: 45, reputation: 12, influence: 0 },
+          currentScene: 'chapter_1_start',
+          inventory: []
+        };
+        if (updateUserData) {
+          updateUserData(initialData);
+        }
+        window.location.href = '/';
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [updateUserData]);
 
   // Dynamic Background based on Route
   const getBgClass = () => {
     if (location.pathname === '/') return 'bg-constellation';
-    if (['/about', '/records', '/system'].includes(location.pathname)) return 'bg-nebula';
+    if (location.pathname === '/about') return 'bg-nebula-dossier';
+    if (location.pathname === '/records') return 'bg-nebula-records';
+    if (location.pathname === '/system') return 'bg-nebula-system';
     return 'bg-bureau-900'; // Default / Session
   };
 

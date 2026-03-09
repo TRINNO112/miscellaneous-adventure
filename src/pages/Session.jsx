@@ -5,7 +5,6 @@ import { useAuth } from '../hooks/useAuth';
 
 export default function Session() {
     const { user } = useAuth();
-    const [now, setNow] = useState(new Date());
     const [stats, setStats] = useState({
         memory: '0.00 GB',
         battery: '100%',
@@ -21,8 +20,6 @@ export default function Session() {
     useEffect(() => {
         const startTime = Date.now();
         const timer = setInterval(() => {
-            setNow(new Date());
-
             // Uptime calculation
             const diff = Math.floor((Date.now() - startTime) / 1000);
             const h = Math.floor(diff / 3600).toString().padStart(2, '0');
@@ -95,13 +92,12 @@ export default function Session() {
                             <Battery className="w-3 h-3 text-accent-amber" />
                             <span>PWR: <span className="text-white">{stats.battery}</span></span>
                         </div>
-                        <div className="flex items-center gap-2 whitespace-nowrap border-l border-neutral-800 pl-4">
-                            <Clock className="w-3 h-3" />
-                            <span>TIME: <span className="text-white">{now.toLocaleTimeString()}</span></span>
-                        </div>
-                        <div className="flex items-center gap-2 whitespace-nowrap border-l border-neutral-800 pl-4">
-                            <ShieldAlert className="w-3 h-3 text-red-500" />
-                            <span>UPTIME: <span className="text-white">{stats.uptime}</span></span>
+                        <div
+                            className="flex items-center gap-2 whitespace-nowrap border-l border-neutral-800 pl-4 text-red-500 hover:text-red-400 cursor-pointer transition-colors group"
+                            onClick={() => window.location.href = '/'}
+                        >
+                            <ShieldAlert className="w-3 h-3 animate-pulse group-hover:scale-110" />
+                            <span className="font-bold underline">[ABORT_TERMINAL_SESSION]</span>
                         </div>
                     </div>
                 </div>
@@ -132,7 +128,8 @@ export default function Session() {
                                 <img
                                     src={char.sprite}
                                     alt={char.name}
-                                    className="h-full object-contain filter drop-shadow-[0_0_15px_rgba(255,165,0,0.3)] contrast-125 saturate-50"
+                                    className="h-full object-contain filter drop-shadow-[0_0_15px_rgba(255,165,0,0.3)] contrast-125 saturate-50 pointer-events-none select-none translate-y-[30px]"
+                                    draggable="false"
                                 />
                                 <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-8 whitespace-nowrap">
                                     <span className="bg-black border border-accent-amber text-accent-amber px-2 py-0.5 font-mono text-[10px] uppercase">
@@ -154,7 +151,7 @@ export default function Session() {
                 </div>
 
                 {/* Right Side: Dialogue & Protocol Panel */}
-                <div className="w-full lg:w-96 flex flex-col gap-4 shrink-0 overflow-y-auto">
+                <div className="w-full lg:w-96 flex flex-col gap-4 shrink-0 min-h-0">
 
                     <div className="brutalist-panel bg-neutral-900 border-neutral-800 p-6 flex-1 flex flex-col">
                         <div className="mb-4 border-b border-neutral-800 pb-2 flex justify-between items-center">

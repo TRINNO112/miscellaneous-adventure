@@ -1,20 +1,25 @@
 {
-    "__comment__": "This is the architecture format we will use. You can define characters, global variables, and scenes here.",
+    "__comment__": "Brutalist Government Tax Adventure - Chapter 1",
     "characters": {
         "system": {
             "name": "SYSTEM",
             "color": "#ff5500",
             "image": null
         },
-        "dash": {
-            "name": "Dash (You)",
+        "player": {
+            "name": "{playerName}",
             "color": "#38bdf8",
             "image": "/images/characters/dash_neutral.png"
         },
-        "rathore": {
-            "name": "Director Rathore",
+        "vance": {
+            "name": "Sr. Inspector Vance",
             "color": "#ef4444",
-            "image": "/images/characters/rathore_scowling.png"
+            "image": "/images/characters/vance_stern.png"
+        },
+        "pete": {
+            "name": "Greasy Pete",
+            "color": "#fbbf24",
+            "image": "/images/characters/pete_greasy.png"
         }
     },
     "initialState": {
@@ -28,63 +33,304 @@
     "scenes": {
         "chapter_1_start": {
             "id": "chapter_1_start",
-            "title": "Cubicle 13B",
-            "background": "/images/backgrounds/cubicle.png",
-            "music": "/audio/office_drone.mp3",
+            "title": "Internal Monologue",
+            "background": "/images/backgrounds/dark_void.png",
+            "type": "name_entry",
             "dialogue": [
                 {
                     "speaker": "system",
-                    "text": "DAY 1. 08:00 AM. ATTENDANCE LOGGED."
+                    "text": "ENTER IDENTIFICATION PROTOCOL."
+                }
+            ],
+            "nextScene": "chapter_1_monologue"
+        },
+        "chapter_1_monologue": {
+            "id": "chapter_1_monologue",
+            "title": "Internal Monologue",
+            "background": "/images/backgrounds/city_haze.png",
+            "dialogue": [
+                {
+                    "speaker": "player",
+                    "text": "I am 24 years old, and I finally did it."
                 },
                 {
-                    "speaker": "dash",
-                    "text": "Another day. The flickering fluorescent light above my desk is plotting against me."
+                    "speaker": "player",
+                    "text": "I actually conquered the absolute mountain of stress, late nights, and soul-crushing prep that was the government tax department exams."
                 },
                 {
-                    "speaker": "rathore",
-                    "text": "Dash. I need the Form 404 audit on my desk by 09:00. No excuses."
+                    "speaker": "player",
+                    "text": "It was brutal. Honestly, it took pieces of my soul I didn't know I had to give. But standing here right now? The view from the top of this mountain is beautiful."
+                },
+                {
+                    "speaker": "player",
+                    "text": "This is the beginning of my actual life. A life where I make my own money, where I am completely independent, and where I don't have to answer to anyone about my future."
+                },
+                {
+                    "speaker": "player",
+                    "text": "My ultimate goal? I'm going to save up, buy a solitary apartment deep in the woods, and just feel that pure independence pumping through my blood."
+                },
+                {
+                    "speaker": "player",
+                    "text": "No noise, no dependency. Just me and the peace I earned."
+                },
+                {
+                    "speaker": "player",
+                    "text": "But to get the woods, I have to survive the concrete jungle first."
+                }
+            ],
+            "nextScene": "office_arrival"
+        },
+        "office_arrival": {
+            "id": "office_arrival",
+            "title": "Regional Tax Office",
+            "background": "/images/backgrounds/office_stale.png",
+            "dialogue": [
+                {
+                    "speaker": "system",
+                    "text": "REGIONAL TAX COLLECTION OFFICE - SECTOR 7G."
+                },
+                {
+                    "speaker": "player",
+                    "text": "I adjust my collar and step in. I’m expecting a sleek operation, but it smells like old paper, stale coffee, and bureaucratic despair."
+                },
+                {
+                    "speaker": "player",
+                    "text": "Ceiling fans lazily slice through the warm air, doing absolutely nothing to cool the room."
+                },
+                {
+                    "speaker": "system",
+                    "text": "SENIOR INSPECTOR VANCE: UNRESPONSIVE AT DESK."
+                }
+            ],
+            "nextScene": "vance_encounter"
+        },
+        "vance_encounter": {
+            "id": "vance_encounter",
+            "title": "Sr. Inspector's Desk",
+            "background": "/images/backgrounds/vance_office.png",
+            "dialogue": [
+                {
+                    "speaker": "vance",
+                    "text": "Ah. The new blood. You must be {playerName}."
+                },
+                {
+                    "speaker": "vance",
+                    "text": "Enjoy the high of passing those exams while it lasts, kid. Because right now, you are at the absolute bottom of the food chain."
+                },
+                {
+                    "speaker": "vance",
+                    "text": "You see this folder? These are the Ghosts. The chronic defaulters."
+                },
+                {
+                    "speaker": "vance",
+                    "text": "People and businesses that haven't paid a dime in years. They ignore letters, they dodge phone calls, and they eat junior officers like you for breakfast."
+                },
+                {
+                    "speaker": "vance",
+                    "text": "Your job is to go out there, be logical, be firm, and squeeze water from these stones. If you fail, you’ll be pushing papers in the basement archive until you retire. Understood?"
                 }
             ],
             "choices": [
                 {
-                    "label": "Yes sir, getting on it immediately.",
-                    "nextScene": "audit_forms",
+                    "label": "I understand perfectly. They haven't dealt with me yet.",
+                    "nextScene": "vance_response_confident",
                     "statChanges": {
-                        "reputation": 2,
-                        "integrity": 0
+                        "reputation": 5,
+                        "integrity": -2
                     }
                 },
                 {
-                    "label": "Ignore him and go get coffee instead.",
-                    "nextScene": "breakroom_incident",
+                    "label": "Understood. I'll review their financials and close the net.",
+                    "nextScene": "vance_response_logical",
                     "statChanges": {
-                        "reputation": -5,
+                        "reputation": 2,
+                        "integrity": 2
+                    }
+                },
+                {
+                    "label": "Yes, sir. I’m here to do a job. Point me to the first target.",
+                    "nextScene": "vance_response_cold",
+                    "statChanges": {
+                        "reputation": 1,
                         "integrity": 1
                     }
                 }
             ]
         },
-        "audit_forms": {
-            "id": "audit_forms",
-            "title": "Paperwork Purgatory",
-            "background": "/images/backgrounds/desk_zoom.png",
+        "vance_response_confident": {
+            "id": "vance_response_confident",
+            "title": "Sr. Inspector's Desk",
+            "background": "/images/backgrounds/vance_office.png",
             "dialogue": [
                 {
-                    "speaker": "dash",
-                    "text": "I'm digging through the 404s... wait, these numbers don't add up. Millions are missing."
+                    "speaker": "vance",
+                    "text": "Big words for a 24-year-old. Let's see if your spine matches your mouth."
+                }
+            ],
+            "nextScene": "vance_assignment"
+        },
+        "vance_response_logical": {
+            "id": "vance_response_logical",
+            "title": "Sr. Inspector's Desk",
+            "background": "/images/backgrounds/vance_office.png",
+            "dialogue": [
+                {
+                    "speaker": "vance",
+                    "text": "Good. Brains over brawn. Let's see if that textbook logic holds up in the real world."
+                }
+            ],
+            "nextScene": "vance_assignment"
+        },
+        "vance_response_cold": {
+            "id": "vance_response_cold",
+            "title": "Sr. Inspector's Desk",
+            "background": "/images/backgrounds/vance_office.png",
+            "dialogue": [
+                {
+                    "speaker": "vance",
+                    "text": "Straight to the point. I can appreciate that. Try to keep that focus."
+                }
+            ],
+            "nextScene": "vance_assignment"
+        },
+        "vance_assignment": {
+            "id": "vance_assignment",
+            "title": "Sr. Inspector's Desk",
+            "background": "/images/backgrounds/vance_office.png",
+            "dialogue": [
+                {
+                    "speaker": "vance",
+                    "text": "Your first target is a local auto-repair shop owner named 'Greasy' Pete. Owes five years of back taxes."
+                },
+                {
+                    "speaker": "vance",
+                    "text": "He claims his business is failing, but his social media shows him buying a new jet ski every summer. He’s loud, he’s aggressive, and he hates us."
+                },
+                {
+                    "speaker": "vance",
+                    "text": "Take a department vehicle. Don't let him intimidate you. Remember, you have the full weight of the tax code behind you."
+                },
+                {
+                    "speaker": "player",
+                    "text": "I pick up the heavy file. The paper is rough against my fingers. Greasy Pete."
+                },
+                {
+                    "speaker": "player",
+                    "text": "I step out of the office and into the glaring sunlight, gripping the folder tight. I need this win. I need that apartment in the woods."
+                }
+            ],
+            "nextScene": "pete_garage"
+        },
+        "pete_garage": {
+            "id": "pete_garage",
+            "title": "Pete's Premium Auto",
+            "background": "/images/backgrounds/pete_garage.png",
+            "dialogue": [
+                {
+                    "speaker": "player",
+                    "text": "I stare at the shop sign: Pete’s Premium Auto. Premium? My foot."
+                },
+                {
+                    "speaker": "player",
+                    "text": "I’ve spent the last hour cross-referencing his filings. The idiot claims he’s 'operating at a net loss' for the fifth year in a row."
+                },
+                {
+                    "speaker": "player",
+                    "text": "I step into the garage. The smell of burnt oil and cigarette smoke is thick."
+                },
+                {
+                    "speaker": "player",
+                    "text": "Peter 'Greasy' Pete? My name is {playerName}, Junior Recovery Officer."
+                },
+                {
+                    "speaker": "pete",
+                    "text": "Another government parasite? What the hell are you doing here, kid? Get lost before I lose my temper."
+                },
+                {
+                    "speaker": "player",
+                    "text": "In the red? Interesting. Then I assume that $150,000 luxury sports car sitting in the back garage is a donation?"
+                },
+                {
+                    "speaker": "pete",
+                    "text": "Listen to me, you government parasite! That car has nothing to do with you. Get off my property before I teach you a lesson."
+                },
+                {
+                    "speaker": "system",
+                    "text": "TENSION LEVEL: CRITICAL. SUBJECT IS ARMED WITH CROWBAR."
                 }
             ],
             "choices": [
                 {
-                    "label": "Report the discrepancy.",
-                    "nextScene": "report_fraud",
-                    "requirements": {
-                        "integrity": 50
+                    "label": "Look, Pete. I’m here to help you avoid a jail cell. Let's talk.",
+                    "nextScene": "pete_peaceful",
+                    "statChanges": {
+                        "integrity": 5,
+                        "reputation": -2
                     }
                 },
                 {
-                    "label": "Look the other way.",
-                    "nextScene": "ignore_fraud"
+                    "label": "Pay me now and keep your shop, or lose your life's work. Choice is yours.",
+                    "nextScene": "pete_pressure",
+                    "statChanges": {
+                        "reputation": 5,
+                        "integrity": -1
+                    }
+                },
+                {
+                    "label": "[DRAW SERVICE WEAPON] Pay the taxes, or go to Hell. Write the check.",
+                    "nextScene": "pete_hostile",
+                    "statChanges": {
+                        "integrity": -10,
+                        "reputation": 10,
+                        "influence": 5
+                    }
+                }
+            ]
+        },
+        "pete_peaceful": {
+            "id": "pete_peaceful",
+            "title": "Pete's Premium Auto",
+            "background": "/images/backgrounds/pete_garage.png",
+            "dialogue": [
+                {
+                    "speaker": "system",
+                    "text": "SCENE UNDER DEVELOPMENT. CHAPTER 1 PART 2 CONTINUES..."
+                }
+            ],
+            "nextScene": "chapter_1_end"
+        },
+        "pete_pressure": {
+            "id": "pete_pressure",
+            "title": "Pete's Premium Auto",
+            "background": "/images/backgrounds/pete_garage.png",
+            "dialogue": [
+                {
+                    "speaker": "system",
+                    "text": "SCENE UNDER DEVELOPMENT. CHAPTER 1 PART 2 CONTINUES..."
+                }
+            ],
+            "nextScene": "chapter_1_end"
+        },
+        "pete_hostile": {
+            "id": "pete_hostile",
+            "title": "Pete's Premium Auto",
+            "background": "/images/backgrounds/pete_garage.png",
+            "dialogue": [
+                {
+                    "speaker": "system",
+                    "text": "SCENE UNDER DEVELOPMENT. CHAPTER 1 PART 2 CONTINUES..."
+                }
+            ],
+            "nextScene": "chapter_1_end"
+        },
+        "chapter_1_end": {
+            "id": "chapter_1_end",
+            "title": "Bureau Headquarters",
+            "background": "/images/backgrounds/dark_void.png",
+            "dialogue": [
+                {
+                    "speaker": "system",
+                    "text": "CHAPTER 1: BLOOD, SWEAT, AND TAXES - COMPLETED."
                 }
             ]
         }

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useAuth } from '../hooks/useAuth';
 import storyData from '../data/story.json';
 import { ChevronRight, ArrowRight, User, Terminal } from 'lucide-react';
@@ -11,6 +11,7 @@ export default function StoryEngine({ onSceneData }) {
     const [displayedText, setDisplayedText] = useState('');
     const [playerNameInput, setPlayerNameInput] = useState('');
     const [history, setHistory] = useState([]); // Array of { sceneId, stats }
+    const intervalRef = useRef(null);
 
     const currentScene = storyData.scenes[currentSceneId];
     const currentDialogue = currentScene?.dialogue[dialogueIndex];
@@ -62,17 +63,21 @@ export default function StoryEngine({ onSceneData }) {
         let i = 0;
         setDisplayedText('');
 
-        const interval = setInterval(() => {
+        if (intervalRef.current) clearInterval(intervalRef.current);
+
+        intervalRef.current = setInterval(() => {
             const rawText = replacePlaceholders(currentDialogue.text);
             setDisplayedText(rawText.substring(0, i + 1));
             i++;
             if (i >= rawText.length) {
-                clearInterval(interval);
+                clearInterval(intervalRef.current);
                 setIsTyping(false);
             }
-        }, 20);
+        }, 15);
 
-        return () => clearInterval(interval);
+        return () => {
+            if (intervalRef.current) clearInterval(intervalRef.current);
+        };
     }, [currentDialogue, replacePlaceholders]);
 
     if (!currentScene) return <div className="p-10 font-mono text-red-500">ERROR: SCENE [{currentSceneId}] NOT FOUND.</div>;
@@ -80,6 +85,7 @@ export default function StoryEngine({ onSceneData }) {
     const handleNextDialogue = () => {
         if (isTyping) {
             // Skip typing
+            if (intervalRef.current) clearInterval(intervalRef.current);
             setDisplayedText(replacePlaceholders(currentDialogue.text));
             setIsTyping(false);
             return;

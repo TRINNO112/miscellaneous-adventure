@@ -8,6 +8,7 @@ import System from './pages/System';
 import Auth from './pages/Auth';
 import Session from './pages/Session';
 import { useAuth } from './hooks/useAuth';
+import { AuthProvider } from './context/AuthContext';
 
 function AppContent() {
   const location = useLocation();
@@ -25,9 +26,13 @@ function AppContent() {
           inventory: []
         };
         if (updateUserData) {
-          updateUserData(initialData);
+          try {
+            await updateUserData(initialData);
+          } catch (e) {
+            console.error(e);
+          }
         }
-        window.location.href = '/';
+        window.location.reload();
       }
     };
     window.addEventListener('keydown', handleKeyDown);

@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useAuth } from '../hooks/useAuth';
 import storyData from '../data/story.json';
-import { ChevronRight, ArrowRight, User, Terminal } from 'lucide-react';
+import { ChevronRight, ArrowRight, ArrowLeft, User, Terminal } from 'lucide-react';
 
 export default function StoryEngine({ onSceneData }) {
     const { user, userData, updateUserData } = useAuth();
@@ -93,6 +93,17 @@ export default function StoryEngine({ onSceneData }) {
 
         if (dialogueIndex < currentScene.dialogue.length - 1) {
             setDialogueIndex(dialogueIndex + 1);
+        }
+    };
+
+    const handlePrevDialogue = (e) => {
+        e.stopPropagation(); // prevent clicking the main box which goes next
+        if (dialogueIndex > 0) {
+            if (isTyping) {
+                if (intervalRef.current) clearInterval(intervalRef.current);
+                setIsTyping(false);
+            }
+            setDialogueIndex(dialogueIndex - 1);
         }
     };
 
@@ -209,7 +220,18 @@ export default function StoryEngine({ onSceneData }) {
                     </p>
                 </div>
 
-                <div className="flex justify-end pt-4">
+                <div className="flex justify-between pt-4">
+                    <div className="flex items-center">
+                        {dialogueIndex > 0 && !isTyping && (
+                            <button
+                                onClick={handlePrevDialogue}
+                                className="flex items-center gap-2 text-neutral-500 hover:text-white transition-colors py-1 z-10 relative"
+                            >
+                                <ArrowLeft className="w-4 h-4" />
+                                <span className="font-mono text-[10px] uppercase">Previous</span>
+                            </button>
+                        )}
+                    </div>
                     {(!isDialogueFinished || isTyping) && (
                         <div className="flex items-center gap-2 text-neutral-500 group-hover:text-white transition-colors animate-pulse">
                             <span className="font-mono text-[10px] uppercase">Click to continue</span>
@@ -254,7 +276,7 @@ export default function StoryEngine({ onSceneData }) {
             {/* Choices Area */}
             {
                 isDialogueFinished && !isTyping && currentScene.type !== 'name_entry' && currentScene.choices && (
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 animate-in fade-in slide-in-from-bottom-4 duration-500">
+                    <div className="flex flex-col gap-3 animate-in fade-in slide-in-from-bottom-4 duration-500">
                         {currentScene.choices.map((choice, idx) => (
                             <button
                                 key={idx}

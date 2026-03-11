@@ -61,7 +61,7 @@ export default function Session() {
     };
 
     return (
-        <div className="w-full h-[calc(100vh-100px)] flex flex-col gap-4 max-w-[1600px] mx-auto py-2">
+        <div className="w-full h-screen flex flex-col gap-4 max-w-[1600px] mx-auto p-4 md:p-6 lg:p-8">
 
             {/* Top Diagnostic Bar */}
             <div className="flex flex-col lg:flex-row gap-4">

@@ -50,10 +50,10 @@ function AppContent() {
 
   return (
     <div className={`min-h-screen ${getBgClass()} flex flex-col md:flex-row max-w-[100vw] overflow-x-hidden transition-colors duration-1000`}>
-      <Navbar />
+      {location.pathname !== '/session' && <Navbar />}
 
-      <main className="flex-1 min-h-screen max-w-full border-l border-neutral-800">
-        <div className="h-full w-full p-4 sm:p-6 md:p-10 lg:p-12 relative z-10 mx-auto">
+      <main className={`flex-1 min-h-screen max-w-full ${location.pathname !== '/session' ? 'border-l border-neutral-800' : ''}`}>
+        <div className={`h-full w-full relative z-10 mx-auto ${location.pathname !== '/session' ? 'p-4 sm:p-6 md:p-10 lg:p-12' : ''}`}>
           <Routes>
             <Route path="/auth" element={<Auth />} />
             <Route path="/" element={<Home />} />

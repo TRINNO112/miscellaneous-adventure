@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Shield, ChevronRight, Terminal, User, BookOpen, Settings } from 'lucide-react';
+import { Shield, ChevronRight, Terminal, User, BookOpen, Settings, GitBranch } from 'lucide-react';
 import { useAuth } from '../hooks/useAuth';
 
 export default function Navbar() {
@@ -12,6 +12,7 @@ export default function Navbar() {
         { name: 'INDEX', path: '/', icon: Terminal },
         { name: 'DOSSIER', path: '/about', icon: BookOpen },
         { name: 'RECORDS', path: '/records', icon: User },
+        { name: 'HISTORY', path: '/history', icon: GitBranch },
         { name: 'SYSTEM', path: '/system', icon: Settings },
     ];
 

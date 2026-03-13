@@ -22,7 +22,7 @@ export default function Home() {
     };
 
     return (
-        <div className={`w-full flex flex-col pb-20 pt-16 md:pt-8 min-h-[calc(100vh-80px)] transition-all duration-75 ${glitch ? 'animate-[glitch-shake_0.15s_ease-in-out_infinite]' : ''}`}>
+        <div className={`w-full flex flex-col pb-20 pt-16 md:pt-8 min-h-[calc(100vh-80px)] transition-all duration-75 animate-boot ${glitch ? 'animate-[glitch-shake_0.15s_ease-in-out_infinite]' : ''}`}>
 
             {/* Glitch Overlay */}
             {glitch && (
@@ -32,8 +32,8 @@ export default function Home() {
                     <div className="absolute inset-0 opacity-60" style={{ background: 'linear-gradient(transparent 50%, rgba(255,0,0,0.15) 50%)', backgroundSize: '100% 4px' }} />
                     <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-[60] pointer-events-none">
                         <div className="bg-red-950/90 border-2 border-red-500 px-8 py-6 shadow-[0_0_40px_rgba(239,68,68,0.5),8px_8px_0px_#000] animate-[glitch-shake_0.1s_ease-in-out_infinite]">
-                            <p className="font-display text-3xl md:text-5xl font-black text-red-500 uppercase tracking-tighter text-center">-5 Integrity</p>
-                            <p className="font-mono text-xs text-red-400/80 mt-3 text-center uppercase tracking-widest">Compliance Violation Logged</p>
+                            <p className="font-display text-3xl md:text-5xl font-black text-red-500 text-glow-red uppercase tracking-tighter text-center">-5 Integrity</p>
+                            <p className="font-mono text-sm text-red-400/80 mt-3 text-center uppercase tracking-widest text-glow-red">Compliance Violation Logged</p>
                         </div>
                     </div>
                 </div>
@@ -43,7 +43,7 @@ export default function Home() {
             {/* Bureaucratic Header */}
             <div className="border-b-4 border-neutral-800 pb-8 mb-12 flex flex-col md:flex-row md:items-end justify-between gap-6">
                 <div>
-                    <div className="font-mono text-accent-amber text-xs tracking-widest uppercase mb-4 flex items-center gap-2">
+                    <div className="font-mono text-accent-amber text-glow-amber text-xs tracking-widest uppercase mb-4 flex items-center gap-2">
                         <span className="inline-block w-2 h-2 bg-accent-amber animate-pulse"></span>
                         WARNING: UNAUTHORIZED ACCESS ATTEMPT LOGGED
                     </div>
@@ -68,7 +68,7 @@ export default function Home() {
 
                     {/* Immersive Game Mode Portal */}
                     <div className="brutalist-panel relative overflow-hidden group p-10 bg-neutral-900 border-2 border-neutral-800 hover:border-accent-amber transition-all duration-500 h-[400px] flex flex-col justify-center">
-                        <div className="absolute top-0 right-0 p-2 font-mono text-[8px] text-neutral-700">SESSION_ISOLATION_v3</div>
+                        <div className="absolute top-0 right-0 p-2 font-mono text-[10px] text-neutral-700">SESSION_ISOLATION_v3</div>
                         <div className="relative z-10 space-y-6">
                             <div className="flex items-center gap-4">
                                 <div className="bg-accent-amber p-3 shadow-[4px_4px_0px_#fff]">
@@ -76,9 +76,9 @@ export default function Home() {
                                 </div>
                                 <div>
                                     <h2 className="font-display text-4xl font-black text-white uppercase tracking-tighter">
-                                        Active <span className="text-accent-amber">Protocol</span>
+                                        Active <span className="text-accent-amber text-glow-amber">Protocol</span>
                                     </h2>
-                                    <p className="font-mono text-[10px] text-neutral-500 uppercase tracking-widest">
+                                    <p className="font-mono text-xs text-neutral-500 uppercase tracking-widest">
                                         Enter the Narrative Core
                                     </p>
                                 </div>
@@ -135,11 +135,11 @@ export default function Home() {
                     {/* Info Card 1 */}
                     <div className="border-2 border-neutral-800 bg-neutral-900 p-5 group hover:border-neutral-600 transition-colors">
                         <div className="flex justify-between items-center mb-4 border-b border-neutral-800 pb-2">
-                            <span className="font-mono text-[10px] text-neutral-500 uppercase">SYS.REQ 01</span>
+                            <span className="font-mono text-xs text-neutral-500 uppercase">SYS.REQ 01</span>
                             <Database className="w-4 h-4 text-neutral-500 group-hover:text-white transition-colors" />
                         </div>
                         <h3 className="font-display font-bold text-lg text-white mb-2 uppercase">Consequences</h3>
-                        <p className="font-mono text-xs text-neutral-400">
+                        <p className="font-mono text-sm text-neutral-400">
                             Every dialogue option is logged. Your Integrity, Reputation, and Influence metrics will determine your survival in the bureau.
                         </p>
                     </div>
@@ -147,11 +147,11 @@ export default function Home() {
                     {/* Info Card 2 */}
                     <div className="border-2 border-neutral-800 bg-neutral-900 p-5 group hover:border-neutral-600 transition-colors">
                         <div className="flex justify-between items-center mb-4 border-b border-neutral-800 pb-2">
-                            <span className="font-mono text-[10px] text-neutral-500 uppercase">SYS.REQ 02</span>
+                            <span className="font-mono text-xs text-neutral-500 uppercase">SYS.REQ 02</span>
                             <FileTerminal className="w-4 h-4 text-neutral-500 group-hover:text-white transition-colors" />
                         </div>
                         <h3 className="font-display font-bold text-lg text-white mb-2 uppercase">Dossier Access</h3>
-                        <p className="font-mono text-xs text-neutral-400">
+                        <p className="font-mono text-sm text-neutral-400">
                             The Dossier page contains your permanent record. It is updated in real-time based on your actions within the terminal.
                         </p>
                     </div>

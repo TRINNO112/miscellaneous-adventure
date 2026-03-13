@@ -55,24 +55,36 @@ export default function StoryEngine({ onSceneData }) {
         if (onSceneData) onSceneData(assets);
     }, [currentSceneId, dialogueIndex, onSceneData, currentDialogue, currentScene, userData?.playerName]);
 
-    // Typing effect
+    // Typing scramble effect
     useEffect(() => {
         if (!currentDialogue) return;
 
         setIsTyping(true);
-        let i = 0;
+        const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+';
+        const rawText = replacePlaceholders(currentDialogue.text);
+        let frame = 0;
         setDisplayedText('');
 
         if (intervalRef.current) clearInterval(intervalRef.current);
 
         intervalRef.current = setInterval(() => {
-            const rawText = replacePlaceholders(currentDialogue.text);
-            setDisplayedText(rawText.substring(0, i + 1));
-            i++;
-            if (i >= rawText.length) {
+            let tempText = '';
+            for (let i = 0; i < rawText.length; i++) {
+                if (frame >= i * 2) {
+                    tempText += rawText[i];
+                } else if (frame >= (i * 2) - 8) {
+                    tempText += chars[Math.floor(Math.random() * chars.length)];
+                }
+            }
+            
+            setDisplayedText(tempText);
+            
+            if (frame >= rawText.length * 2) {
                 clearInterval(intervalRef.current);
+                setDisplayedText(rawText);
                 setIsTyping(false);
             }
+            frame++;
         }, 15);
 
         return () => {
@@ -214,9 +226,9 @@ export default function StoryEngine({ onSceneData }) {
                         </span>
                     </div>
 
-                    <p className="font-mono text-lg text-white leading-relaxed min-h-[120px]">
+                    <p className="font-mono text-lg text-white leading-relaxed min-h-[120px] relative">
                         {displayedText}
-                        {isTyping && <span className="inline-block w-2 h-5 bg-accent-amber ml-1 animate-pulse"></span>}
+                        <span className="inline-block w-2.5 h-[1.1em] bg-accent-amber ml-1 align-middle animate-blink"></span>
                     </p>
                 </div>
 
@@ -283,7 +295,8 @@ export default function StoryEngine({ onSceneData }) {
                                 onClick={() => handleChoice(choice)}
                                 className="brutalist-button flex items-center justify-between group py-4 px-6 text-left"
                             >
-                                <span className="font-display font-bold uppercase tracking-tight pr-4">
+                                <span className="font-display font-bold uppercase tracking-tight pr-4 transition-colors group-hover:text-accent-amber">
+                                    <span className="opacity-0 group-hover:opacity-100 transition-opacity text-accent-amber mr-2 font-mono">{'>'}</span>
                                     {replacePlaceholders(choice.label)}
                                 </span>
                                 <ArrowRight className="w-5 h-5 shrink-0 group-hover:translate-x-1 transition-transform" />

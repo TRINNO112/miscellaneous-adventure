@@ -67,6 +67,9 @@ function AppContent() {
 
       {/* Scanline Effect */}
       <div className="pointer-events-none fixed inset-0 z-50 h-full w-full bg-scanlines opacity-20"></div>
+      
+      {/* Global CRT Geometry & Vignette */}
+      <div className="crt-vignette pointer-events-none"></div>
     </div>
   );
 }

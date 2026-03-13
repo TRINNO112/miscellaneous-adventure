@@ -7,6 +7,7 @@ import Records from './pages/Records';
 import System from './pages/System';
 import Auth from './pages/Auth';
 import Session from './pages/Session';
+import History from './pages/History';
 import { useAuth } from './hooks/useAuth';
 import { AuthProvider } from './context/AuthContext';
 
@@ -47,6 +48,7 @@ function AppContent() {
     if (location.pathname === '/about') return 'bg-nebula-dossier';
     if (location.pathname === '/records') return 'bg-nebula-records';
     if (location.pathname === '/system') return 'bg-nebula-system';
+    if (location.pathname === '/history') return 'bg-nebula-records';
     return 'bg-bureau-900'; // Default / Session
   };
 

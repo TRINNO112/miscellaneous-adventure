@@ -16,7 +16,8 @@ export const chapter2Scenes = {
         choices: [
             { label: "Look, Pete. Let's be reasonable. I can set you up on a payment plan.", nextScene: "pete_peaceful", statChanges: { integrity: 5, reputation: -5 } },
             { label: "[Show Badge] We are the Bureau. You are going to pay the taxes, Pete.", nextScene: "pete_pressure", statChanges: { reputation: 5, integrity: -1 } },
-            { label: "[Light a cigarette] Here's a meme for you, Pete: 'Tax Evasion is a Crime, Virgil.' Pay up or I repo your life.", nextScene: "pete_hostile", statChanges: { integrity: -10, reputation: 15, influence: 5 } }
+            { label: "[Light a cigarette] Here's a meme for you, Pete: 'Tax Evasion is a Crime, Virgil.' Pay up or I repo your life.", nextScene: "pete_hostile", statChanges: { integrity: -10, reputation: 15, influence: 5 } },
+            { label: "[REQUIRES: 60 REPUTATION] Grab the crowbar from his hand. \"You're done, Pete.\"", nextScene: "pete_dominate", statChanges: { reputation: 20, integrity: -15, influence: 10 }, requires: { stat: "reputation", min: 60 } }
         ]
     },
     pete_peaceful: {
@@ -60,6 +61,23 @@ export const chapter2Scenes = {
         ],
         nextScene: "chapter_2_end"
     },
+    pete_dominate: {
+        id: "pete_dominate",
+        title: "Pete's Premium Auto",
+        background: "/images/backgrounds/pete_garage.png",
+        dialogue: [
+            { speaker: "player", text: "I snatch the crowbar out of his hand before he can blink. The metal is cold and heavy." },
+            { speaker: "player", text: "I toss it across the garage. It clangs against the concrete floor." },
+            { speaker: "player", text: "You're done threatening people, Pete. You're done dodging taxes. You're done with all of it." },
+            { speaker: "pete", text: "What the— How did you—" },
+            { speaker: "player", text: "I lean in close enough to smell the cigarette smoke on his breath." },
+            { speaker: "player", text: "Here's what's going to happen. You're going to write a check for the full amount. Then you're going to shake my hand. Then you're going to thank the Bureau for not pressing criminal charges." },
+            { speaker: "player", text: "And if I EVER hear your name on a defaulter list again, I will personally come back here and dismantle this shithole bolt by bolt. Are we clear?" },
+            { speaker: "pete", text: "Y-yes. Yes, sir. Crystal clear." },
+            { speaker: "system", text: "TOTAL DOMINANCE ACHIEVED. REPUTATION SIGNIFICANTLY INCREASED. INTEGRITY COMPROMISED." }
+        ],
+        nextScene: "chapter_2_end"
+    },
     chapter_2_end: {
         id: "chapter_2_end",
         title: "Outside the Garage",
@@ -68,7 +86,9 @@ export const chapter2Scenes = {
             { speaker: "player", text: "Another successful collection. I tuck the certified check into my jacket. The air smells like victory and bureaucracy." },
             { speaker: "player", text: "Vance is going to have to find harder targets if he wants to break me. I'm just getting started." },
             { speaker: "system", text: "CHAPTER 2: DEATH AND TAXES - COMPLETED." },
-            { speaker: "system", text: "NEW CHAPTERS WILL BE ADDED TO THE TERMINAL DATABASE SHORTLY." }
-        ]
+            { speaker: "system", text: "ITEM ACQUIRED: PETE'S TAX RECEIPT. EVIDENCE OF SUCCESSFUL COLLECTION." }
+        ],
+        addItem: "pete_receipt",
+        nextScene: "chapter_3_start"
     }
 };

@@ -4,5 +4,6 @@ export const initialState = {
         reputation: 50,
         influence: 0
     },
-    inventory: []
+    inventory: [],
+    choiceHistory: []
 };

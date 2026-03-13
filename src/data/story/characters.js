@@ -18,5 +18,30 @@ export const characters = {
         name: "Greasy Pete",
         color: "#fbbf24",
         image: "/images/characters/pete_greasy.png"
+    },
+    maya: {
+        name: "Officer Maya Chen",
+        color: "#a78bfa",
+        image: "/images/characters/maya_neutral.png"
+    },
+    rathore: {
+        name: "Director Rathore",
+        color: "#dc2626",
+        image: "/images/characters/rathore_cold.png"
+    },
+    karen: {
+        name: "Karen (HR)",
+        color: "#f472b6",
+        image: "/images/characters/karen_smile.png"
+    },
+    sal: {
+        name: "Sal 'The Ledger'",
+        color: "#22d3ee",
+        image: "/images/characters/sal_shady.png"
+    },
+    hermit: {
+        name: "The Old Man",
+        color: "#86efac",
+        image: "/images/characters/hermit.png"
     }
 };

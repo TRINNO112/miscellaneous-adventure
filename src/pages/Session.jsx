@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import StoryEngine from '../components/StoryEngine';
-import { Terminal, ShieldAlert, Wifi, Battery, Clock, Cpu, HardDrive } from 'lucide-react';
+import { Terminal, ShieldAlert, Wifi, Battery, Clock, Cpu, HardDrive, Skull } from 'lucide-react';
 import { useAuth } from '../hooks/useAuth';
 
 export default function Session() {
@@ -15,35 +15,23 @@ export default function Session() {
         background: '',
         characters: []
     });
+    const [gameOver, setGameOver] = useState(null);
 
-    // System Stats Simulation & Real APIs
     useEffect(() => {
         const startTime = Date.now();
         const timer = setInterval(() => {
-            // Uptime calculation
             const diff = Math.floor((Date.now() - startTime) / 1000);
             const h = Math.floor(diff / 3600).toString().padStart(2, '0');
             const m = Math.floor((diff % 3600) / 60).toString().padStart(2, '0');
             const s = (diff % 60).toString().padStart(2, '0');
-
-            // Resource simulation (CPU)
             const cpuVal = (Math.random() * 5 + 1).toFixed(1) + '%';
-
-            // Real Memory (Chrome/Edge only)
             let memVal = '0.42 GB';
             if (window.performance && window.performance.memory) {
                 memVal = (window.performance.memory.usedJSHeapSize / (1024 * 1024 * 1024)).toFixed(2) + ' GB';
             }
-
-            setStats(prev => ({
-                ...prev,
-                uptime: `${h}:${m}:${s}`,
-                cpu: cpuVal,
-                memory: memVal
-            }));
+            setStats(prev => ({ ...prev, uptime: `${h}:${m}:${s}`, cpu: cpuVal, memory: memVal }));
         }, 1000);
 
-        // Real Battery
         if ('getBattery' in navigator) {
             navigator.getBattery().then(bat => {
                 const updateBat = () => setStats(prev => ({ ...prev, battery: Math.floor(bat.level * 100) + '%' }));
@@ -55,20 +43,25 @@ export default function Session() {
         return () => clearInterval(timer);
     }, []);
 
-    // Callback from StoryEngine to update assets
-    const onSceneChange = (assets) => {
-        setSceneAssets(assets);
-    };
+    const onSceneChange = (assets) => setSceneAssets(assets);
 
     return (
         <div className="w-full h-screen flex flex-col gap-4 max-w-[1600px] mx-auto p-4 md:p-6 lg:p-8 animate-boot overflow-hidden">
+
+            {/* Game Over Full-Screen Overlay */}
+            {gameOver && (
+                <div className="fixed inset-0 z-[200] pointer-events-none">
+                    <div className="absolute inset-0 bg-red-950/60 animate-pulse pointer-events-none" />
+                    <div className="absolute inset-0 bg-[repeating-linear-gradient(0deg,transparent,transparent_2px,rgba(255,0,0,0.1)_2px,rgba(255,0,0,0.1)_4px)] pointer-events-none" />
+                </div>
+            )}
 
             {/* Top Diagnostic Bar */}
             <div className="flex flex-col lg:flex-row gap-4">
                 <div className="flex-1 brutalist-panel bg-neutral-900 border-neutral-800 px-4 py-2 flex items-center justify-between overflow-hidden">
                     <div className="flex items-center gap-4 shrink-0">
                         <div className="flex gap-1.5">
-                            <div className="w-2.5 h-2.5 rounded-full bg-red-600 animate-pulse"></div>
+                            <div className={`w-2.5 h-2.5 rounded-full ${gameOver ? 'bg-red-600' : 'bg-red-600'} animate-pulse`}></div>
                             <div className="w-2.5 h-2.5 rounded-full bg-neutral-800"></div>
                         </div>
                         <div className="flex items-center gap-2">
@@ -106,10 +99,8 @@ export default function Session() {
             {/* Main Visual Stage & Dialogue Area */}
             <div className="flex-1 flex flex-col lg:flex-row gap-4 min-h-0">
 
-                {/* Visual Stage (The Game Screen) */}
+                {/* Visual Stage */}
                 <div className="flex-1 brutalist-panel bg-black border-neutral-800 relative overflow-hidden flex flex-col items-center justify-end">
-
-                    {/* Background Layer */}
                     <div
                         className="absolute inset-0 bg-cover bg-center transition-all duration-1000 opacity-40 grayscale-[0.5]"
                         style={{
@@ -117,11 +108,9 @@ export default function Session() {
                             backgroundColor: '#050505'
                         }}
                     >
-                        {/* Static/Noise overlay for immersion */}
                         <div className="absolute inset-0 bg-scanlines opacity-20 pointer-events-none"></div>
                     </div>
 
-                    {/* Character Layer - Centered for now, can be expanded to positional rendering */}
                     <div className="relative z-10 w-full h-full flex items-end justify-center px-10 gap-8">
                         {sceneAssets.characters.map((char, idx) => (
                             <div key={idx} className="relative h-[80%] flex flex-col justify-end transition-all duration-700 animate-in fade-in slide-in-from-bottom-8">
@@ -140,7 +129,6 @@ export default function Session() {
                         ))}
                     </div>
 
-                    {/* Corner Status Accents */}
                     <div className="absolute top-4 left-4 font-mono text-[11px] text-neutral-600 uppercase transition-all">
                         Rendering_Core_v4.2 // Active
                     </div>
@@ -152,7 +140,6 @@ export default function Session() {
 
                 {/* Right Side: Dialogue & Protocol Panel */}
                 <div className="w-full lg:w-96 flex flex-col gap-4 shrink-0 min-h-0 overflow-y-auto pr-2 custom-scrollbar">
-
                     <div className="brutalist-panel bg-neutral-900 border-neutral-800 p-6 flex-1 flex flex-col">
                         <div className="mb-4 border-b border-neutral-800 pb-2 flex justify-between items-center">
                             <h3 className="font-mono text-xs font-bold text-white uppercase flex items-center gap-2">
@@ -161,10 +148,8 @@ export default function Session() {
                             </h3>
                             <div className="w-2 h-2 bg-accent-amber animate-pulse"></div>
                         </div>
-
-                        {/* Story Engine integrated here */}
                         <div className="flex-1">
-                            <StoryEngine onSceneData={onSceneChange} />
+                            <StoryEngine onSceneData={onSceneChange} onGameOver={setGameOver} />
                         </div>
                     </div>
 

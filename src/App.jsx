@@ -12,7 +12,9 @@ import { AuthProvider } from './context/AuthContext';
 
 function AppContent() {
   const location = useLocation();
-  const { updateUserData } = useAuth();
+  const { userData, updateUserData } = useAuth();
+  
+  const settings = userData?.settings || { crtEnabled: true, readabilityMode: false };
 
   // Testing helper: Reset memory shortcut
   useEffect(() => {
@@ -49,7 +51,7 @@ function AppContent() {
   };
 
   return (
-    <div className={`min-h-screen ${getBgClass()} flex flex-col md:flex-row max-w-[100vw] overflow-x-hidden transition-colors duration-1000`}>
+    <div className={`min-h-screen ${getBgClass()} flex flex-col md:flex-row max-w-[100vw] overflow-x-hidden transition-colors duration-1000 ${settings.readabilityMode ? 'font-sans text-neutral-200' : ''}`}>
       {location.pathname !== '/session' && <Navbar />}
 
       <main className={`flex-1 min-h-screen max-w-full ${location.pathname !== '/session' ? 'border-l border-neutral-800' : ''}`}>
@@ -65,11 +67,13 @@ function AppContent() {
         </div>
       </main>
 
-      {/* Scanline Effect */}
-      <div className="pointer-events-none fixed inset-0 z-50 h-full w-full bg-scanlines opacity-20"></div>
-      
-      {/* Global CRT Geometry & Vignette */}
-      <div className="crt-vignette pointer-events-none"></div>
+      {/* Screen Effects based on Settings */}
+      {settings.crtEnabled && (
+        <>
+          <div className="pointer-events-none fixed inset-0 z-50 h-full w-full bg-scanlines opacity-20"></div>
+          <div className="crt-vignette pointer-events-none"></div>
+        </>
+      )}
     </div>
   );
 }

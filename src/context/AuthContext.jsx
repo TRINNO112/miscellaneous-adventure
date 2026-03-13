@@ -27,6 +27,12 @@ export function AuthProvider({ children }) {
                 reputation: 12,
                 influence: 0
             },
+            settings: {
+                crtEnabled: true,
+                readabilityMode: false,
+                typingSounds: true,
+                volume: 74
+            },
             currentScene: 'chapter_1_start',
             inventory: [],
             createdAt: new Date().toISOString()
@@ -102,6 +108,7 @@ export function AuthProvider({ children }) {
                 } else {
                     setUserData({
                         stats: { integrity: 45, reputation: 12, influence: 0 },
+                        settings: { crtEnabled: true, readabilityMode: false, typingSounds: true, volume: 74 },
                         currentScene: 'chapter_1_start',
                         inventory: []
                     });

@@ -155,6 +155,15 @@
   .animate-blink {
     animation: blink 1s step-end infinite;
   }
+  
+  @keyframes marquee {
+    0% { transform: translateX(100%); }
+    100% { transform: translateX(-100%); }
+  }
+  
+  .animate-marquee {
+    animation: marquee 15s linear infinite;
+  }
 
   @keyframes boot-sequence {
     0% { opacity: 0; filter: brightness(3) contrast(1.5) blur(10px); }

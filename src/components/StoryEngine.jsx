@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useAuth } from '../hooks/useAuth';
-import storyData from '../data/story.json';
+import storyData from '../data/story';
 import { ChevronRight, ArrowRight, ArrowLeft, User, Terminal } from 'lucide-react';
 
 export default function StoryEngine({ onSceneData }) {

@@ -21,8 +21,8 @@ export default function Dossier() {
             </button>
 
             {/* Main Header */}
-            <div className="border-b-8 border-white pb-6 mb-12">
-                <h1 className="text-6xl md:text-8xl font-display font-black uppercase text-white tracking-tighter leading-none">
+            <div className="border-b-8 border-white pb-6 mb-12 min-w-0 overflow-hidden">
+                <h1 className="text-5xl sm:text-6xl md:text-8xl font-display font-black uppercase text-white tracking-tighter leading-none break-all sm:break-words">
                     Dossier <span className="text-accent-amber">//</span> {name}
                 </h1>
                 <p className="font-mono text-xs uppercase tracking-[0.5em] text-neutral-500 mt-4">
@@ -35,7 +35,7 @@ export default function Dossier() {
                 </div>
             </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start w-full">
 
                 {/* ID CARD - STICKY ON DESKTOP */}
                 <div className="lg:col-span-4 lg:sticky lg:top-24">
@@ -56,7 +56,7 @@ export default function Dossier() {
 
                             <div className="space-y-4">
                                 <div>
-                                    <h2 className="font-display font-black text-3xl text-white uppercase leading-none break-words">{name}</h2>
+                                    <h2 className="font-display font-black text-3xl text-white uppercase leading-none truncate">{name}</h2>
                                     <p className="font-mono text-[11px] text-accent-amber uppercase tracking-widest mt-1 text-glow-amber">Junior Data Analyst</p>
                                 </div>
 
@@ -72,7 +72,7 @@ export default function Dossier() {
                 </div>
 
                 {/* STATS & DETAILS */}
-                <div className="lg:col-span-8 space-y-12">
+                <div className="lg:col-span-8 space-y-12 min-w-0">
 
                     {/* Stats Panel */}
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -114,19 +114,19 @@ export default function Dossier() {
                     </div>
 
                     {/* Records Section */}
-                    <div className="space-y-6">
-                        <div className="brutalist-panel border-l-white p-8 space-y-6">
-                            <div className="flex items-center gap-3">
-                                <FileText className="w-6 h-6 text-white" />
-                                <h3 className="font-display font-black text-2xl text-white uppercase italic">Background_Summary</h3>
+                    <div className="space-y-6 min-w-0">
+                        <div className="brutalist-panel border-l-white p-6 sm:p-8 space-y-6 overflow-hidden">
+                            <div className="flex items-start gap-3 flex-col sm:flex-row sm:items-center">
+                                <FileText className="w-6 h-6 text-white shrink-0" />
+                                <h3 className="font-display font-black text-2xl text-white uppercase italic break-all sm:break-normal">Background_Summary</h3>
                             </div>
-                            <div className="font-mono text-sm text-neutral-400 space-y-4 leading-relaxed break-words hyphen-auto">
+                            <div className="font-mono text-[11px] text-neutral-400 space-y-4 leading-relaxed break-words hyphen-auto">
                                 <p>Subject identified as a high-potential recruit following the Bureau exams. Psychological profile indicates a strong desire for "Independence" and "Solitary Living"—traits frequently correlated with high productivity but potential for non-compliance.</p>
                                 <p>Mandatory psychological supervision recommended if Integrity Index falls below threshold.</p>
                             </div>
                         </div>
 
-                        <div className="brutalist-panel border-l-red-600 p-8 space-y-6">
+                        <div className="brutalist-panel border-l-red-600 p-6 sm:p-8 space-y-6 overflow-hidden">
                             <div className="flex items-center gap-3 text-red-600">
                                 <AlertCircle className="w-6 h-6" />
                                 <h3 className="font-display font-black text-2xl uppercase italic">Incident_Log</h3>

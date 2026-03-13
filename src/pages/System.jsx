@@ -2,7 +2,28 @@ import { Settings as SettingsIcon, Monitor, Volume2, Save, PowerOff, ShieldAlert
 import { useAuth } from '../hooks/useAuth';
 
 export default function System() {
-    const { logout, user } = useAuth();
+    const { logout, user, userData, updateUserData } = useAuth();
+    
+    // Default settings if undefined
+    const settings = userData?.settings || { crtEnabled: true, readabilityMode: false, typingSounds: true, volume: 74 };
+
+    const updateSetting = async (key, value) => {
+        await updateUserData({
+            settings: {
+                ...settings,
+                [key]: value
+            }
+        });
+    };
+
+    const handleVolumeClick = (e) => {
+        const rect = e.currentTarget.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const width = rect.width;
+        let percentage = Math.round((x / width) * 100);
+        percentage = Math.max(0, Math.min(100, Math.round(percentage / 5) * 5)); // Snap to 5% intervals
+        updateSetting('volume', percentage);
+    };
 
     return (
         <div className="w-full max-w-5xl mx-auto flex flex-col pb-20 pt-8">
@@ -45,7 +66,12 @@ export default function System() {
                                     <span className="text-white block mb-1">CRT Scanlines</span>
                                     Toggle visual interference overlay.
                                 </div>
-                                <button className="brutalist-button px-4 py-2 text-xs bg-accent-amber text-black border-accent-amber hover:bg-transparent hover:text-accent-amber active:shadow-none">ENABLD</button>
+                                <button 
+                                    onClick={() => updateSetting('crtEnabled', !settings.crtEnabled)}
+                                    className={`brutalist-button px-4 py-2 text-xs ${settings.crtEnabled ? 'bg-accent-amber text-black border-accent-amber hover:bg-transparent hover:text-accent-amber active:shadow-none' : 'text-neutral-500 border-neutral-700 hover:text-white'}`}
+                                >
+                                    {settings.crtEnabled ? 'ENABLD' : 'DISBLD'}
+                                </button>
                             </div>
 
                             <div className="flex justify-between items-center border-t border-neutral-800 pt-6">
@@ -53,7 +79,12 @@ export default function System() {
                                     <span className="text-white block mb-1">Text Readability Mode</span>
                                     Increases contrast, removes atmospheric glitches.
                                 </div>
-                                <button className="brutalist-button px-4 py-2 text-xs text-neutral-500 border-neutral-700 hover:text-white">DISBLD</button>
+                                <button 
+                                    onClick={() => updateSetting('readabilityMode', !settings.readabilityMode)}
+                                    className={`brutalist-button px-4 py-2 text-xs ${settings.readabilityMode ? 'bg-accent-amber text-black border-accent-amber hover:bg-transparent hover:text-accent-amber active:shadow-none' : 'text-neutral-500 border-neutral-700 hover:text-white'}`}
+                                >
+                                    {settings.readabilityMode ? 'ENABLD' : 'DISBLD'}
+                                </button>
                             </div>
 
                         </div>
@@ -69,10 +100,13 @@ export default function System() {
                             <div className="flex flex-col gap-4">
                                 <div className="flex justify-between items-center font-mono text-sm text-neutral-400">
                                     <span className="text-white">Master Volume</span>
-                                    <span className="text-accent-amber">74%</span>
+                                    <span className="text-accent-amber">{settings.volume}%</span>
                                 </div>
-                                <div className="w-full h-8 bg-neutral-800 border-2 border-neutral-700 flex">
-                                    <div className="h-full w-[74%] bg-[repeating-linear-gradient(90deg,#ff5500_0px,#ff5500_4px,transparent_4px,transparent_6px)]"></div>
+                                <div 
+                                    className="w-full h-8 bg-neutral-800 border-2 border-neutral-700 flex cursor-pointer"
+                                    onClick={handleVolumeClick}
+                                >
+                                    <div className="h-full bg-[repeating-linear-gradient(90deg,#ff5500_0px,#ff5500_4px,transparent_4px,transparent_6px)] transition-all duration-150" style={{ width: `${settings.volume}%` }}></div>
                                 </div>
                             </div>
 
@@ -81,7 +115,12 @@ export default function System() {
                                     <span className="text-white block mb-1">Typing Sounds</span>
                                     Mechanical keyboard acoustics.
                                 </div>
-                                <button className="brutalist-button px-4 py-2 text-xs bg-accent-amber text-black border-accent-amber hover:bg-transparent hover:text-accent-amber">ENABLD</button>
+                                <button 
+                                    onClick={() => updateSetting('typingSounds', !settings.typingSounds)}
+                                    className={`brutalist-button px-4 py-2 text-xs ${settings.typingSounds ? 'bg-accent-amber text-black border-accent-amber hover:bg-transparent hover:text-accent-amber active:shadow-none' : 'text-neutral-500 border-neutral-700 hover:text-white'}`}
+                                >
+                                    {settings.typingSounds ? 'ENABLD' : 'DISBLD'}
+                                </button>
                             </div>
 
                         </div>
@@ -107,7 +146,13 @@ export default function System() {
                             Caution: Saving state creates a detectable log entry (Entity ID: {user?.uid?.substring(0, 8) || 'GUEST_PROTO'}...). Do not leave the terminal unattended.
                         </p>
 
-                        <button className="w-full brutalist-button flex items-center justify-center gap-2 border-red-500 text-red-500 hover:bg-red-500 hover:text-black shadow-[4px_4px_0px_#ef4444]">
+                        <button 
+                            className="w-full brutalist-button flex items-center justify-center gap-2 border-red-500 text-red-500 hover:bg-red-500 hover:text-black shadow-[4px_4px_0px_#ef4444]"
+                            onClick={() => {
+                                updateUserData({ savedAt: new Date().toISOString() });
+                                alert("Data successfully transmitted and logged internally.");
+                            }}
+                        >
                             <Save className="w-4 h-4" />
                             Force Save State
                         </button>

@@ -61,7 +61,7 @@ export default function Session() {
     };
 
     return (
-        <div className="w-full h-screen flex flex-col gap-4 max-w-[1600px] mx-auto p-4 md:p-6 lg:p-8">
+        <div className="w-full h-screen flex flex-col gap-4 max-w-[1600px] mx-auto p-4 md:p-6 lg:p-8 animate-boot overflow-hidden">
 
             {/* Top Diagnostic Bar */}
             <div className="flex flex-col lg:flex-row gap-4">
@@ -79,7 +79,7 @@ export default function Session() {
                         </div>
                     </div>
 
-                    <div className="flex items-center gap-6 font-mono text-[9px] text-neutral-500 uppercase overflow-x-auto no-scrollbar">
+                    <div className="flex items-center gap-6 font-mono text-[11px] text-neutral-500 uppercase overflow-x-auto no-scrollbar">
                         <div className="flex items-center gap-2 whitespace-nowrap">
                             <Cpu className="w-3 h-3 text-blue-500" />
                             <span>CPU: <span className="text-white">{stats.cpu}</span></span>
@@ -141,17 +141,17 @@ export default function Session() {
                     </div>
 
                     {/* Corner Status Accents */}
-                    <div className="absolute top-4 left-4 font-mono text-[9px] text-neutral-600 uppercase transition-all">
+                    <div className="absolute top-4 left-4 font-mono text-[11px] text-neutral-600 uppercase transition-all">
                         Rendering_Core_v4.2 // Active
                     </div>
                     <div className="absolute bottom-4 right-4 flex items-center gap-2">
                         <Wifi className="w-3 h-3 text-emerald-500 animate-pulse" />
-                        <span className="font-mono text-[9px] text-neutral-600 uppercase">Live_Feed_Encrypted</span>
+                        <span className="font-mono text-[11px] text-neutral-600 uppercase">Live_Feed_Encrypted</span>
                     </div>
                 </div>
 
                 {/* Right Side: Dialogue & Protocol Panel */}
-                <div className="w-full lg:w-96 flex flex-col gap-4 shrink-0 min-h-0">
+                <div className="w-full lg:w-96 flex flex-col gap-4 shrink-0 min-h-0 overflow-y-auto pr-2 custom-scrollbar">
 
                     <div className="brutalist-panel bg-neutral-900 border-neutral-800 p-6 flex-1 flex flex-col">
                         <div className="mb-4 border-b border-neutral-800 pb-2 flex justify-between items-center">
@@ -163,15 +163,15 @@ export default function Session() {
                         </div>
 
                         {/* Story Engine integrated here */}
-                        <div className="flex-1 overflow-y-auto pr-2 custom-scrollbar">
+                        <div className="flex-1">
                             <StoryEngine onSceneData={onSceneChange} />
                         </div>
                     </div>
 
-                    <div className="brutalist-panel bg-black border-neutral-800 p-4 font-mono text-[9px] text-neutral-500 space-y-2 uppercase leading-relaxed">
-                        <p className="text-white border-b border-neutral-800 pb-1 mb-2">Operational Guidelines:</p>
+                    <div className="brutalist-panel bg-black border-neutral-800 p-4 font-mono text-[11px] text-system-cold space-y-2 uppercase leading-relaxed text-glow-cold">
+                        <p className="border-b border-neutral-800 pb-1 mb-2">Operational Guidelines:</p>
                         <p>1. Dialogue represents binding input.</p>
-                        <p>2. Simulation variance: <span className="text-accent-amber">0.0042%</span></p>
+                        <p>2. Simulation variance: <span className="text-accent-amber text-glow-amber">0.0042%</span></p>
                         <p>3. Do not attempt to bypass security layers.</p>
                     </div>
                 </div>

@@ -65,6 +65,7 @@ function AppContent() {
             <Route path="/about" element={<Dossier />} />
             <Route path="/records" element={<Records />} />
             <Route path="/system" element={<System />} />
+            <Route path="/history" element={<History />} />
           </Routes>
         </div>
       </main>

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useAuth } from '../hooks/useAuth';
-import storyData from '../data/story';
+import storyData from '../data/story/index.js';
 import { ChevronRight, ArrowRight, ArrowLeft, User, Terminal } from 'lucide-react';
 
 export default function StoryEngine({ onSceneData }) {
@@ -10,7 +10,6 @@ export default function StoryEngine({ onSceneData }) {
     const [isTyping, setIsTyping] = useState(false);
     const [displayedText, setDisplayedText] = useState('');
     const [playerNameInput, setPlayerNameInput] = useState('');
-    const [history, setHistory] = useState([]); // Array of { sceneId, stats }
     const intervalRef = useRef(null);
 
     const currentScene = storyData.scenes[currentSceneId];
@@ -122,12 +121,6 @@ export default function StoryEngine({ onSceneData }) {
     const handleChoice = async (choice) => {
         const nextSceneId = choice.nextScene;
 
-        // Save current state to history before moving forward
-        setHistory(prev => [...prev, {
-            sceneId: currentSceneId,
-            stats: { ...userData.stats }
-        }]);
-
         // Update local state first for responsiveness
         setCurrentSceneId(nextSceneId);
         setDialogueIndex(0);
@@ -146,22 +139,7 @@ export default function StoryEngine({ onSceneData }) {
         });
     };
 
-    const handleRewind = async () => {
-        if (history.length === 0) return;
 
-        const lastState = history[history.length - 1];
-        const newHistory = history.slice(0, -1);
-
-        setHistory(newHistory);
-        setCurrentSceneId(lastState.sceneId);
-        setDialogueIndex(0);
-        setDisplayedText('');
-
-        await updateUserData({
-            currentScene: lastState.sceneId,
-            stats: lastState.stats
-        });
-    };
 
     const handleNameSubmit = async (e) => {
         e.preventDefault();
@@ -196,14 +174,6 @@ export default function StoryEngine({ onSceneData }) {
                     <span className="font-mono text-[10px] text-neutral-500 uppercase tracking-widest">
                         Location: {currentScene.title}
                     </span>
-                    {history.length > 0 && !currentScene.disableRewind && (
-                        <button
-                            onClick={handleRewind}
-                            className="ml-4 font-mono text-[9px] text-white bg-accent-amber/80 hover:bg-accent-amber px-3 py-1 uppercase tracking-tighter transition-all font-bold shadow-[2px_2px_0px_#fff] active:shadow-none active:translate-x-0.5 active:translate-y-0.5"
-                        >
-                            [BACK_PROTOCOL // UNDO]
-                        </button>
-                    )}
                 </div>
                 <span className="font-mono text-[10px] text-neutral-700">SCENE_ID: {currentSceneId}</span>
             </div>

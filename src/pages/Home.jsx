@@ -54,10 +54,25 @@ export default function Home() {
                     </h1>
                 </div>
 
-                <div className="bg-neutral-900 border border-neutral-800 p-4 font-mono text-xs text-neutral-400 max-w-xs md:text-right">
-                    <p>DEPARTMENT OF DIGITAL REGULATION</p>
-                    <p>IDENTITY: {user?.uid?.substring(0, 10) || 'GUEST_ENTITY'}</p>
-                    <p className="mt-2 text-white">"Obedience is Efficiency."</p>
+                <div className="flex flex-col gap-4 max-w-sm md:items-end">
+                    {/* News Bulletin */}
+                    <div className="bg-red-950/20 border-l-2 border-red-500 p-3 font-mono text-xs text-red-500 text-left w-full">
+                        <p className="font-bold mb-1 flex items-center gap-2">
+                            <span className="w-1.5 h-1.5 bg-red-500 animate-pulse rounded-full"></span>
+                            LIVE BULLETIN
+                        </p>
+                        <div className="overflow-hidden w-full relative h-[18px]">
+                            <p className="text-[10px] text-red-400/80 uppercase whitespace-nowrap absolute animate-marquee">
+                                Sector 4 communications remain severed. All personnel must report to their designated compliance officers immediately.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div className="bg-neutral-900 border border-neutral-800 p-4 font-mono text-xs text-neutral-400 w-full md:text-right">
+                        <p>DEPARTMENT OF DIGITAL REGULATION</p>
+                        <p>IDENTITY: {user?.uid?.substring(0, 10) || 'GUEST_ENTITY'}</p>
+                        <p className="mt-2 text-white">"Obedience is Efficiency."</p>
+                    </div>
                 </div>
             </div>
 

@@ -35,6 +35,7 @@ export function AuthProvider({ children }) {
             },
             currentScene: 'chapter_1_start',
             inventory: [],
+            choiceHistory: [],
             createdAt: new Date().toISOString()
         };
         await setDoc(doc(db, 'users', uid), initialData);
@@ -110,7 +111,8 @@ export function AuthProvider({ children }) {
                         stats: { integrity: 45, reputation: 12, influence: 0 },
                         settings: { crtEnabled: true, readabilityMode: false, typingSounds: true, volume: 74 },
                         currentScene: 'chapter_1_start',
-                        inventory: []
+                        inventory: [],
+                        choiceHistory: []
                     });
                 }
             }
